@@ -1,69 +1,97 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  --primary: rgba(255, 255, 255, 1);
+  --secondary: rgb(179, 179, 179);
+  --background: rgba(6, 4, 18, 1);
+  --accent: rgb(32, 79, 254);
+  --warning: rgba(235, 55, 149, 1);
+  --button: rgba(39, 42, 46, 1);
+  --button_hover: rgba(39, 42, 46, 0.9);
+
+  --font-title: 'Kanit', sans-serif;
+  --font-body: 'Roboto Mono', monospace;
+
+  --font-size_title-web: 140px;
+  --font-size_title-tab: 112px;
+  --font-size_title-mob: 48px;
+
+  --font-size_subtitle-web: 24px;
+  --font-size_subtitle-tab: 20px;
+  --font-size_subtitle-mob: 18px;
+
+  --font-size_body-web: 18px;
+  --font-size_body-tab: 16px;
+  --font-size_body-mob: 14px;
+
+  --font-size_button: 16px;
+
+  --cubic-bezier: cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  src: url('styles/fonts/Kanit/Kanit-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 500;
+  src: url('styles/fonts/Kanit/Kanit-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('styles/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+body {
+  position: relative;
+  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  color: var(--primary);
+  background-color: var(--background);
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+img,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  text-decoration: none;
+  color: inherit;
 }
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+textarea {
+  resize: none;
 }
