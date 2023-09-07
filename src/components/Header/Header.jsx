@@ -1,12 +1,16 @@
 import Button from '../Buttons/Button';
 import Logo from '../Logo/Logo';
-import { HeaderContainer } from './Header.styled';
+import WalletInfo from '../ContractWrapper/ContractWrapper';
+import { HeaderContainer, HeaderContainerNav } from './Header.styled';
 
 const Header = () => {
   return (
     <HeaderContainer>
-      <Logo />
-      <Button>Connect Wallet</Button>
+      <HeaderContainerNav>
+        <Logo />
+        <Button>Connect Wallet</Button>
+      </HeaderContainerNav>
+      <WalletInfo />
     </HeaderContainer>
   );
 };
