@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { CONTRACT_INFO } from '../../constants/contractInfo';
 import { ContractInfoStyled } from './ContractInfo.styled';
-import ButtonHint from '../Buttons/ButtonHelp/ButtonHint';
+
+import ButtonTip from '../Buttons/ButtonTip/ButtonTip';
 
 const ContractInfo = ({ result = 0, variable = '' }) => {
   const { balance, apr, days, rewards } = CONTRACT_INFO;
@@ -25,7 +26,7 @@ const ContractInfo = ({ result = 0, variable = '' }) => {
     <ContractInfoStyled>
       <p>{result}</p>
       <p>{textContractInfo}</p>
-      <ButtonHint />
+      <ButtonTip />
     </ContractInfoStyled>
   );
 };
