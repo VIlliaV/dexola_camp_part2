@@ -1,6 +1,6 @@
 import Button from '../Buttons/Button';
 import Logo from '../Logo/Logo';
-import WalletInfo from '../ContractWrapper/ContractWrapper';
+import ContractWrapper from '../ContractWrapper/ContractWrapper';
 import { HeaderContainer, HeaderContainerNav } from './Header.styled';
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
         <Logo />
         <Button>Connect Wallet</Button>
       </HeaderContainerNav>
-      <WalletInfo />
+      <ContractWrapper />
     </HeaderContainer>
   );
 };
