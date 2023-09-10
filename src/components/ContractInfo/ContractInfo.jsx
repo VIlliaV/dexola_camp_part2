@@ -1,32 +1,23 @@
-import { useMemo } from 'react';
 import { CONTRACT_INFO } from '../../constants/contractInfo';
 import { ContractInfoStyled } from './ContractInfo.styled';
 
-import ButtonTip from '../Buttons/ButtonTip/ButtonTip';
+import SignTip from '../Tip/SignTip/SignTip';
+import { result } from '../../utils/formating';
 
-const ContractInfo = ({ result = 0, variable = '' }) => {
-  const { balance, apr, days, rewards } = CONTRACT_INFO;
-  const textContractInfo = useMemo(() => {
-    switch (variable) {
-      case balance:
-        return balance;
-      case apr:
-        return apr;
-      case days:
-        return days;
-      case rewards:
-        return rewards;
-      default:
-        return '';
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variable]);
+const ContractInfo = ({ data = 0, variable = {}, tokenName = 'TEST' }) => {
+  const { balance, rewards } = CONTRACT_INFO;
 
   return (
     <ContractInfoStyled>
-      <p>{result}</p>
-      <p>{textContractInfo}</p>
-      <ButtonTip />
+      <div className="contract_data">
+        <p className="contract_result">{result(variable, data)}</p>
+        {(variable === balance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
+      </div>
+
+      <div className="contract_variable">
+        <p className="text_variable">{variable.text}</p>
+        <SignTip tip={variable.tip} />
+      </div>
     </ContractInfoStyled>
   );
 };

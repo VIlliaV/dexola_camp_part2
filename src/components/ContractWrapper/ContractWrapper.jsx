@@ -1,4 +1,3 @@
-// import SectionWrapper from '../Section/SectionWrapper';
 import { CONTRACT_INFO } from '../../constants/contractInfo';
 import ContractInfo from '../ContractInfo/ContractInfo';
 import HeadContainer from '../HeadContainer/HeadContainer';
@@ -10,12 +9,20 @@ const ContractWrapper = () => {
     <ContractWrapperStyled>
       <HeadContainer>
         <h1>StarRunner Token staking</h1>
-        <div className="contract_info">
-          <ContractInfo result={0.0} variable={balance} />
-          <ContractInfo result={0.0} variable={apr} />
-          <ContractInfo result={0.0} variable={days} />
-          <ContractInfo result={0.0} variable={rewards} />
-        </div>
+        <ul className="contract_info">
+          <li>
+            <ContractInfo result={0.0} variable={balance} tokenName="Next" />
+          </li>
+          <li>
+            <ContractInfo result={0.0} variable={apr} />
+          </li>
+          <li>
+            <ContractInfo result={0.0} variable={days} />
+          </li>
+          <li>
+            <ContractInfo result={0.0} variable={rewards} tokenName="Next" />
+          </li>
+        </ul>
       </HeadContainer>
     </ContractWrapperStyled>
   );

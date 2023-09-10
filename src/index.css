@@ -9,6 +9,7 @@
 
   --font-title: 'Kanit', sans-serif;
   --font-body: 'Roboto Mono', monospace;
+  --font-tip: 'Inter', sans-serif;
 
   --font-size_title-web: 140px;
   --font-size_title-tab: 112px;
@@ -46,6 +47,21 @@
   font-style: normal;
   font-weight: 400;
   src: url('styles/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 500;
+  src: url('styles/fonts/Roboto_Mono/static/RobotoMono-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('styles/fonts/Inter/static/Inter-Regular.ttf') format('truetype');
   font-display: swap;
 }
 body {
