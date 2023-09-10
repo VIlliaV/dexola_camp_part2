@@ -1,18 +1,29 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import background_header from '../../images/background/technology_background.png';
+import { headerBackground } from '../../styles/styledConst';
+
+// import background_header from '../../images/background/technology_background.webp';
+// import background_header2x from '../../images/background/technology_background@2x.webp';
+// import background_header_mob from '../../images/background/technology_background_mob.webp';
+// import background_header_mob2x from '../../images/background/technology_background_mob@2x.webp';
+
+// export const background = `background-image: url(${background_header_mob});
+//   @media ${media.mobile + media.retina} {
+//     background-image: url(${background_header_mob2x});
+//   }
+//   @media ${media.desktop} {
+//     background-image: url(${background_header});
+//   }
+//   @media ${media.desktop + media.retina} {
+//     background-image: url(${background_header2x});
+//   }
+//   background-size: 100vw auto;
+//   background-repeat: no-repeat;
+//   background-position: top center;
+// `;
 
 export const HeaderContainer = styled.header`
-  background: url(${background_header});
-  background-size: auto 400px;
-  background-repeat: no-repeat;
-  background-position: top center;
-
-  /* @supports (background-image: url(background_header)) {
-    background-image: url(background_header);
-  } */
-
-  /* background-image: url(background_header); */
+  ${headerBackground}
 `;
 
 export const HeaderContainerNav = styled.div`
@@ -24,12 +35,9 @@ export const HeaderContainerNav = styled.div`
   align-items: center;
   width: 100vw;
   padding: 11px 40px;
-  /* background-color: var(--background); */
+
   z-index: 100;
-  background: url(${background_header});
-  background-size: auto 400px;
-  background-repeat: no-repeat;
-  background-position: top center;
+  ${headerBackground}
   @media ${media.tablet} {
     padding: 15px 40px;
   }

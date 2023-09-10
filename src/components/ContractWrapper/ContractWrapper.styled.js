@@ -13,4 +13,10 @@ export const ContractWrapperStyled = styled.div`
     justify-content: start;
     gap: 40px;
   }
+
+  & li {
+    /* display: flex;
+    align-items: baseline;
+    height: auto; */
+  }
 `;

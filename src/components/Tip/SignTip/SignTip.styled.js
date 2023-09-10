@@ -15,6 +15,9 @@ export const SignTipStyled = styled.div`
 `;
 
 export const SvgStyled = styled(tipSvg)`
+  margin-bottom: -6px;
+  margin-left: -4px;
   fill: transparent;
   stroke: var(--primary);
+  stroke-width: 1.5px;
 `;

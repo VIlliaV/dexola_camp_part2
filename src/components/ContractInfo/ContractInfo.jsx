@@ -9,15 +9,12 @@ const ContractInfo = ({ data = 0, variable = {}, tokenName = 'TEST' }) => {
 
   return (
     <ContractInfoStyled>
-      <div className="contract_data">
+      <div className="contract_data contract_item">
         <p className="contract_result">{result(variable, data)}</p>
         {(variable === balance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
       </div>
-
-      <div className="contract_variable">
-        <p className="text_variable">{variable.text}</p>
-        <SignTip tip={variable.tip} />
-      </div>
+      <SignTip tip={variable.tip} className="contract_item" />
+      <p className="text_variable contract_item">{variable.text}</p>
     </ContractInfoStyled>
   );
 };
