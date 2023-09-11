@@ -5,6 +5,7 @@ import Backdrop from '../../Backdrop/Backdrop';
 
 const SignTip = ({ variable = {}, className = '' }) => {
   const [isActive, setIsActive] = useState(false);
+
   const { tip, text } = variable;
   const handleMouseEnter = () => {
     setIsActive(true);
@@ -13,15 +14,20 @@ const SignTip = ({ variable = {}, className = '' }) => {
   const handleMouseLeave = () => {
     setIsActive(false);
   };
+  const handleClick = () => {
+    if (!isActive) setIsActive(true);
+  };
   const clearBackdrop = e => {
     if (e.target === e.currentTarget) {
       setIsActive(false);
     }
   };
+
   return (
     <SignTipStyled
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className={`${className}  ${isActive ? 'active' : ''}`}
     >
       <Backdrop className="backdrop" onClick={clearBackdrop} />

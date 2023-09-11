@@ -6,6 +6,8 @@ export const TextTipStyled = styled.div`
   position: absolute;
   padding: 8px 12px;
   background-color: var(--primary);
+  left: 0;
+  z-index: 10001;
 
   @media ${media.mobTab} {
     bottom: 0;
@@ -25,8 +27,7 @@ export const TextTipStyled = styled.div`
       background-color: rgba(60, 60, 67, 0.3);
     }
   }
-  left: 0;
-  z-index: 10001;
+
   @media ${media.tablet} {
     top: -5px;
     left: 50%;
