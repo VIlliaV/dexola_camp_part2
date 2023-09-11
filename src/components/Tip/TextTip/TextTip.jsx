@@ -1,11 +1,14 @@
-import { SvgStyled, TextTipStyled } from './TextTip.styled';
+import { SvgStyled, TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 
-const TextTip = ({ text = '' }) => {
+const TextTip = ({ tip = '', text = '' }) => {
   return (
-    <TextTipStyled className="text_tip">
-      <p>{text}</p>
-      <SvgStyled />
-    </TextTipStyled>
+    <>
+      <TextTipStyled className="text_tip">
+        <TipTitle>{text}</TipTitle>
+        <TipInfo>{tip}</TipInfo>
+      </TextTipStyled>
+      <SvgStyled className="tip_svg" />
+    </>
   );
 };
 

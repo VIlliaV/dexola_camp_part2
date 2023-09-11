@@ -7,11 +7,24 @@ export const SignTipStyled = styled.div`
   background-color: transparent;
   border: none;
 
-  & .text_tip {
+  & .text_tip,
+  & .backdrop,
+  & .tip_svg {
     display: none;
   }
-  &:hover .text_tip {
-    display: block;
+  &.active {
+    @media ${media.mobTab} {
+      position: static;
+    }
+    & .text_tip,
+    & .tip_svg {
+      display: block;
+    }
+    & .backdrop {
+      @media ${media.mobTab} {
+        display: block;
+      }
+    }
   }
 `;
 

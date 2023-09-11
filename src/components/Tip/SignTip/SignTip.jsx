@@ -1,11 +1,32 @@
+import { useState } from 'react';
 import Tip from '../TextTip/TextTip';
 import { SignTipStyled, SvgStyled } from './SignTip.styled';
+import Backdrop from '../../Backdrop/Backdrop';
 
-const SignTip = ({ tip = '', className = '' }) => {
+const SignTip = ({ variable = {}, className = '' }) => {
+  const [isActive, setIsActive] = useState(false);
+  const { tip, text } = variable;
+  const handleMouseEnter = () => {
+    setIsActive(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsActive(false);
+  };
+  const clearBackdrop = e => {
+    if (e.target === e.currentTarget) {
+      setIsActive(false);
+    }
+  };
   return (
-    <SignTipStyled className={className}>
+    <SignTipStyled
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`${className}  ${isActive ? 'active' : ''}`}
+    >
+      <Backdrop className="backdrop" onClick={clearBackdrop} />
       <SvgStyled />
-      <Tip text={tip} />
+      <Tip tip={tip} text={text} />
     </SignTipStyled>
   );
 };

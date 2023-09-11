@@ -13,7 +13,7 @@ const ContractInfo = ({ data = 0, variable = {}, tokenName = 'TEST' }) => {
         <p className="contract_result">{result(variable, data)}</p>
         {(variable === balance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
       </div>
-      {variable !== days ? <SignTip tip={variable.tip} className="contract_item" /> : <div></div>}
+      {variable !== days ? <SignTip variable={variable} className="contract_item" /> : <div></div>}
       <p className="text_variable contract_item">{variable.text}</p>
     </ContractInfoStyled>
   );
