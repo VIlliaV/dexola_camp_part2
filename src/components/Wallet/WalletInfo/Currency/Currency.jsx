@@ -10,7 +10,7 @@ const Currency = () => {
       <p>
         {value} {TYPE}
       </p>
-      <p>|</p>
+      <span>|</span>
       <WalletAddress />
     </CurrencyStyled>
   );

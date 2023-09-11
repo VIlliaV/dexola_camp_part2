@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '@/styles/media';
 
 export const ContractWrapperStyled = styled.div`
   padding: 94px 0 48px;
@@ -8,10 +9,21 @@ export const ContractWrapperStyled = styled.div`
     flex-direction: column;
     gap: 16px;
   }
+  & h1 {
+    @media ${media.mobTab} {
+      width: 75.73333vw;
+    }
+  }
   & .contract_info {
     display: flex;
     justify-content: start;
-    gap: 40px;
+    gap: 20px;
+    @media ${media.tablet} {
+      gap: 24px;
+    }
+    @media ${media.desktop} {
+      gap: 40px;
+    }
   }
 
   & li {

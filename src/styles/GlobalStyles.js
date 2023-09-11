@@ -19,24 +19,18 @@ export const GlobalStyles = createGlobalStyle`
     font-family: var(--font-title)
   }
   h1 {
-    /* color: #FFF; */
-
-font-size: 48px;
-
-
-
-  
+    font-size: 28px;
     font-weight: 500;
-    line-height: 1.4;
-    
-    letter-spacing: 0;
-
+    line-height: 1.205;
+    letter-spacing: normal;
     @media ${media.tablet} {
-     font-size: 48px;
+     font-size: 40px;
+     line-height: 1.4;
     }
 
     @media ${media.desktop} {
       font-size: 48px;
+      letter-spacing: normal;
     }
 
   }
