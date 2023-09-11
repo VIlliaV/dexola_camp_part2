@@ -18,6 +18,7 @@ export const ContractWrapperStyled = styled.div`
     display: flex;
     justify-content: start;
     gap: 20px;
+
     @media ${media.tablet} {
       gap: 24px;
     }
