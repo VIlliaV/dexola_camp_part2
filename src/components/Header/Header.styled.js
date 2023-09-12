@@ -14,6 +14,9 @@ export const HeaderContainerNav = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100vw;
+  @media ${media.mobTab} {
+    padding: 3px 24px 22px;
+  }
   padding: 11px 40px;
 
   z-index: 100;
@@ -23,7 +26,7 @@ export const HeaderContainerNav = styled.div`
   }
   & button {
     @media ${media.mobTab} {
-      padding: 10px 16px;
+      padding: 8px 24px;
     }
   }
 `;

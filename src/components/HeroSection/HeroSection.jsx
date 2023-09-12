@@ -1,13 +1,14 @@
 import { CONTRACT_INFO } from '../../constants/contractInfo';
 import ContractInfo from '../ContractInfo/ContractInfo';
-import HeadContainer from '../HeadContainer/HeadContainer';
+
+import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
 const HeroSection = () => {
   const { balance, apr, days, rewards } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>
-      <HeadContainer>
+      <SectionWrapper>
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
@@ -23,7 +24,7 @@ const HeroSection = () => {
             <ContractInfo result={0.0} variable={rewards} tokenName="Next" />
           </li>
         </ul>
-      </HeadContainer>
+      </SectionWrapper>
     </HeroSectionStyled>
   );
 };

@@ -2,10 +2,19 @@ import styled from 'styled-components';
 import { media } from '@/styles/media';
 import { headerBackground } from '../../styles/styledConst';
 
-export const HeroSectionStyled = styled.section`
-  padding: 94px 0 48px;
-  ${headerBackground}
+export const HeroSectionStyled = styled.div`
+  /* padding: 94px 0 48px; 65 102*/
 
+  & .section {
+    padding-top: 65px;
+    ${headerBackground}
+    @media ${media.tablet} {
+      padding-top: 102px;
+    }
+    @media ${media.desktop} {
+      padding-top: 94px;
+    }
+  }
   & .container {
     display: flex;
     flex-direction: column;

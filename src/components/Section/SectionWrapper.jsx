@@ -3,7 +3,7 @@ import { SectionStyled } from './SectionWrapper.styled';
 
 const SectionWrapper = ({ children }) => {
   return (
-    <SectionStyled>
+    <SectionStyled className="section">
       <HeadContainer>{children}</HeadContainer>
     </SectionStyled>
   );
