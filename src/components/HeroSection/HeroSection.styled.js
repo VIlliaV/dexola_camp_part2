@@ -6,6 +6,7 @@ export const HeroSectionStyled = styled.div`
   /* padding: 94px 0 48px; 65 102*/
 
   & .section {
+    position: static;
     padding-top: 65px;
     ${headerBackground}
     @media ${media.tablet} {

@@ -16,7 +16,6 @@ export const NavStyled = styled.nav`
 `;
 
 export const StyledNavLink = styled(NavLink)`
-  position: relative;
   display: flex;
   padding: 16px 0px;
   justify-content: center;
@@ -31,6 +30,7 @@ export const StyledNavLink = styled(NavLink)`
   }
 
   &.active {
+    position: relative;
     color: var(--primary);
     &::after {
       content: '';
