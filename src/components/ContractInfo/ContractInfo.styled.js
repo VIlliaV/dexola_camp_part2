@@ -34,11 +34,8 @@ export const ContractInfoStyled = styled.div`
   }
   & .contract_result {
     font-size: 18px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
     text-transform: uppercase;
-    letter-spacing: -0.36px;
     color: var(--primary);
     @media ${media.tablet} {
       font-size: 28px;
@@ -53,8 +50,6 @@ export const ContractInfoStyled = styled.div`
   & .contract_token_name {
     color: var(--primary);
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
     line-height: 1.66667;
     letter-spacing: normal;
     text-transform: uppercase;
@@ -70,10 +65,6 @@ export const ContractInfoStyled = styled.div`
   & .text_variable {
     color: var(--primary);
     font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.02em;
     @media ${media.tablet} {
       font-size: 16px;
     }

@@ -44,7 +44,6 @@ export const TipTitle = styled.p`
     color: rgba(0, 0, 0, 0.8);
     text-align: center;
     font-size: 16px;
-    font-style: normal;
     font-weight: 700;
     line-height: 1;
     margin-bottom: 16px;
@@ -55,8 +54,6 @@ export const TipInfo = styled.p`
   color: rgba(0, 0, 0, 0.8);
   font-family: var(--font-tip);
   font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 1.14286;
   text-align: start;
   letter-spacing: normal;

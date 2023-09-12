@@ -11,15 +11,15 @@
   --font-body: 'Roboto Mono', monospace;
   --font-tip: 'Inter', sans-serif;
 
-  --font-size_title-web: 140px;
-  --font-size_title-tab: 112px;
-  --font-size_title-mob: 48px;
+  --font-size_title-web: 24px;
+  --font-size_title-tab: 24px;
+  --font-size_title-mob: 18px;
 
-  --font-size_subtitle-web: 24px;
-  --font-size_subtitle-tab: 20px;
-  --font-size_subtitle-mob: 18px;
+  --font-size_subtitle-web: 14px;
+  --font-size_subtitle-tab: 14px;
+  --font-size_subtitle-mob: 12px;
 
-  --font-size_body-web: 18px;
+  --font-size_body-web: 16px;
   --font-size_body-tab: 16px;
   --font-size_body-mob: 14px;
 

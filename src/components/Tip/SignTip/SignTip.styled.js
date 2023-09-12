@@ -32,7 +32,6 @@ export const SvgStyled = styled(tipSvg)`
   width: 16.7px;
   height: 18.7px;
   margin-bottom: -6px;
-  /* margin-left: -4px; */
   fill: transparent;
   stroke-width: 0.965px;
   stroke: var(--secondary);

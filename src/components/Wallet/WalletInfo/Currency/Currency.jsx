@@ -7,9 +7,9 @@ const Currency = () => {
   return (
     <CurrencyStyled>
       <SvgStyled />
-      <p>
+      <h3>
         {value} {TYPE}
-      </p>
+      </h3>
       <span>|</span>
       <WalletAddress />
     </CurrencyStyled>

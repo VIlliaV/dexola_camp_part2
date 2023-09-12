@@ -8,25 +8,6 @@ export const visualHidden = `
   overflow: hidden;
   clip: rect(0 0 0 0);`;
 
-export const wallet = `
-   color: var(--primary);
-    font-family: var(--font-title);
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0.12px;
-    text-transform: uppercase;
-     @media ${media.tablet} {
-     font-size: 14px;
-    font-weight: 600;
-    line-height: 1.14286;
-    letter-spacing: normal;
-    }
-    
-
-`;
-
 import { media } from '@/styles/media';
 import background_header from '@/images/background/technology_background.webp';
 import background_header2x from '@/images/background/technology_background@2x.webp';

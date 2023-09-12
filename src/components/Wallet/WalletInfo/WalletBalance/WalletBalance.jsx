@@ -12,9 +12,9 @@ const WalletBalance = () => {
         <source srcSet={`${stru} 1x, ${stru2x} 2x`} type="image/webp" />
         <img src={`${struDef}`} alt={tokenName} />
       </picture>
-      <p>
+      <h3>
         {balance} {tokenName}
-      </p>
+      </h3>
     </WalletBalanceStyled>
   );
 };
