@@ -12,7 +12,8 @@ export const NavStyled = styled.nav`
 `;
 
 export const StyledNavLink = styled(NavLink)`
+  color: var(--secondary);
   &.active {
-    /* color: #fff; */
+    color: var(--primary);
   }
 `;

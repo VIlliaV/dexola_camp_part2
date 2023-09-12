@@ -1,6 +1,6 @@
 import Button from '../Buttons/Button';
 import Logo from '../Logo/Logo';
-import ContractWrapper from '../ContractWrapper/ContractWrapper';
+// import HeroSection from '../HeroSection/HeroSection';
 import { HeaderContainer, HeaderContainerNav } from './Header.styled';
 import { useState } from 'react';
 import Wallet from '../Wallet/Wallet';
@@ -23,7 +23,7 @@ const Header = () => {
           </Wallet>
         )}
       </HeaderContainerNav>
-      <ContractWrapper />
+      {/* <HeroSection /> */}
     </HeaderContainer>
   );
 };

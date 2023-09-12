@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
+import { headerBackground } from '../../styles/styledConst';
 
-export const ContractWrapperStyled = styled.div`
+export const HeroSectionStyled = styled.section`
   padding: 94px 0 48px;
+  ${headerBackground}
 
   & .container {
     display: flex;
