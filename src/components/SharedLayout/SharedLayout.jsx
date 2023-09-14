@@ -17,7 +17,7 @@ export const SharedLayout = () => {
       <Header />
       <main>
         <HeroSection />
-        <SectionWrapper>
+        <SectionWrapper className="pages_section">
           <Navigation />
           <Pages>
             <Suspense fallback={null}>

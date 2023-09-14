@@ -7,10 +7,18 @@ export const Container = styled.div`
   flex-direction: column;
 
   & main {
-    flex: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    & .pages_section {
+      height: 100%;
+      & .container {
+        height: 100%;
+      }
+    }
     /* margin-top: 49px; */
     @media ${media.tablet} {
-      /* margin-top: 59px; */
+      flex: 1;
     }
     @media ${media.desktop} {
       /* margin-top: 54px; */
@@ -20,7 +28,9 @@ export const Container = styled.div`
 
 export const Pages = styled.div`
   position: relative;
+  height: 100%;
   padding: 29px 0 56px;
+
   &::before {
     content: '';
     position: absolute;
