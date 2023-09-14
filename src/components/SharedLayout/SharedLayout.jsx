@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Container, Pages } from './SharedLayout.styled';
+import { Container, Ellipse, Pages } from './SharedLayout.styled';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -15,6 +15,7 @@ export const SharedLayout = () => {
   return (
     <Container>
       <Header />
+      <Ellipse></Ellipse>
       <main>
         <HeroSection />
         <SectionWrapper className="pages_section">

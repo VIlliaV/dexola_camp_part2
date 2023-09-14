@@ -6,11 +6,10 @@ export const Container = styled.div`
   padding: 0 ${padding.mobile}px;
 
   @media ${media.tablet} {
-    width: ${size.tablet}px;
     padding: 0 ${padding.tablet}px;
   }
   @media ${media.desktop} {
     width: ${size.desktop}px;
-    padding: 0 ${padding.desktop};
+    padding: 0 ${padding.desktop}px;
   }
 `;
