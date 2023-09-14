@@ -1,5 +1,8 @@
+import NoConnect from '../../components/NoConnect/NoConnect';
+
 const Stake = () => {
-  return <div>Stake</div>;
+  const noConnect = true;
+  return <div>{noConnect ? <NoConnect /> : <p>Stake</p>}</div>;
 };
 
 export default Stake;

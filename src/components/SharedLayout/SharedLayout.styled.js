@@ -20,6 +20,7 @@ export const Container = styled.div`
 
 export const Pages = styled.div`
   position: relative;
+  padding: 29px 0 56px;
   &::before {
     content: '';
     position: absolute;
@@ -34,6 +35,7 @@ export const Pages = styled.div`
 
   /* border-top: 1px solid var(--accent); */
   @media ${media.tablet} {
+    padding: 32px 24px;
     border: 1px solid var(--accent);
     &::before {
       display: none;
