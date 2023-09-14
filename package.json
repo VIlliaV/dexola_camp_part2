@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://VIlliaV.github.io/",
+  "homepage": "https://dexola-camp-part2.vercel.app/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
