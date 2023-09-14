@@ -3,8 +3,6 @@ import { media } from '@/styles/media';
 import { headerBackground } from '../../styles/styledConst';
 
 export const HeroSectionStyled = styled.div`
-  /* padding: 94px 0 48px; 65 102*/
-
   & .section {
     position: static;
     padding-top: 65px;

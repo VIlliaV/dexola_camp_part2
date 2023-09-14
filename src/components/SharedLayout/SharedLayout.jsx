@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Container } from './SharedLayout.styled';
+import { Container, Pages } from './SharedLayout.styled';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -19,9 +19,11 @@ export const SharedLayout = () => {
         <HeroSection />
         <SectionWrapper>
           <Navigation />
-          <Suspense fallback={null}>
-            <Outlet />
-          </Suspense>
+          <Pages>
+            <Suspense fallback={null}>
+              <Outlet />
+            </Suspense>
+          </Pages>
         </SectionWrapper>
       </main>
       <Footer />

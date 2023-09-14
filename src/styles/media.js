@@ -4,6 +4,12 @@ export const size = {
   desktop: 1440,
 };
 
+export const padding = {
+  mobile: 24,
+  tablet: 48,
+  desktop: 120,
+};
+
 export const media = {
   mobile: `screen and (min-width: ${size.mobile}px)`,
   tablet: `screen and (min-width: ${size.tablet}px)`,
