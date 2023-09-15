@@ -3,19 +3,19 @@ import { media } from '@/styles/media';
 import { ReactComponent as no_connect } from '@/images/svg/no_connect.svg';
 
 export const NoConnectStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: 1fr auto;
   align-items: center;
   height: 100%;
-  gap: 32px;
+
   @media ${media.tablet} {
-    /* padding: 30px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 32px;
   }
 
   & .no_connect_info {
-    /* padding-top: 149px; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,6 +33,13 @@ export const NoConnectStyled = styled.div`
     }
     @media ${media.tablet} {
       padding-top: 0;
+    }
+  }
+
+  & button {
+    @media ${media.mobTab} {
+      margin-top: 16px;
+      margin-bottom: 56px;
     }
   }
 `;
