@@ -15,7 +15,7 @@ export const SharedLayout = () => {
   return (
     <Container>
       <Header />
-      {/* <Ellipse></Ellipse> */}
+      <Ellipse />
       <main>
         <HeroSection />
         <SectionWrapper className="pages_section">

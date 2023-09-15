@@ -1,7 +1,7 @@
 :root {
   --primary: rgba(255, 255, 255, 1);
   --secondary: rgb(179, 179, 179);
-  --background: rgba(6, 4, 18, 1);
+  --background: rgb(8, 8, 8);
   --accent: rgb(32, 79, 254);
   --warning: rgba(235, 55, 149, 1);
   --button: rgba(39, 42, 46, 1);

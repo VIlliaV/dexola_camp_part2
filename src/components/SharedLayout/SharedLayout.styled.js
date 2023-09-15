@@ -5,7 +5,7 @@ export const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 
   @media ${media.mobTab} {
@@ -35,10 +35,6 @@ export const Container = styled.div`
     @media ${media.tablet} {
       flex: 1;
     }
-    @media ${media.desktop} {
-      /* height: 100%; */
-      /* overflow: hidden; */
-    }
   }
 `;
 
@@ -58,7 +54,6 @@ export const Pages = styled.div`
     transform: translate(-${padding.mobile}px, 0);
   }
 
-  /* border-top: 1px solid var(--accent); */
   @media ${media.tablet} {
     padding: 32px 24px;
     max-height: 341px;
@@ -72,16 +67,16 @@ export const Pages = styled.div`
 export const Ellipse = styled.div`
   display: none;
   @media ${media.desktop} {
-    position: absolute;
-    top: 57%;
-    left: 50%;
-    transform: translate(-50%, 0);
     display: block;
-    width: 2193px;
-    height: 1330px;
-    /* flex-shrink: 0; */
-    border-radius: 2193px;
+    position: absolute;
+    top: 57vh;
+    width: 100vw;
+    bottom: 0;
     z-index: -1;
+    overflow: hidden;
     background: radial-gradient(42.93% 42.93% at 50% 50%, #2f4bc9 0%, #080808 100%);
+    background-size: 2193px 1330px;
+    background-repeat: no-repeat;
+    background-position: center top;
   }
 `;

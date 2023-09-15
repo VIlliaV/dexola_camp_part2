@@ -11,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
       font-size: var(--font-size_body-tab);
     }
     @media ${media.desktop} {
+
       font-size: var(--font-size_body-web);
     }
 
