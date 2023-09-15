@@ -10,7 +10,8 @@ export const Container = styled.div`
   overflow: hidden;
 
   & main {
-    height: 100svh;
+    max-height: 100svh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     & .pages_section {
@@ -24,6 +25,7 @@ export const Container = styled.div`
       flex: 1;
     }
     @media ${media.desktop} {
+      height: 100%;
       /* margin-top: 54px; */
     }
   }
@@ -66,7 +68,7 @@ export const Ellipse = styled.div`
     display: block;
     width: 2193px;
     height: 1330px;
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
     border-radius: 2193px;
     z-index: -1;
     background: radial-gradient(42.93% 42.93% at 50% 50%, #2f4bc9 0%, #080808 100%);
