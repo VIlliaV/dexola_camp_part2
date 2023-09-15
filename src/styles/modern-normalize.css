@@ -30,6 +30,7 @@ html {
   /* 3 */
   tab-size: 4;
   /* 3 */
+  height: --webkit-fill-available;
 }
 
 /*

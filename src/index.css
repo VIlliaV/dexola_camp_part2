@@ -78,7 +78,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--primary);
   background-color: var(--background);
-  /* overflow: hidden; */
+  min-height: 100vh;
+  min-height: --webkit-fill-available;
 }
 
 a,
