@@ -10,8 +10,8 @@ export const Container = styled.div`
   overflow: hidden;
 
   & main {
-    min-height: 100svh;
-    height: 100%;
+    min-height: 100dvh;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     & .pages_section {
