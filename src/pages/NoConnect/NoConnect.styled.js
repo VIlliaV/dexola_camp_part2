@@ -14,7 +14,7 @@ export const NoConnectStyled = styled.div`
   }
 
   & .no_connect_info {
-    padding-top: 149px;
+    /* padding-top: 149px; */
     display: flex;
     flex-direction: column;
     align-items: center;
