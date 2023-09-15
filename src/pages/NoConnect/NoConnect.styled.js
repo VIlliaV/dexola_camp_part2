@@ -5,9 +5,10 @@ import { ReactComponent as no_connect } from '@/images/svg/no_connect.svg';
 export const NoConnectStyled = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 100%;
+  gap: 32px;
   @media ${media.tablet} {
     padding: 30px;
     gap: 32px;
