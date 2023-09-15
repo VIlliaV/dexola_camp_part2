@@ -10,7 +10,7 @@ export const Container = styled.div`
   overflow: hidden;
 
   & main {
-    max-height: 100svh;
+    min-height: 100svh;
     height: 100vh;
     display: flex;
     flex-direction: column;

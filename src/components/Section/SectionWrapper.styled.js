@@ -3,7 +3,7 @@ import { media } from '@/styles/media';
 
 export const SectionStyled = styled.section`
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 
   padding: 16px 0 24px;
 
