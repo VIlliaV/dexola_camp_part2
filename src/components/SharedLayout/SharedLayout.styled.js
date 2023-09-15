@@ -11,7 +11,7 @@ export const Container = styled.div`
 
   & main {
     min-height: 100svh;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     & .pages_section {
