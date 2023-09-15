@@ -10,7 +10,7 @@ export const NoConnectStyled = styled.div`
   height: 100%;
   gap: 32px;
   @media ${media.tablet} {
-    padding: 30px;
+    /* padding: 30px; */
     gap: 32px;
   }
 

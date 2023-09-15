@@ -3,29 +3,45 @@ import { media, padding } from '@/styles/media';
 
 export const Container = styled.div`
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-
-  & main {
+  /* overflow: hidden; */
+  @media ${media.mobTab} {
     height: 100dvh;
+  }
+  @media ${media.desktop} {
+    /* overflow: hidden; */
+  }
+  & main {
     /* height: 100%; */
+    flex-grow: 1;
+
     display: flex;
     flex-direction: column;
     & .pages_section {
       height: 100%;
       & .container {
         height: 100%;
+        display: flex;
+        flex-direction: column;
       }
     }
     /* margin-top: 49px; */
+    @media ${media.mobTab} {
+      min-height: 100dvh;
+      overflow: auto;
+    }
     @media ${media.tablet} {
       flex: 1;
+      /* overflow: auto; */
+      min-height: 100dvh;
+      /* height: 100%; */
     }
     @media ${media.desktop} {
-      height: 100%;
+      /* height: 100%; */
+      /* overflow: hidden; */
       /* margin-top: 54px; */
     }
   }
@@ -34,7 +50,9 @@ export const Container = styled.div`
 export const Pages = styled.div`
   position: relative;
   height: 100%;
-  padding: 29px 0 56px;
+  /* max-height: 150px; */
+  /* padding: 29px 0 56px; */
+  flex-grow: 1;
 
   &::before {
     content: '';
@@ -50,7 +68,8 @@ export const Pages = styled.div`
 
   /* border-top: 1px solid var(--accent); */
   @media ${media.tablet} {
-    padding: 32px 24px;
+    /* padding: 32px 24px; */
+    max-height: 341px;
     border: 1px solid var(--accent);
     &::before {
       display: none;
