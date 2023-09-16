@@ -39,7 +39,7 @@ export const NoConnectStyled = styled.div`
   & button {
     @media ${media.mobTab} {
       margin-top: 16px;
-      margin-bottom: 56px;
+      /* margin-bottom: 56px; */
     }
   }
 `;

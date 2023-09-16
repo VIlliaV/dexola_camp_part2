@@ -41,6 +41,7 @@ export const Container = styled.div`
 export const Pages = styled.div`
   position: relative;
   height: 100%;
+  padding: 29px 0px 56px;
 
   &::before {
     content: '';
