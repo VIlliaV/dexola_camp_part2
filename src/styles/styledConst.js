@@ -29,7 +29,7 @@ export const headerBackground = `background-image: url(${background_header_mob})
   background-position: top center;
 `;
 
-export const pagesSyled = `
+export const pagesContainer = `
 
 `;
 

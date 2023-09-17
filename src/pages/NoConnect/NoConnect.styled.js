@@ -1,19 +1,10 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
 import { ReactComponent as no_connect } from '@/images/svg/no_connect.svg';
+import { PagesContainer } from '../Pages.styled';
 
-export const NoConnectStyled = styled.div`
-  display: grid;
-  grid-template-rows: 1fr auto;
+export const NoConnectStyled = styled(PagesContainer)`
   align-items: center;
-  height: 100%;
-
-  @media ${media.tablet} {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 32px;
-  }
 
   & .no_connect_info {
     display: flex;
@@ -35,12 +26,8 @@ export const NoConnectStyled = styled.div`
       padding-top: 0;
     }
   }
-
   & button {
-    @media ${media.mobTab} {
-      margin-top: 16px;
-      /* margin-bottom: 56px; */
-    }
+    align-self: center;
   }
 `;
 

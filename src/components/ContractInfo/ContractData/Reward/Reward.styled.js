@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '@/styles/media';
 
 export const RewardStyled = styled.p`
   display: inline-flex;
@@ -14,6 +15,9 @@ export const RewardValue = styled.span`
   line-height: 1.4;
   letter-spacing: normal;
   color: var(--primary);
+  @media ${media.tablet} {
+    font-size: 20px;
+  }
 `;
 
 export const RewardUnit = styled.span`
@@ -21,4 +25,8 @@ export const RewardUnit = styled.span`
   letter-spacing: normal;
   text-transform: uppercase;
   color: var(--primary);
+
+  @media ${media.tablet} {
+    font-size: 16px;
+  }
 `;

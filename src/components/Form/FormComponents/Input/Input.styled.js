@@ -17,8 +17,6 @@ export const InputStyled = styled.input`
     border-color: ${props => (props.$errorMessage ? 'var(--warning)' : 'var(--accent)')};
   }
   @media ${media.desktop} {
-    padding: 8px 0px 8px 30px;
-    letter-spacing: 0.02em;
-    line-height: 1.333333;
+    padding: 6px 0px;
   }
 `;

@@ -5,7 +5,6 @@ import { InputStyled } from './Input.styled';
 const Input = ({ type, handleErrorMessage, errorMessage }) => {
   const [inputValue, setInputValue] = useState('');
   const { nameInput, typeInput, placeholderInput, requiredInput } = inputInfo(type);
-  console.log('🚀 ~ nameInput:', nameInput);
 
   const handleChange = event => {
     const value = event.target.value;

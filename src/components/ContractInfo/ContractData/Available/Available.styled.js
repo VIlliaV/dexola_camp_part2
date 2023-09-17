@@ -14,7 +14,6 @@ export const AvailableData = styled.span`
 
 export const AvailableValue = styled.span`
   font-weight: 700;
-
   color: var(--primary);
 `;
 

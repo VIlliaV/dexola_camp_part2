@@ -18,6 +18,12 @@ export const INPUT_INFO = {
     placeholderInput: 'Enter stake amount',
     requiredInput: true,
   },
+  withdraw: {
+    nameInput: 'withdraw',
+    typeInput: 'text',
+    placeholderInput: 'Enter withdraw amount',
+    requiredInput: true,
+  },
 };
 
 export const PAGES_NAME = {

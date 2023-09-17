@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media, padding } from '@/styles/media';
+import { media } from '@/styles/media';
 
 export const Container = styled.div`
   position: relative;
@@ -34,33 +34,6 @@ export const Container = styled.div`
     }
     @media ${media.tablet} {
       flex: 1;
-    }
-  }
-`;
-
-export const Pages = styled.div`
-  position: relative;
-  height: 100%;
-  padding: 29px 0px 56px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 1px;
-    background-color: var(--accent);
-    transform: translate(-${padding.mobile}px, 0);
-  }
-
-  @media ${media.tablet} {
-    padding: 32px 24px;
-    max-height: 100%;
-    border: 1px solid var(--accent);
-    &::before {
-      display: none;
     }
   }
 `;
