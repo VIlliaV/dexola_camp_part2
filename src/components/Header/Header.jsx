@@ -9,14 +9,14 @@ import { useGlobalContext } from '../../Context/Context';
 
 const Header = () => {
   // const [connect, setConnect] = useState(false);
-  const { isConnected, connectMask } = useGlobalContext();
+  const { isConnected, connectWallet } = useGlobalContext();
 
   return (
     <HeaderContainer>
       <HeaderContainerNav>
         <Logo />
         {!isConnected ? (
-          <Button onClick={connectMask}>Connect Wallet</Button>
+          <Button onClick={connectWallet}>Connect Wallet</Button>
         ) : (
           <Wallet>
             <Currency />
