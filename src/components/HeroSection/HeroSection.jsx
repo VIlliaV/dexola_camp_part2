@@ -1,4 +1,4 @@
-import { CONTRACT_INFO } from '../../constants/contractInfo';
+import { CONTRACT_INFO } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';

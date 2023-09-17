@@ -13,7 +13,6 @@ const NoConnect = () => {
           to connect you wallet first
         </p>
       </div>
-
       <Button onClick={connectMask}>Connect Wallet</Button>
     </NoConnectStyled>
   );

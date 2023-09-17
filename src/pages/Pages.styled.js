@@ -15,3 +15,5 @@ export const PagesHead = styled.div`
     background-color: var(--secondary);
   }
 `;
+
+export const PagesContainer = styled.div``;

@@ -1,13 +1,3 @@
-export const visualHidden = `
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);`;
-
 import { media } from '@/styles/media';
 import background_header from '@/images/background/technology_background.webp';
 import background_header2x from '@/images/background/technology_background@2x.webp';
@@ -38,3 +28,17 @@ export const headerBackground = `background-image: url(${background_header_mob})
   background-repeat: no-repeat;
   background-position: top center;
 `;
+
+export const pagesSyled = `
+
+`;
+
+export const visualHidden = `
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);`;

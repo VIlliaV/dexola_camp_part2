@@ -57,7 +57,7 @@ export const Pages = styled.div`
 
   @media ${media.tablet} {
     padding: 32px 24px;
-    max-height: 341px;
+    max-height: 100%;
     border: 1px solid var(--accent);
     &::before {
       display: none;

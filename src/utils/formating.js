@@ -1,4 +1,5 @@
-import { CONTRACT_INFO } from '../constants/contractInfo';
+import { CONTRACT_INFO } from '../constants/constants';
+
 const { balance, apr, day, rewards } = CONTRACT_INFO;
 
 export const formatDecimalPlaces = (data, quantity = 2) => {

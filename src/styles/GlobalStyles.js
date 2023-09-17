@@ -74,10 +74,15 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   input {
-    font-style: normal;
     font-weight: 500;
     line-height: 1.71429; 
     letter-spacing: 0.02em;
+    color: var(--primary);
+       &::placeholder {
+        font-weight: 400;
+        color: var(--secondary);
+       }
+
     @media ${media.tablet} {
     line-height: 1.5; 
     }

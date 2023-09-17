@@ -4,6 +4,8 @@ export const RewardStyled = styled.p`
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
+  white-space: nowrap;
+  flex: 0;
 `;
 
 export const RewardValue = styled.span`

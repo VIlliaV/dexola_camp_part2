@@ -1,4 +1,4 @@
-import { CONTRACT_INFO } from '../../constants/contractInfo';
+import { CONTRACT_INFO } from '../../constants/constants';
 import { ContractInfoStyled } from './ContractInfo.styled';
 
 import SignTip from '../Tip/SignTip/SignTip';
