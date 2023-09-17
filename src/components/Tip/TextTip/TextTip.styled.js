@@ -9,7 +9,7 @@ export const TextTipStyled = styled.div`
   left: 0;
   z-index: 10001;
 
-  @media ${media.mobTab} {
+  @media ${media.mobTab}, ${media.tabDesk} {
     bottom: 0;
     width: 100vw;
     height: 275px;
@@ -28,7 +28,7 @@ export const TextTipStyled = styled.div`
     }
   }
 
-  @media ${media.tablet} {
+  @media ${media.desktop} {
     top: -5px;
     left: 50%;
     transform: translate(-50%, -100%);
@@ -39,7 +39,7 @@ export const TextTipStyled = styled.div`
 
 export const TipTitle = styled.p`
   display: none;
-  @media ${media.mobTab} {
+  @media ${media.mobTab}, ${media.tabDesk} {
     display: block;
     color: rgba(0, 0, 0, 0.8);
     text-align: center;

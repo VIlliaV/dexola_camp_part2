@@ -16,16 +16,16 @@ export const Container = styled.div`
     /* overflow: hidden; */
   }
   & main {
-    /* height: 100%; */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     & .pages_section {
-      height: 100%;
-      & .container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+      /* height: 100%; */
+      @media ${media.tablet} {
+        padding-bottom: 16px;
+      }
+      @media ${media.desktop} {
+        padding-bottom: 0px;
       }
     }
 

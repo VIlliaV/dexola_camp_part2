@@ -13,7 +13,7 @@ export const SignTipStyled = styled.div`
     display: none;
   }
   &.active {
-    @media ${media.mobTab} {
+    @media ${media.mobTab}, ${media.tabDesk} {
       position: static;
     }
     & .text_tip,
@@ -21,7 +21,7 @@ export const SignTipStyled = styled.div`
       display: block;
     }
     & .backdrop {
-      @media ${media.mobTab} {
+      @media ${media.mobTab}, ${media.tabDesk} {
         display: block;
       }
     }

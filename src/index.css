@@ -4,8 +4,9 @@
   --background: rgb(8, 8, 8);
   --accent: rgb(32, 79, 254);
   --warning: rgba(235, 55, 149, 1);
-  --button: rgba(39, 42, 46, 1);
+  --button: rgb(40, 43, 47);
   --button_hover: rgba(39, 42, 46, 0.9);
+  --additionally: rgba(47, 47, 47, 1);
 
   --font-title: 'Kanit', sans-serif;
   --font-body: 'Roboto Mono', monospace;

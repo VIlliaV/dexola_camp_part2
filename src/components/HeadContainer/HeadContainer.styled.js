@@ -2,7 +2,10 @@ import styled from 'styled-components';
 import { media, size, padding } from '@/styles/media';
 
 export const Container = styled.div`
-  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 0 ${padding.mobile}px;
 
   @media ${media.tablet} {

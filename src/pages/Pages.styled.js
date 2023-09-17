@@ -25,7 +25,7 @@ export const PagesContainer = styled.div`
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 
     gap: 32px;
     min-height: 341px;
@@ -56,6 +56,6 @@ export const PagesHead = styled.div`
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: var(--secondary);
+    background-color: var(--additionally);
   }
 `;

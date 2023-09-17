@@ -15,8 +15,6 @@ export const HeroSectionStyled = styled.div`
     }
   }
   & .container {
-    display: flex;
-    flex-direction: column;
     gap: 16px;
   }
   & h1 {

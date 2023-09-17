@@ -3,7 +3,10 @@ import { media } from '@/styles/media';
 
 export const SectionStyled = styled.section`
   position: relative;
-  /* overflow: hidden; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   padding: 16px 0 24px;
 

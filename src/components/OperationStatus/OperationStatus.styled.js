@@ -5,6 +5,7 @@ import { ReactComponent as operationError } from '@/images/svg/operation_error.s
 import { ReactComponent as operationSuccess } from '@/images/svg/operation_success.svg';
 
 export const OperationStatusStyled = styled.div`
+  flex: 1;
   justify-self: center;
   display: ${props => (props.$media === 'tablet' ? 'none' : 'flex')};
   align-items: center;
@@ -13,6 +14,10 @@ export const OperationStatusStyled = styled.div`
   padding: 8px;
   @media ${media.tablet} {
     display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')};
+    align-self: end;
+  }
+  @media ${media.tabDesk} {
+    align-items: end;
   }
 `;
 
@@ -39,8 +44,8 @@ export const OperationInfo = styled.p`
   /* display: inline-flex;
   align-items: baseline; */
   /* max-width: 36vh; */
-
   /* gap: 8px; */
+
   line-height: 1.71429;
   letter-spacing: normal;
   color: var(--primary);

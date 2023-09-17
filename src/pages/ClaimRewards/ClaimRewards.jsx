@@ -8,12 +8,12 @@ const ClaimRewards = () => {
     <PagesContainer>
       <div>
         <PagesHead>
-          <h2>{PAGES_NAME.withdraw}</h2>
+          <h2>{PAGES_NAME.rewards}</h2>
         </PagesHead>
         <Available />
       </div>
-      <Button typeButton="submit" form={PAGES_NAME.withdraw}>
-        {PAGES_NAME.withdraw}
+      <Button typeButton="submit" form={PAGES_NAME.rewards}>
+        {PAGES_NAME.rewards}
       </Button>
     </PagesContainer>
   );

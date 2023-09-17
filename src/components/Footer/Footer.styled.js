@@ -5,8 +5,7 @@ export const FooterContainer = styled.footer`
   border-top: 1px solid var(--accent);
   flex-grow: 0;
   & .container {
-    display: flex;
-
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-top: 8px;
