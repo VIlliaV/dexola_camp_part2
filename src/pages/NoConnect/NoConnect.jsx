@@ -1,16 +1,9 @@
-// import { useGlobalContext } from '../../Context/Context';
 import Button from '../../components/Buttons/Button';
 import { NoConnectStyled, SvgStyled } from './NoConnect.styled';
-import { useConnect } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 const NoConnect = () => {
-  // const { connectWallet } = useGlobalContext();
-  const {
-    connect,
-    connector,
-    // , error, isLoading, pendingConnector
-  } = useConnect();
-  console.log('🚀 ~ connector:', connector);
+  const { open } = useWeb3Modal();
   return (
     <NoConnectStyled>
       <div className="no_connect_info">
@@ -20,7 +13,7 @@ const NoConnect = () => {
           to connect you wallet first
         </p>
       </div>
-      <Button onClick={() => connect()}>Connect Wallet</Button>
+      <Button onClick={() => open()}>Connect Wallet</Button>
     </NoConnectStyled>
   );
 };

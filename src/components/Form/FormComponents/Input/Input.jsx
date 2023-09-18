@@ -13,11 +13,7 @@ const Input = ({ type, handleErrorMessage, errorMessage }) => {
     handleErrorMessage('');
   };
 
-  const handleBlur = event => {
-    //   setUserData(typeInput, inputValue);
-    const value = event.target.value;
-    console.log('🚀 ~ valueInput:', value);
-
+  const handleBlur = () => {
     if (!inputValue.trim()) {
       handleErrorMessage('Please complete this field');
       return;

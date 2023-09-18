@@ -1,39 +1,14 @@
-// import { createContext, useContext, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import { WagmiConfig, createConfig, mainnet, configureChains } from 'wagmi';
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
+import { WagmiConfig } from 'wagmi';
+import { arbitrum, mainnet } from 'wagmi/chains';
 
-import { publicProvider } from '@wagmi/core/providers/public';
-// import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask';
-import { MetaMaskSDK } from '@metamask/sdk';
-// import { connect } from '@wagmi/core';
+const { VITE_PROJECT_ID } = import.meta.env;
+const projectId = VITE_PROJECT_ID;
+const chains = [mainnet, arbitrum];
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, appName: 'Web3Modal' });
 
-// const GlobalContext = createContext();
-const { chains, publicClient, webSocketPublicClient } = configureChains([mainnet], [publicProvider()]);
-const connector = new MetaMaskSDK();
-console.log('🚀 ~ connector:', connector);
-
-const config = createConfig({
-  chains,
-  publicClient,
-  webSocketPublicClient,
-  // connector,
-});
-
-// eslint-disable-next-line react-refresh/only-export-components
-// export const useGlobalContext = () => useContext(GlobalContext);
+createWeb3Modal({ wagmiConfig, projectId, chains });
 
 export const Wagmi = ({ children }) => {
-  // const [isConnected, setIsConnected] = useState(false);
-  // const navigate = useNavigate();
-
-  // const connectWallet = async () => {
-  //   await connect({
-  //     connector: connector,
-  //   });
-
-  // setIsConnected(true);
-  // navigate('/');
-  // };
-
-  return <WagmiConfig config={config}>{children}</WagmiConfig>;
+  return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
 };

@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import { lazy } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { lazy, useEffect } from 'react';
 
 import { SharedLayout } from './components/SharedLayout/SharedLayout.jsx';
 import { Toaster } from 'react-hot-toast';
@@ -7,13 +7,20 @@ import { Toaster } from 'react-hot-toast';
 import { GlobalStyles } from './styles/GlobalStyles.js';
 import NoConnect from './pages/NoConnect/NoConnect.jsx';
 import { PrivateRoute } from './PrivateRoute.jsx';
-
+import { useAccount } from 'wagmi';
 const Stake = lazy(() => import('./pages/Stake/Stake.jsx'));
 const Withdraw = lazy(() => import('./pages/Withdraw/Withdraw.jsx'));
 const ClaimRewards = lazy(() => import('./pages/ClaimRewards/ClaimRewards.jsx'));
 const Page404 = lazy(() => import('./pages/404Page/404Page.jsx'));
 
 function App() {
+  const { isConnected } = useAccount();
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected]);
+
   return (
     <>
       <Toaster

@@ -8,7 +8,6 @@ import {
 } from './OperationStatus.styled';
 
 const OperationStatus = ({ media }) => {
-  console.log('🚀 ~ media:', media);
   const status = 'success';
   const value = 99.9;
   const unit = 'TEST';
