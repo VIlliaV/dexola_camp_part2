@@ -5,13 +5,13 @@ import SignTip from '../Tip/SignTip/SignTip';
 import { result } from '../../utils/formating';
 
 const ContractInfo = ({ data = 0, variable = {}, tokenName = 'TEST' }) => {
-  const { balance, rewards, days } = CONTRACT_INFO;
+  const { stakedBalance, rewards, days } = CONTRACT_INFO;
 
   return (
     <ContractInfoStyled>
       <div className="contract_data contract_item">
         <p className="contract_result">{result(variable, data)}</p>
-        {(variable === balance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
+        {(variable === stakedBalance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
       </div>
       {variable !== days ? <SignTip variable={variable} className="contract_item" /> : <div></div>}
       <p className="text_variable contract_item">{variable.text}</p>

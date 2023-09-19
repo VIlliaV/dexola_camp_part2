@@ -3,50 +3,85 @@ import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
-import { erc20ABI } from 'wagmi';
 
+import abiContact from '../../dataBase/example.json';
+// import { formatEther, parseEther } from 'viem';
 import { useAccount, useContractReads } from 'wagmi';
 
 const StarRunnerStakingContract = {
   address: StarRunnerStakingAddress,
-  abi: erc20ABI,
+  abi: abiContact,
 };
 
 const HeroSection = () => {
   const { address } = useAccount();
-  const { data, error } = useContractReads({
+
+  const { data } = useContractReads({
     contracts: [
       {
         ...StarRunnerStakingContract,
         functionName: 'balanceOf',
         args: [address],
+        chainId: 11155111,
       },
       {
         ...StarRunnerStakingContract,
         functionName: 'getRewardForDuration',
-        // args: ['90948769184027775744000'],
+        chainId: 11155111,
+      },
+      {
+        ...StarRunnerStakingContract,
+        functionName: 'totalSupply',
+        chainId: 11155111,
+      },
+      {
+        ...StarRunnerStakingContract,
+        functionName: 'periodFinish',
+        chainId: 11155111,
+      },
+      {
+        ...StarRunnerStakingContract,
+        functionName: 'earned',
+        args: [address],
+        chainId: 11155111,
       },
     ],
   });
-  console.log('🚀 ~ data:', data, error);
+  console.log('🚀 ~ data:', data);
 
-  const { balance, apr, days, rewards } = CONTRACT_INFO;
+  const [
+    { result: stakedBalanceResultBig = BigInt('0') } = {},
+    { result: rewardForDuration = BigInt('0') } = {},
+    { result: totalAmountUsers = BigInt('1') } = {},
+    { result: periodFinish = undefined } = {},
+    { result: earned = BigInt('0') } = {},
+  ] = data || [];
+
+  const stakedBalanceResult = Number(stakedBalanceResultBig);
+
+  const aprResult = (Number(rewardForDuration) * 100) / Number(totalAmountUsers);
+
+  const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
+
+  const earnedResult = Number(earned);
+
+  const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>
       <SectionWrapper>
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
-            <ContractInfo result={0.0} variable={balance} tokenName="Next" />
+            <ContractInfo data={+stakedBalanceResult} variable={stakedBalance} tokenName="STRU" />
           </li>
           <li>
-            <ContractInfo result={0.0} variable={apr} />
+            <ContractInfo data={aprResult} variable={apr} />
           </li>
           <li>
-            <ContractInfo result={0.0} variable={days} />
+            <ContractInfo data={daysResult} variable={days} />
           </li>
           <li>
-            <ContractInfo result={0.0} variable={rewards} tokenName="Next" />
+            <ContractInfo data={earnedResult} variable={rewards} tokenName="STRU" />
           </li>
         </ul>
       </SectionWrapper>
