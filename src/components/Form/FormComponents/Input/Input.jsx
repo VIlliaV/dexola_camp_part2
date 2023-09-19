@@ -38,6 +38,7 @@ const Input = ({ type, handleErrorMessage, errorMessage }) => {
       onChange={handleChange}
       onBlur={handleBlur}
       $errorMessage={errorMessage}
+      aria-label={nameInput}
       // onFocus={handleFocus}
     />
   );

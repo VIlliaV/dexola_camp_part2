@@ -1,10 +1,35 @@
-import { CONTRACT_INFO } from '../../constants/constants';
+import { CONTRACT_INFO, StarRunnerStakingAddress } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
+import { erc20ABI } from 'wagmi';
+
+import { useAccount, useContractReads } from 'wagmi';
+
+const StarRunnerStakingContract = {
+  address: StarRunnerStakingAddress,
+  abi: erc20ABI,
+};
 
 const HeroSection = () => {
+  const { address } = useAccount();
+  const { data, error } = useContractReads({
+    contracts: [
+      {
+        ...StarRunnerStakingContract,
+        functionName: 'balanceOf',
+        args: [address],
+      },
+      {
+        ...StarRunnerStakingContract,
+        functionName: 'getRewardForDuration',
+        // args: ['90948769184027775744000'],
+      },
+    ],
+  });
+  console.log('🚀 ~ data:', data, error);
+
   const { balance, apr, days, rewards } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>

@@ -5,7 +5,7 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import { PAGES_NAME } from '../../constants/constants';
+import { PAGES_NAME, StarRunnerTokenAddress } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useBalance } from 'wagmi';
 import { useAccount } from 'wagmi';
@@ -15,7 +15,7 @@ const Stake = () => {
   const { address } = useAccount();
   const { data } = useBalance({
     address,
-    token: '0x59Ec26901B19fDE7a96f6f7f328f12d8f682CB83',
+    token: StarRunnerTokenAddress,
   });
 
   const available = formatDecimalPlaces(+data?.formatted, 0);
