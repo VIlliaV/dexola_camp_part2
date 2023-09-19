@@ -7,8 +7,18 @@ import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
 import { PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
+import { useBalance } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { formatDecimalPlaces } from '@/utils/formating';
 
 const Stake = () => {
+  const { address } = useAccount();
+  const { data } = useBalance({
+    address,
+    token: '0x59Ec26901B19fDE7a96f6f7f328f12d8f682CB83',
+  });
+
+  const available = formatDecimalPlaces(+data?.formatted, 0);
   const handleSubmit = event => {
     event.preventDefault();
     // const { error } = validateData(userData);
@@ -20,6 +30,7 @@ const Stake = () => {
     //   setUserData({});
     // }
   };
+
   return (
     <PagesContainer>
       <div>
@@ -29,7 +40,7 @@ const Stake = () => {
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
           <Label type={PAGES_NAME.stake}></Label>
-          <Available />
+          <Available available={available} tokenName="STRU" />
         </Form>
       </div>
       <OperationStatus media="mobile" />

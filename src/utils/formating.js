@@ -25,3 +25,7 @@ export const result = (type, data) => {
     return data;
   }
 };
+
+export function formatAddress(address) {
+  return `${address.substring(0, 16)}...`;
+}

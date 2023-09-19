@@ -1,14 +1,24 @@
 import WalletAddress from '../WalletAddress/WalletAddress';
 import { CurrencyStyled, SvgStyled } from './Currency.styled';
+import { useWeb3Modal } from '@web3modal/wagmi/react';
+import { useBalance } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { formatDecimalPlaces } from '../../../../utils/formating';
 
 const Currency = () => {
-  const TYPE = 'ETH';
-  const value = 4.5;
+  const { address } = useAccount();
+  const { data } = useBalance({
+    address,
+  });
+
+  const tokenName = 'ETH';
+
+  const { open } = useWeb3Modal();
   return (
-    <CurrencyStyled>
+    <CurrencyStyled onClick={() => open()}>
       <SvgStyled />
       <h3>
-        {value} {TYPE}
+        {formatDecimalPlaces(+data?.formatted)} {tokenName}
       </h3>
       <span>|</span>
       <WalletAddress />

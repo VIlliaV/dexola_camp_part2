@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import { media } from '@/styles/media';
 import { ReactComponent as svgETH } from '@/images/svg/cryptocurrency-color_eth.svg';
 
-export const CurrencyStyled = styled.div`
+export const CurrencyStyled = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 24px;
+  color: var(--primary);
+  background-color: transparent;
+  border: none;
+  /* padding: 8px 24px; */
   &:hover {
-    border-radius: 4px;
-    background-color: var(--button_hover);
+    /* border-radius: 4px; */
+    /* background-color: var(--button_hover); */
   }
 
   & .wallet_address,

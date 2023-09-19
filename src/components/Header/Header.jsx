@@ -7,10 +7,7 @@ import Wallet from '../Wallet/Wallet';
 import Currency from '../Wallet/WalletInfo/Currency/Currency';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 
-import {
-  useAccount,
-  // , useConnect, useDisconnect, useEnsAvatar, useEnsName
-} from 'wagmi';
+import { useAccount } from 'wagmi';
 
 const Header = () => {
   const { isConnected } = useAccount();
