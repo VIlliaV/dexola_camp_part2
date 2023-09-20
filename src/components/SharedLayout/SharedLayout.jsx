@@ -12,7 +12,7 @@ import OperationStatus from '../OperationStatus/OperationStatus';
 
 // import Loader from 'components/Loader/Loader';
 
-export const SharedLayout = () => {
+const SharedLayout = () => {
   return (
     <Container>
       <Header />
@@ -21,11 +21,9 @@ export const SharedLayout = () => {
         <HeroSection />
         <SectionWrapper className="pages_section">
           <Navigation />
-          {/* <Pages> */}
           <Suspense fallback={null}>
             <Outlet />
           </Suspense>
-          {/* </Pages> */}
           <OperationStatus media="tablet" />
         </SectionWrapper>
       </main>
@@ -33,3 +31,5 @@ export const SharedLayout = () => {
     </Container>
   );
 };
+
+export default SharedLayout;

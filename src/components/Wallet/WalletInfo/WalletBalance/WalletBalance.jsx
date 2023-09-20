@@ -5,13 +5,13 @@ import { WalletBalanceStyled } from './WalletBalance.styled';
 import { useBalance } from 'wagmi';
 import { useAccount } from 'wagmi';
 import { formatDecimalPlaces } from '@/utils/formating';
-import { STAR_RUNNER_STAKING_ADDRESS } from '../../../../constants/constants';
+import { STAR_RUNNER_TOKEN_ADDRESS } from '../../../../constants/constants';
 
 const WalletBalance = () => {
   const { address } = useAccount();
   const { data } = useBalance({
     address,
-    token: STAR_RUNNER_STAKING_ADDRESS,
+    token: STAR_RUNNER_TOKEN_ADDRESS,
   });
 
   const tokenName = 'STRU';
