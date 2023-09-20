@@ -9,6 +9,7 @@ import Navigation from '../Navigation/Navigation';
 import SectionWrapper from '../Section/SectionWrapper';
 import HeroSection from '../HeroSection/HeroSection';
 import OperationStatus from '../OperationStatus/OperationStatus';
+import Reward from '../ContractInfo/ContractData/Reward/Reward';
 
 // import Loader from 'components/Loader/Loader';
 
@@ -16,9 +17,11 @@ const SharedLayout = () => {
   return (
     <Container>
       <Header />
+
       <Ellipse />
       <main>
         <HeroSection />
+        <Reward />
         <SectionWrapper className="pages_section">
           <Navigation />
           <Suspense fallback={null}>
