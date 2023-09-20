@@ -1,17 +1,10 @@
-import { CONTRACT_INFO, StarRunnerStakingAddress } from '../../constants/constants';
+import { CONTRACT_INFO, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
-import abiContact from '../../dataBase/example.json';
-// import { formatEther, parseEther } from 'viem';
 import { useAccount, useContractReads } from 'wagmi';
-
-const StarRunnerStakingContract = {
-  address: StarRunnerStakingAddress,
-  abi: abiContact,
-};
 
 const HeroSection = () => {
   const { address } = useAccount();
@@ -19,35 +12,35 @@ const HeroSection = () => {
   const { data } = useContractReads({
     contracts: [
       {
-        ...StarRunnerStakingContract,
+        ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'balanceOf',
         args: [address],
         chainId: 11155111,
       },
       {
-        ...StarRunnerStakingContract,
+        ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'getRewardForDuration',
         chainId: 11155111,
       },
       {
-        ...StarRunnerStakingContract,
+        ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'totalSupply',
         chainId: 11155111,
       },
       {
-        ...StarRunnerStakingContract,
+        ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'periodFinish',
         chainId: 11155111,
       },
       {
-        ...StarRunnerStakingContract,
+        ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'earned',
         args: [address],
         chainId: 11155111,
       },
     ],
   });
-  console.log('🚀 ~ data:', data);
+  // console.log('🚀 ~ data:', data);
 
   const [
     { result: stakedBalanceResultBig = BigInt('0') } = {},
