@@ -26,6 +26,7 @@ export const HeroSectionStyled = styled.div`
     display: flex;
     justify-content: start;
     gap: 20px;
+    /* height: 100%; */
 
     @media ${media.tablet} {
       gap: 24px;
@@ -36,6 +37,7 @@ export const HeroSectionStyled = styled.div`
   }
 
   & li {
+    flex-shrink: 0;
     /* display: flex;
     align-items: baseline;
     height: auto; */

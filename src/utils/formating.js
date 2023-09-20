@@ -19,7 +19,7 @@ export const result = (type, data) => {
   } else if (type === apr) {
     return formatApproximately(data);
   } else if (type === days) {
-    return formatDecimalPlaces(data);
+    return formatDecimalPlaces(data, 0);
   } else if (type === rewards) {
     return data;
   } else {
