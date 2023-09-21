@@ -4,10 +4,19 @@ import Available from '../../components/ContractInfo/ContractData/Available/Avai
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 
-import { PAGES_NAME } from '../../constants/constants';
+import { PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
+import { useContractRead, useAccount } from 'wagmi';
 
 const Withdraw = () => {
+  const { address } = useAccount();
+  const { data: stakedBalance } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'balanceOf',
+    args: [address],
+    // chainId: 11155111,
+  });
+  const available = Number(stakedBalance);
   const handleSubmit = event => {
     event.preventDefault();
     // const { error } = validateData(userData);
@@ -19,6 +28,7 @@ const Withdraw = () => {
     //   setUserData({});
     // }
   };
+
   return (
     <PagesContainer>
       <div>
@@ -27,7 +37,7 @@ const Withdraw = () => {
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.withdraw}>
           <Label type={PAGES_NAME.withdraw}></Label>
-          <Available />
+          <Available available={available} />
         </Form>
       </div>
       <Button typeButton="submit" form={PAGES_NAME.withdraw}>

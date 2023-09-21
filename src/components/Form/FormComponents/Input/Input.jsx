@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { inputInfo } from '../../../../utils/inputInfo';
 import { InputStyled } from './Input.styled';
 
-const Input = ({ type, handleErrorMessage, errorMessage }) => {
+const Input = ({ type, handleErrorMessage, errorMessage, formValue }) => {
   const [inputValue, setInputValue] = useState('');
   const { nameInput, typeInput, placeholderInput, requiredInput } = inputInfo(type);
 
   const handleChange = event => {
     const value = event.target.value;
     setInputValue(value);
-    // setUserData(typeInput, value);
+    formValue(value);
     handleErrorMessage('');
   };
 

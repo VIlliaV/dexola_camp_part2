@@ -42,3 +42,8 @@ export const STAR_RUNNER_STAKING_CONTRACT = {
   address: STAR_RUNNER_STAKING_ADDRESS,
   abi: abiContact,
 };
+
+export const STAR_RUNNER_TOKEN_CONTRACT = {
+  address: STAR_RUNNER_TOKEN_ADDRESS,
+  abi: abiContact,
+};
