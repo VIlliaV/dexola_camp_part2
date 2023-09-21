@@ -7,10 +7,10 @@ import {
   SvgSuccess,
 } from './OperationStatus.styled';
 
-const OperationStatus = ({ media }) => {
+const OperationStatus = ({ stake, media }) => {
   const status = 'success';
-  const value = 99.9;
-  const unit = 'TEST';
+
+  const unit = 'STRU';
 
   return (
     <OperationStatusStyled $media={media}>
@@ -20,7 +20,7 @@ const OperationStatus = ({ media }) => {
           <OperationInfo>
             Adding{' '}
             <SpanStyled>
-              {value} {unit}
+              {stake} {unit}
             </SpanStyled>{' '}
             to Staking
           </OperationInfo>
@@ -30,7 +30,7 @@ const OperationStatus = ({ media }) => {
           <SvgSuccess />
           <OperationInfo>
             <SpanStyled>
-              {value} {unit}{' '}
+              {stake} {unit}{' '}
             </SpanStyled>
             successfully <br />
             added to Staking

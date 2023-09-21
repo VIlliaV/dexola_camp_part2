@@ -13,7 +13,6 @@ const wagmiConfig = defaultWagmiConfig({
   // publicClient,
   // webSocketPublicClient,
 });
-console.log('🚀 ~ wagmiConfig:', wagmiConfig);
 
 createWeb3Modal({ wagmiConfig, projectId, chains });
 

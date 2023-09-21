@@ -1,8 +1,8 @@
 import { formatDecimalPlaces } from '../../../../utils/formating';
 import { AvailableData, AvailableStyled, AvailableUnit, AvailableValue } from './Available.styled';
 
-const Available = ({ available = 0, tokenName = 'STRU' }) => {
-  const availableFormating = formatDecimalPlaces(available, 0);
+const Available = ({ available = 0, tokenName = 'STRU', formatDecimal = 0 }) => {
+  const availableFormating = formatDecimalPlaces(available, formatDecimal);
   return (
     <AvailableStyled>
       Available:

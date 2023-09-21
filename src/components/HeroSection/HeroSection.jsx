@@ -1,3 +1,4 @@
+import { formatEther } from 'viem';
 import { CONTRACT_INFO, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
@@ -36,11 +37,10 @@ const HeroSection = () => {
         ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'earned',
         args: [address],
-        chainId: 11155111,
+        // chainId: 11155111,
       },
     ],
   });
-  // console.log('🚀 ~ data:', data);
 
   const [
     { result: stakedBalanceResultBig = BigInt('0') } = {},
@@ -50,13 +50,13 @@ const HeroSection = () => {
     { result: earned = BigInt('0') } = {},
   ] = data || [];
 
-  const stakedBalanceResult = Number(stakedBalanceResultBig);
+  const stakedBalanceResult = formatEther(stakedBalanceResultBig);
 
   const aprResult = (Number(rewardForDuration) * 100) / Number(totalAmountUsers);
 
   const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
 
-  const earnedResult = Number(earned);
+  const earnedResult = formatEther(earned);
 
   const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
   return (
@@ -74,7 +74,7 @@ const HeroSection = () => {
             <ContractInfo data={daysResult} variable={days} />
           </li>
           <li>
-            <ContractInfo data={earnedResult} variable={rewards} tokenName="STRU" />
+            <ContractInfo data={+earnedResult} variable={rewards} tokenName="STRU" />
           </li>
         </ul>
       </SectionWrapper>

@@ -1,4 +1,5 @@
-import abiContact from '@/dataBase/example.json';
+import abiStaking from '@/dataBase/staking_abi.json';
+import abiToken from '@/dataBase/token_abi.json';
 
 export const CONTRACT_INFO = {
   stakedBalance: { text: 'Staked balance', tip: 'Staking rewards get \nallocated on this sum' },
@@ -40,10 +41,10 @@ export const STAR_RUNNER_STAKING_ADDRESS = '0x2F112ED8A96327747565f4d4b4615be8fb
 
 export const STAR_RUNNER_STAKING_CONTRACT = {
   address: STAR_RUNNER_STAKING_ADDRESS,
-  abi: abiContact,
+  abi: abiStaking,
 };
 
 export const STAR_RUNNER_TOKEN_CONTRACT = {
   address: STAR_RUNNER_TOKEN_ADDRESS,
-  abi: abiContact,
+  abi: abiToken,
 };

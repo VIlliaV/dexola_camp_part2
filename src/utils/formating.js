@@ -21,7 +21,7 @@ export const result = (type, data) => {
   } else if (type === days) {
     return formatDecimalPlaces(data, 0);
   } else if (type === rewards) {
-    return data;
+    return formatDecimalPlaces(data);
   } else {
     return data;
   }
