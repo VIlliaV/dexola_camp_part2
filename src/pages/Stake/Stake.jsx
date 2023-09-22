@@ -29,16 +29,16 @@ const Stake = ({ setStatusStake }) => {
   const {
     write,
     status,
-    data: dataStake,
+    // data: dataStake,
   } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'stake',
     chainId: 11155111,
     args: [parseEther(stake)],
   });
-  const { isSuccess: isSuccessStake } = useWaitForTransaction({
-    hash: dataStake?.hash,
-  });
+  // const { isSuccess: isSuccessStake } = useWaitForTransaction({
+  //   hash: dataStake?.hash,
+  // });
   const { write: approve, data: dataApprove } = useContractWrite({
     ...STAR_RUNNER_TOKEN_CONTRACT,
     functionName: 'approve',
