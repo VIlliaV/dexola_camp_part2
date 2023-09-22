@@ -1,20 +1,11 @@
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
+import { createWeb3Modal } from '@web3modal/wagmi/react';
 import { WagmiConfig } from 'wagmi';
-import { arbitrum, sepolia, mainnet } from 'wagmi/chains';
+import { wagmiConfig } from './wagmiConfig';
 
 const { VITE_PROJECT_ID } = import.meta.env;
 const projectId = VITE_PROJECT_ID;
-const chains = [mainnet, arbitrum, sepolia];
 
-const wagmiConfig = defaultWagmiConfig({
-  chains,
-  projectId,
-  appName: 'Web3Modal',
-  // publicClient,
-  // webSocketPublicClient,
-});
-
-createWeb3Modal({ wagmiConfig, projectId, chains });
+createWeb3Modal({ wagmiConfig, projectId });
 
 export const Wagmi = ({ children }) => {
   return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
