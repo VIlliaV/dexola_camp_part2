@@ -10,7 +10,7 @@ const Input = ({ type, handleErrorMessage, errorMessage, formValue }) => {
     const value = event.target.value;
     setInputValue(value);
     formValue(value);
-    handleErrorMessage('');
+    handleErrorMessage(undefined);
   };
 
   const handleBlur = () => {

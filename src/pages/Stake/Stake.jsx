@@ -56,6 +56,7 @@ const Stake = ({ setStatusStake }) => {
   }, [isSuccessApprove]);
   useEffect(() => {
     setStatusStake(status);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
   // const { config } = usePrepareContractWrite({
   //   ...STAR_RUNNER_STAKING_CONTRACT,

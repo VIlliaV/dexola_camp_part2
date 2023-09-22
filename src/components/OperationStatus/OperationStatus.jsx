@@ -8,10 +8,6 @@ import {
 } from './OperationStatus.styled';
 
 const OperationStatus = ({ stake, media, statusStake }) => {
-  console.log('🚀 ~ stake:', stake);
-  // console.log('🚀 ~ status:', status);
-  // const status = 'success';
-
   const unit = 'STRU';
 
   return (
