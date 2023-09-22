@@ -57,6 +57,7 @@ const HeroSection = () => {
   const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
 
   const earnedResult = formatEther(earned);
+  console.log('🚀 ~ earnedResult:', earnedResult);
 
   const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
   return (

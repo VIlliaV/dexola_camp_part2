@@ -4,10 +4,11 @@ import { STAR_RUNNER_STAKING_CONTRACT } from '../../../../constants/constants';
 import { RewardStyled, RewardUnit, RewardValue } from './Reward.styled';
 import { formatDecimalPlaces } from '../../../../utils/formating';
 
-import { useContractRead } from 'wagmi';
+import { useContractRead, useAccount } from 'wagmi';
 
 const Reward = ({ startBalance }) => {
-  // const { address } = useAccount();
+  console.log('🚀 ~ startBalance:', startBalance);
+  const { address } = useAccount();
   // const reward = 1;
   const unit = 'STRU/week';
   // const { address } = useAccount();
@@ -22,12 +23,12 @@ const Reward = ({ startBalance }) => {
     functionName: 'rewardRate',
     // chainId: 11155111,
   });
-  // const { data: stakedBalance } = useContractRead({
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'balanceOf',
-  //   args: [address],
-  //   // chainId: 11155111,
-  // });
+  const { data: stakedBalance } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'balanceOf',
+    args: [address],
+    // chainId: 11155111,
+  });
   const { data: totalSupply } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'totalSupply',
@@ -38,7 +39,7 @@ const Reward = ({ startBalance }) => {
   const remaining = Number(periodFinish) - Math.floor(Date.now()) / 1000;
   const available = remaining * formatEther(rewardRate);
 
-  const totalAvailableRewards = (startBalance * available) / formatEther(totalSupply) + startBalance;
+  const totalAvailableRewards = (formatEther(stakedBalance) * available) / formatEther(totalSupply) + +startBalance;
 
   return (
     <RewardStyled>

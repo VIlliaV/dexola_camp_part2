@@ -7,14 +7,16 @@ import {
   SvgSuccess,
 } from './OperationStatus.styled';
 
-const OperationStatus = ({ stake, media }) => {
-  const status = 'success';
+const OperationStatus = ({ stake, media, statusStake }) => {
+  console.log('🚀 ~ stake:', stake);
+  // console.log('🚀 ~ status:', status);
+  // const status = 'success';
 
   const unit = 'STRU';
 
   return (
     <OperationStatusStyled $media={media}>
-      {status === 'pending' ? (
+      {statusStake === 'loading' ? (
         <>
           <SvgPending />
           <OperationInfo>
@@ -25,7 +27,7 @@ const OperationStatus = ({ stake, media }) => {
             to Staking
           </OperationInfo>
         </>
-      ) : status === 'success' ? (
+      ) : statusStake === 'success' ? (
         <>
           <SvgSuccess />
           <OperationInfo>
@@ -36,7 +38,7 @@ const OperationStatus = ({ stake, media }) => {
             added to Staking
           </OperationInfo>
         </>
-      ) : (
+      ) : statusStake === 'error' ? (
         <>
           <SvgError />
           <OperationInfo>
@@ -45,6 +47,8 @@ const OperationStatus = ({ stake, media }) => {
             Please try again
           </OperationInfo>
         </>
+      ) : (
+        <></>
       )}
     </OperationStatusStyled>
   );

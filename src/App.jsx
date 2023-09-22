@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { lazy, useEffect, useState } from 'react';
 
 import SharedLayout from './components/SharedLayout/SharedLayout.jsx';
 import { Toaster } from 'react-hot-toast';
@@ -17,6 +17,7 @@ const Page404 = lazy(() => import('./pages/404Page/404Page.jsx'));
 
 function App() {
   const { isConnected } = useAccount();
+  const [statusStake, setStatusStake] = useState('idle');
   const navigate = useNavigate();
   useEffect(() => {
     navigate('/');
@@ -41,8 +42,11 @@ function App() {
       />
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<PrivateRoute component={<Stake />} redirectTo="/no_connect" />} />
+        <Route path="/" element={<SharedLayout statusStake={statusStake} />}>
+          <Route
+            index
+            element={<PrivateRoute component={<Stake setStatusStake={setStatusStake} />} redirectTo="/no_connect" />}
+          />
           <Route path="/no_connect" element={<NoConnect />} />
           <Route path="withdraw" element={<PrivateRoute component={<Withdraw />} redirectTo="/no_connect" />} />
           <Route path="claim" element={<PrivateRoute component={<ClaimRewards />} redirectTo="/no_connect" />} />

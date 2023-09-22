@@ -12,7 +12,8 @@ import OperationStatus from '../OperationStatus/OperationStatus';
 
 // import Loader from 'components/Loader/Loader';
 
-const SharedLayout = () => {
+const SharedLayout = ({ statusStake }) => {
+  const stake = 345;
   return (
     <Container>
       <Header />
@@ -22,9 +23,9 @@ const SharedLayout = () => {
         <SectionWrapper className="pages_section">
           <Navigation />
           <Suspense fallback={null}>
-            <Outlet />
+            <Outlet stake={stake} />
           </Suspense>
-          <OperationStatus media="tablet" />
+          <OperationStatus media="tablet" statusStake={statusStake} />
         </SectionWrapper>
       </main>
       <Footer />

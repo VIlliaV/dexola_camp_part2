@@ -14,13 +14,15 @@ const ClaimRewards = () => {
     args: [address],
     // chainId: 11155111,
   });
+  console.log('🚀 ~ availableRewards:', availableRewards);
   const { write: writeRewards } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'claimReward',
     chainId: 11155111,
     // args: [parseEther(withdraw)],
   });
-  const available = +formatEther(availableRewards);
+  const available = formatEther(availableRewards);
+  console.log('🚀 ~ available:', typeof available);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -44,7 +46,7 @@ const ClaimRewards = () => {
           <h2>{PAGES_NAME.rewards}</h2>
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.rewards}>
-          <Available available={available} formatDecimal={4} />
+          <Available available={+available} formatDecimal={4} />
         </Form>
       </div>
       <Button typeButton="submit" form={PAGES_NAME.rewards}>

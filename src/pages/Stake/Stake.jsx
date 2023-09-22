@@ -19,39 +19,44 @@ import { useAccount } from 'wagmi';
 import { useContractWrite } from 'wagmi';
 import { parseEther } from 'viem';
 
-const Stake = () => {
+const Stake = ({ setStatusStake }) => {
   const [stake, setStake] = useState('0');
   const { address } = useAccount();
   const { data: balance } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
   });
-  const { write, status } = useContractWrite({
+  const {
+    write,
+    status,
+    data: dataStake,
+  } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'stake',
     chainId: 11155111,
     args: [parseEther(stake)],
   });
-
-  const {
-    write: approve,
-
-    data,
-  } = useContractWrite({
+  const { isSuccess: isSuccessStake } = useWaitForTransaction({
+    hash: dataStake?.hash,
+  });
+  const { write: approve, data: dataApprove } = useContractWrite({
     ...STAR_RUNNER_TOKEN_CONTRACT,
     functionName: 'approve',
     // address: STAR_RUNNER_STAKING_ADDRESS,
     // chainId: 11155111,
     args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)],
   });
-  const { isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
+  const { isSuccess: isSuccessApprove } = useWaitForTransaction({
+    hash: dataApprove?.hash,
   });
 
   useEffect(() => {
-    if (isSuccess) write();
-  }, [isSuccess]);
-
+    if (isSuccessApprove) write();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessApprove]);
+  useEffect(() => {
+    setStatusStake(status);
+  }, [status]);
   // const { config } = usePrepareContractWrite({
   //   ...STAR_RUNNER_STAKING_CONTRACT,
   //   functionName: 'stake',
@@ -87,7 +92,7 @@ const Stake = () => {
           <Available available={available} tokenName="STRU" />
         </Form>
       </div>
-      <OperationStatus media="mobile" stake={stake} status={status} />
+      <OperationStatus media="mobile" stake={stake} statusStake={status} />
       <Button typeButton="submit" form={PAGES_NAME.stake}>
         {PAGES_NAME.stake}
       </Button>
