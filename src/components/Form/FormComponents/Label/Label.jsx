@@ -5,7 +5,7 @@ import Input from '../Input/Input';
 import ErrorMessage from '../ErrorMesage/ErrorMessage';
 
 const Label = props => {
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleErrorMessage = message => {
     setErrorMessage(message);
