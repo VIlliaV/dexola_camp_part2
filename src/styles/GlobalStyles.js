@@ -90,26 +90,29 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     }
   }
- .desktop{
-  display: none;
-   @media ${media.desktop} {  
-    display: block;
+
+  .mobile{
+   @media ${media.tablet} {  
+    display: none;
     }
- 
- }
+
+  }
 
   .tablet{
-  display: none;
-   @media ${media.tabDesk} {  
-    display: block;
+   @media ${media.mobTab} {  
+    display: none;
     }
- 
- }
+  @media ${media.desktop} {  
+    display: none;
+    }
+  }
+
   .desktop{
-  display: none;
-   @media ${media.desktop} {  
-    display: block;
+   @media ${media.mobTab} {  
+    display: none;
     }
- 
- }
+  @media ${media.tabDesk} {  
+    display: none;
+    }
+  }
 `;

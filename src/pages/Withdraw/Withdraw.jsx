@@ -9,6 +9,7 @@ import { PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/consta
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useContractRead, useAccount, useContractWrite } from 'wagmi';
 import { useState } from 'react';
+import { ButtonContainer } from './Withdraw.styled';
 
 const Withdraw = () => {
   // const { innerWidth } = window;
@@ -60,12 +61,14 @@ const Withdraw = () => {
           <Available available={available} />
         </Form>
       </div>
-      <Button typeButton="submit" form={PAGES_NAME.withdraw}>
-        {PAGES_NAME.withdraw}
-      </Button>
-      <Button onClick={() => writeWithdrawExit()} className="tablet desktop" form={PAGES_NAME.withdraw}>
-        withdraw all & Claim rewards
-      </Button>
+      <ButtonContainer>
+        <Button typeButton="submit" form={PAGES_NAME.withdraw}>
+          {PAGES_NAME.withdraw}
+        </Button>
+        <Button onClick={() => writeWithdrawExit()} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
+          withdraw all & Claim rewards
+        </Button>
+      </ButtonContainer>
     </PagesContainer>
   );
 };
