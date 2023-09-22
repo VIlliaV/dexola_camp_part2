@@ -90,5 +90,26 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     }
   }
+ .desktop{
+  display: none;
+   @media ${media.desktop} {  
+    display: block;
+    }
+ 
+ }
 
+  .tablet{
+  display: none;
+   @media ${media.tabDesk} {  
+    display: block;
+    }
+ 
+ }
+  .desktop{
+  display: none;
+   @media ${media.desktop} {  
+    display: block;
+    }
+ 
+ }
 `;

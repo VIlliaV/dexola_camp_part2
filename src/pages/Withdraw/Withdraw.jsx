@@ -63,7 +63,7 @@ const Withdraw = () => {
       <Button typeButton="submit" form={PAGES_NAME.withdraw}>
         {PAGES_NAME.withdraw}
       </Button>
-      <Button onClick={() => writeWithdrawExit()} form={PAGES_NAME.withdraw}>
+      <Button onClick={() => writeWithdrawExit()} className="tablet desktop" form={PAGES_NAME.withdraw}>
         withdraw all & Claim rewards
       </Button>
     </PagesContainer>
