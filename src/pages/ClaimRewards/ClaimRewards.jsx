@@ -14,7 +14,7 @@ const ClaimRewards = () => {
     args: [address],
     // chainId: 11155111,
   });
-  // console.log('🚀 ~ availableRewards:', availableRewards);
+
   const { write: writeRewards } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'claimReward',
@@ -22,12 +22,10 @@ const ClaimRewards = () => {
     // args: [parseEther(withdraw)],
   });
   const available = formatEther(availableRewards);
-  console.log('🚀 ~ available:', formatEther('0'));
 
   const handleSubmit = event => {
     event.preventDefault();
     writeRewards();
-    console.log('done Reward :>> ');
 
     // const { error } = validateData(userData);
 

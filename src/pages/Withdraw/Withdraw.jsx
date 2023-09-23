@@ -38,7 +38,6 @@ const Withdraw = () => {
   const handleSubmit = event => {
     event.preventDefault();
     writeWithdraw();
-    console.log('done whithdraw :>> ');
 
     // const { error } = validateData(userData);
 
@@ -57,7 +56,7 @@ const Withdraw = () => {
           <h2>{PAGES_NAME.withdraw}</h2>
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.withdraw}>
-          <Label type={PAGES_NAME.withdraw} formValue={setWithdraw}></Label>
+          <Label type={PAGES_NAME.withdraw} formValue={setWithdraw} maxAllowed={available}></Label>
           <Available available={available} />
         </Form>
       </div>

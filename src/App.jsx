@@ -18,6 +18,8 @@ const Page404 = lazy(() => import('./pages/404Page/404Page.jsx'));
 function App() {
   const { isConnected = false } = useAccount();
   const [statusStake, setStatusStake] = useState('idle');
+  const [stakeForOperation, setStakeForOperation] = useState('0');
+
   const navigate = useNavigate();
   useEffect(() => {
     !isConnected ? navigate('/no_connect') : navigate('/');
@@ -42,10 +44,15 @@ function App() {
       />
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<SharedLayout statusStake={statusStake} />}>
+        <Route path="/" element={<SharedLayout statusStake={statusStake} stakeForOperation={stakeForOperation} />}>
           <Route
             index
-            element={<PrivateRoute component={<Stake setStatusStake={setStatusStake} />} redirectTo="/no_connect" />}
+            element={
+              <PrivateRoute
+                component={<Stake setStatusStake={setStatusStake} setStakeForOperation={setStakeForOperation} />}
+                redirectTo="/no_connect"
+              />
+            }
           />
           <Route path="/no_connect" element={<NoConnect />} />
           <Route path="withdraw" element={<PrivateRoute component={<Withdraw />} redirectTo="/no_connect" />} />

@@ -9,7 +9,6 @@ const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed }
 
   const handleChange = event => {
     const value = event.target.value;
-    console.log('🚀 ~ value:', value);
 
     const { error } = validateData(value, maxAllowed);
     if (!error || error?.details[0].type === 'any.required') {

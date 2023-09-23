@@ -19,40 +19,43 @@ import { useAccount } from 'wagmi';
 import { useContractWrite } from 'wagmi';
 import { parseEther } from 'viem';
 import { validateData } from '../../utils/validation';
+import toast from 'react-hot-toast';
 
-const Stake = ({ setStatusStake }) => {
+const Stake = ({ setStatusStake, setStakeForOperation }) => {
   const [stake, setStake] = useState('0');
-  console.log('🚀 ~ stake:', stake);
+  const [successStake, setSuccessStake] = useState(false);
   const { address } = useAccount();
   const { data: balance } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
+    watch: successStake,
   });
 
   const {
     write,
     status,
-    // data: dataStake,
+    data: dataStake,
   } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'stake',
     chainId: 11155111,
     args: [parseEther(stake)],
   });
-  // const { isSuccess: isSuccessStake } = useWaitForTransaction({
-  //   hash: dataStake?.hash,
-  // });
+  const { isSuccess: isSuccessStake } = useWaitForTransaction({
+    hash: dataStake?.hash,
+  });
   const { write: approve, data: dataApprove } = useContractWrite({
     ...STAR_RUNNER_TOKEN_CONTRACT,
     functionName: 'approve',
-    // address: STAR_RUNNER_STAKING_ADDRESS,
-    // chainId: 11155111,
     args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)],
   });
   const { isSuccess: isSuccessApprove } = useWaitForTransaction({
     hash: dataApprove?.hash,
   });
-
+  useEffect(() => {
+    if (isSuccessStake) setSuccessStake(true);
+  }, [isSuccessStake]);
+  console.log('🚀 ~ isSuccessStake:', isSuccessStake);
   useEffect(() => {
     if (isSuccessApprove) write();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,16 +76,13 @@ const Stake = ({ setStatusStake }) => {
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stake, available);
-    if (!error) approve();
 
-    // write();
-
-    // !error
-    //   ? toast.success(`Enjoy ${userData[email]} your number: ${userData[tel]} and password : ${userData[password]}`)
-    //   : toast.error(error.message);
-    // if (!error) {
-    //   setUserData({});
-    // }
+    if (!error) {
+      setStakeForOperation(stake);
+      approve();
+    } else {
+      toast.error(error.message);
+    }
   };
 
   return (

@@ -7,7 +7,6 @@ import { formatDecimalPlaces } from '../../../../utils/formating';
 import { useContractRead, useAccount } from 'wagmi';
 
 const Reward = ({ startBalance }) => {
-  // console.log('🚀 ~ startBalance:', startBalance);
   const { address } = useAccount();
   // const reward = 1;
   const unit = 'STRU/week';
