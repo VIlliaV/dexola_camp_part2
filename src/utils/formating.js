@@ -15,13 +15,18 @@ export const formatApproximately = data => {
 
 export const result = (type, data) => {
   if (type === stakedBalance) {
-    return formatDecimalPlaces(data);
+    return !data ? formatDecimalPlaces(data) : data;
   } else if (type === apr) {
     return formatApproximately(data);
   } else if (type === days) {
     return formatDecimalPlaces(data, 0);
   } else if (type === rewards) {
-    return formatDecimalPlaces(data);
+    // console.log('🚀 ~ rewards:', rewards);
+    return data < 10
+      ? formatDecimalPlaces(data, 4)
+      : data > 100
+      ? formatDecimalPlaces(data, 0)
+      : formatDecimalPlaces(data);
   } else {
     return data;
   }

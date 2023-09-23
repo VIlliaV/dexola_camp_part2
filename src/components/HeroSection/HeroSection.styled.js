@@ -25,9 +25,13 @@ export const HeroSectionStyled = styled.div`
   & .contract_info {
     display: flex;
     justify-content: start;
-    gap: 20px;
+    /* width: 100%; */
+    /* gap: 20px; */
     /* height: 100%; */
-
+    /* gap: 2px; */
+    @media ${media.mobTab} {
+      justify-content: space-between;
+    }
     @media ${media.tablet} {
       gap: 24px;
     }
@@ -37,7 +41,7 @@ export const HeroSectionStyled = styled.div`
   }
 
   & li {
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
     /* display: flex;
     align-items: baseline;
     height: auto; */
