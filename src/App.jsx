@@ -20,7 +20,7 @@ function App() {
   const [statusStake, setStatusStake] = useState('idle');
   const navigate = useNavigate();
   useEffect(() => {
-    navigate('/');
+    !isConnected ? navigate('/no_connect') : navigate('/');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 

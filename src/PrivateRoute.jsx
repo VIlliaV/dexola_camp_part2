@@ -6,10 +6,7 @@ import {
 } from 'wagmi';
 
 export const PrivateRoute = ({ component: Component, redirectTo = '/' }) => {
-  const {
-    // address, connector,
-    isConnected = false,
-  } = useAccount();
+  const { isConnected = false } = useAccount();
 
   return isConnected ? Component : <Navigate to={redirectTo} />;
 };
