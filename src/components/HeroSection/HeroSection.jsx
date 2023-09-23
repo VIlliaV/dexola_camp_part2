@@ -46,7 +46,7 @@ const HeroSection = () => {
     { result: stakedBalanceResultBig = BigInt('0') } = {},
     { result: rewardForDuration = BigInt('0') } = {},
     { result: totalAmountUsers = BigInt('1') } = {},
-    { result: periodFinish = undefined } = {},
+    { result: periodFinish = '0' } = {},
     { result: earned = BigInt('0') } = {},
   ] = data || [];
 
@@ -57,7 +57,7 @@ const HeroSection = () => {
   const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
 
   const earnedResult = formatEther(earned);
-  console.log('🚀 ~ earnedResult:', earnedResult);
+  // console.log('🚀 ~ earnedResult:', earnedResult);
 
   const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
   return (

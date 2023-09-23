@@ -15,7 +15,7 @@ const Withdraw = () => {
   // const { innerWidth } = window;
   const [withdraw, setWithdraw] = useState('0');
   const { address } = useAccount();
-  const { data: stakedBalance } = useContractRead({
+  const { data: stakedBalance = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
     args: [address],

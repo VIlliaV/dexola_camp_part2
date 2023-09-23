@@ -8,13 +8,13 @@ import Form from '../../components/Form/Form';
 
 const ClaimRewards = () => {
   const { address } = useAccount();
-  const { data: availableRewards } = useContractRead({
+  const { data: availableRewards = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
     args: [address],
     // chainId: 11155111,
   });
-  console.log('🚀 ~ availableRewards:', availableRewards);
+  // console.log('🚀 ~ availableRewards:', availableRewards);
   const { write: writeRewards } = useContractWrite({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'claimReward',
@@ -22,7 +22,7 @@ const ClaimRewards = () => {
     // args: [parseEther(withdraw)],
   });
   const available = formatEther(availableRewards);
-  console.log('🚀 ~ available:', typeof available);
+  console.log('🚀 ~ available:', formatEther('0'));
 
   const handleSubmit = event => {
     event.preventDefault();

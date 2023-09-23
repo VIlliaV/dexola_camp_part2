@@ -8,7 +8,7 @@ import {
 export const PrivateRoute = ({ component: Component, redirectTo = '/' }) => {
   const {
     // address, connector,
-    isConnected,
+    isConnected = false,
   } = useAccount();
 
   return isConnected ? Component : <Navigate to={redirectTo} />;

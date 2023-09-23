@@ -7,29 +7,29 @@ import { formatDecimalPlaces } from '../../../../utils/formating';
 import { useContractRead, useAccount } from 'wagmi';
 
 const Reward = ({ startBalance }) => {
-  console.log('🚀 ~ startBalance:', startBalance);
+  // console.log('🚀 ~ startBalance:', startBalance);
   const { address } = useAccount();
   // const reward = 1;
   const unit = 'STRU/week';
   // const { address } = useAccount();
-  const { data: periodFinish } = useContractRead({
+  const { data: periodFinish = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'periodFinish',
     // chainId: 11155111,
   });
 
-  const { data: rewardRate } = useContractRead({
+  const { data: rewardRate = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'rewardRate',
     // chainId: 11155111,
   });
-  const { data: stakedBalance } = useContractRead({
+  const { data: stakedBalance = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
     args: [address],
     // chainId: 11155111,
   });
-  const { data: totalSupply } = useContractRead({
+  const { data: totalSupply = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'totalSupply',
     // args: [address],
