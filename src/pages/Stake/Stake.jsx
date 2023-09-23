@@ -18,14 +18,17 @@ import { useBalance, useWaitForTransaction } from 'wagmi';
 import { useAccount } from 'wagmi';
 import { useContractWrite } from 'wagmi';
 import { parseEther } from 'viem';
+import { validateData } from '../../utils/validation';
 
 const Stake = ({ setStatusStake }) => {
   const [stake, setStake] = useState('0');
+  console.log('🚀 ~ stake:', stake);
   const { address } = useAccount();
   const { data: balance } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
   });
+
   const {
     write,
     status,
@@ -66,11 +69,12 @@ const Stake = ({ setStatusStake }) => {
   // });
 
   const available = +balance?.formatted;
+
   const handleSubmit = event => {
     event.preventDefault();
-    // const { error } = validateData(userData);
+    const { error } = validateData(stake, available);
+    if (!error) approve();
 
-    approve();
     // write();
 
     // !error
@@ -89,7 +93,7 @@ const Stake = ({ setStatusStake }) => {
           <Reward startBalance={stake} />
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
-          <Label type={PAGES_NAME.stake} formValue={setStake}></Label>
+          <Label type={PAGES_NAME.stake} formValue={setStake} maxAllowed={available}></Label>
           <Available available={available} tokenName="STRU" />
         </Form>
       </div>
