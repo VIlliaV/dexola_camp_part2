@@ -7,13 +7,13 @@ import { ReactComponent as operationSuccess } from '@/images/svg/operation_succe
 export const OperationStatusStyled = styled.div`
   flex: 1;
   justify-self: center;
-  display: ${props => (props.$media === 'tablet' ? 'none' : 'flex')};
+  /* display: ${props => (props.$media === 'tablet' ? 'none' : 'flex')}; */
   align-items: center;
   justify-content: center;
   gap: 16px;
   padding: 8px;
   @media ${media.tablet} {
-    display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')};
+    /* display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')}; */
     align-self: end;
   }
   @media ${media.tabDesk} {

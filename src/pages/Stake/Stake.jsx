@@ -20,11 +20,18 @@ import { useContractWrite } from 'wagmi';
 import { parseEther } from 'viem';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
+import { useContextContract } from '../../Context';
+import { useLocation } from 'react-router-dom';
 
-const Stake = ({ setStatusStake, setStakeForOperation }) => {
+const Stake = () => {
   const [stake, setStake] = useState('0');
   const [successStake, setSuccessStake] = useState(false);
+  // const [testCon, setTestCon] = useState('idle');
+  // console.log('🚀 ~ testCon:', testCon);
   const { address } = useAccount();
+  const { pathname } = useLocation();
+  const { setValueForOperation, setDataOperation } = useContextContract();
+
   const { data: balance } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
@@ -41,29 +48,63 @@ const Stake = ({ setStatusStake, setStakeForOperation }) => {
     chainId: 11155111,
     args: [parseEther(stake)],
   });
+
   const { isSuccess: isSuccessStake } = useWaitForTransaction({
     hash: dataStake?.hash,
   });
+
+  // useEffect(() => {
+  //   if (dataStake) setTestCon(dataStake?.hash);
+  // }, [dataStake]);
+
   const { write: approve, data: dataApprove } = useContractWrite({
     ...STAR_RUNNER_TOKEN_CONTRACT,
     functionName: 'approve',
     args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)],
   });
+
   const { isSuccess: isSuccessApprove } = useWaitForTransaction({
     hash: dataApprove?.hash,
   });
+
   useEffect(() => {
     if (isSuccessStake) setSuccessStake(true);
   }, [isSuccessStake]);
-  console.log('🚀 ~ isSuccessStake:', isSuccessStake);
+
   useEffect(() => {
     if (isSuccessApprove) write();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessApprove]);
+  // useEffect(() => {
+  //   // setDataOperation(prev => [...prev, ...[pathname], { [pathname]: status }]);
+
+  //   setDataOperation(prev => {
+  //     prev[pathname] = status;
+  //     return prev;
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [status]);
+  // const pageTest = 'testPage';
+  // console.log('object :>> ', pathname === '/');
   useEffect(() => {
-    setStatusStake(status);
+    // setDataOperation(prev => [...prev, ...[pathname], { [pathname]: status }]);
+    // if (pathname === '/')
+    setDataOperation(prev => {
+      const findPath = prev.find(item => item.page === pathname);
+      if (findPath) {
+        const test = prev.map(item =>
+          item.page === pathname ? { ...item, status, valueOperation: stake, operation: () => approve() } : item
+        );
+        return test;
+      } else {
+        const test = [...prev, { page: pathname, status: 'idle' }];
+        return test;
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+  console.log('🚀 ~ status:', status);
+
   // const { config } = usePrepareContractWrite({
   //   ...STAR_RUNNER_STAKING_CONTRACT,
   //   functionName: 'stake',
@@ -78,7 +119,7 @@ const Stake = ({ setStatusStake, setStakeForOperation }) => {
     const { error } = validateData(stake, available);
 
     if (!error) {
-      setStakeForOperation(stake);
+      setValueForOperation(stake);
       approve();
     } else {
       toast.error(error.message);
@@ -97,7 +138,7 @@ const Stake = ({ setStatusStake, setStakeForOperation }) => {
           <Available available={available} tokenName="STRU" />
         </Form>
       </div>
-      <OperationStatus media="mobile" stake={stake} statusStake={status} />
+      <OperationStatus media="mobile" />
       <Button typeButton="submit" form={PAGES_NAME.stake}>
         {PAGES_NAME.stake}
       </Button>

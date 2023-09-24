@@ -6,13 +6,16 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 // import { Context } from './Context/Context.jsx';
 import { Wagmi } from './Wagmi/Wagmi.jsx';
+import { Context } from './Context.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Wagmi>
-        <App />
-      </Wagmi>
+      <Context>
+        <Wagmi>
+          <App />
+        </Wagmi>
+      </Context>
     </BrowserRouter>
   </React.StrictMode>
 );
