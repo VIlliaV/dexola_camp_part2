@@ -17,8 +17,6 @@ const Page404 = lazy(() => import('./pages/404Page/404Page.jsx'));
 
 function App() {
   const { isConnected = false } = useAccount();
-  // const [statusStake, setStatusStake] = useState('idle');
-  // const [valueForOperation, setValueForOperation] = useState('0');
 
   const navigate = useNavigate();
   useEffect(() => {

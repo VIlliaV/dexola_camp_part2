@@ -8,24 +8,49 @@ import {
   SvgPending,
   SvgSuccess,
 } from './OperationStatus.styled';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const OperationStatus = ({ media }) => {
   const unit = 'STRU';
   const { pathname } = useLocation();
-  useEffect(() => {}, [pathname]);
+  const [clearStatus, setClearStatus] = useState(false);
+  // useEffect(() => {}, [pathname]);
 
-  const { dataOperation } = useContextContract();
+  const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
 
   const isStatus = dataOperation.find(option => option.page === pathname);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setClearStatus(true);
+    }, 7000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isStatus]);
+
+  useEffect(() => {
+    setDataOperation(prev => {
+      const index = prev.findIndex(item => item.status === 'error' || item.status === 'success');
+      if (index !== -1) {
+        const arr = [...prev];
+        arr.splice(index, 1);
+        return arr;
+      }
+      return prev;
+    });
+    // }
+    setClearStatus(false);
+    if (updateInfo) setUpdateInfo(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clearStatus]);
+
   if (!isStatus) return;
   const { status, valueOperation } = isStatus;
-  // console.log('🚀 ~ status:', status);
 
   return (
     <OperationStatusStyled $media={media}>
-      {status === 'loading' ? (
+      {status === 'loading' || status === 'pre-loading' ? (
         <>
           <SvgPending />
           <OperationInfo>

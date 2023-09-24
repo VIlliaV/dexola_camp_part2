@@ -11,11 +11,11 @@ import { Context } from './Context.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Context>
-        <Wagmi>
+      <Wagmi>
+        <Context>
           <App />
-        </Wagmi>
-      </Context>
+        </Context>
+      </Wagmi>
     </BrowserRouter>
   </React.StrictMode>
 );
