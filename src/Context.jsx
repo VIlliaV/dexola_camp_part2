@@ -17,7 +17,7 @@ export const Context = ({ children }) => {
 
   // const [isError, setIsError] = useState(false);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ dataOperation:', dataOperation);
+  // console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
   const { address } = useAccount();
   const { data: balance } = useBalance({
