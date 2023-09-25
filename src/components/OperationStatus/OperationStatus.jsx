@@ -9,6 +9,7 @@ import {
   SvgSuccess,
 } from './OperationStatus.styled';
 import { useEffect, useState } from 'react';
+import { CONTRACT_OPERATION } from '../../constants/constants';
 
 const OperationStatus = ({ media }) => {
   const unit = 'STRU';
@@ -31,7 +32,9 @@ const OperationStatus = ({ media }) => {
 
   useEffect(() => {
     setDataOperation(prev => {
-      const index = prev.findIndex(item => item.status === 'error' || item.status === 'success');
+      const index = prev.findIndex(
+        item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
+      );
       if (index !== -1) {
         const arr = [...prev];
         arr.splice(index, 1);
@@ -50,7 +53,7 @@ const OperationStatus = ({ media }) => {
 
   return (
     <OperationStatusStyled $media={media}>
-      {status === 'loading' || status === 'pre-loading' ? (
+      {status === CONTRACT_OPERATION.status.loading || status === CONTRACT_OPERATION.status.preLoading ? (
         <>
           <SvgPending />
           <OperationInfo>
@@ -61,7 +64,7 @@ const OperationStatus = ({ media }) => {
             to Staking
           </OperationInfo>
         </>
-      ) : status === 'success' ? (
+      ) : status === CONTRACT_OPERATION.status.success ? (
         <>
           <SvgSuccess />
           <OperationInfo>
@@ -72,7 +75,7 @@ const OperationStatus = ({ media }) => {
             added to Staking
           </OperationInfo>
         </>
-      ) : status === 'error' ? (
+      ) : status === CONTRACT_OPERATION.status.error ? (
         <>
           <SvgError />
           <OperationInfo>

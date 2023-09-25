@@ -33,7 +33,15 @@ const ClaimRewards = () => {
 
     if (available !== '0') {
       setDataOperation(prev => {
-        const arr = [...prev, { page: pathname, status: 'pre-loading', valueOperation: available, operation: 'claim' }];
+        const arr = [
+          ...prev,
+          {
+            page: pathname,
+            status: 'CONTRACT_OPERATION.status.preLoading',
+            valueOperation: available,
+            operation: 'claim',
+          },
+        ];
         return arr;
       });
       writeRewards();

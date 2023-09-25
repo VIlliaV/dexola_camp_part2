@@ -11,10 +11,11 @@ export const CONTRACT_INFO = {
 export const CONTRACT_OPERATION = {
   stake: { operation: { stake: 'stake', approve: 'approve' } },
 
-  withdraw: { operation: { withdraw: 'withdraw', withdrawAll: 'withdrawAll' } },
+  withdraw: { operation: { withdraw: 'withdraw', withdrawAll: 'withdraw-exit' } },
   claim: {
     operation: { claim: 'claim' },
   },
+  status: { preLoading: 'pre-loading', loading: 'loading', error: 'error', success: 'success' },
 };
 
 export const INPUT_INFO = {

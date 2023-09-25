@@ -5,7 +5,7 @@ import Available from '../../components/ContractInfo/ContractData/Available/Avai
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
-import { PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useContractRead, useAccount } from 'wagmi';
 import { useState } from 'react';
@@ -51,7 +51,12 @@ const Withdraw = () => {
       setDataOperation(prev => {
         const arr = [
           ...prev,
-          { page: pathname, status: 'pre-loading', valueOperation: withdrawValue, operation: 'withdraw' },
+          {
+            page: pathname,
+            status: CONTRACT_OPERATION.status.preLoading,
+            valueOperation: withdrawValue,
+            operation: 'withdraw',
+          },
         ];
         return arr;
       });
@@ -66,7 +71,12 @@ const Withdraw = () => {
       setDataOperation(prev => {
         const arr = [
           ...prev,
-          { page: pathname, status: 'pre-loading', valueOperation: available, operation: 'withdraw-exit' },
+          {
+            page: pathname,
+            status: CONTRACT_OPERATION.status.preLoading,
+            valueOperation: available,
+            operation: 'withdraw-exit',
+          },
         ];
         return arr;
       });

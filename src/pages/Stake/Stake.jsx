@@ -6,7 +6,7 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import { PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { parseEther } from 'viem';
 import { validateData } from '../../utils/validation';
@@ -27,7 +27,15 @@ const Stake = () => {
 
     if (!error) {
       setDataOperation(prev => {
-        const arr = [...prev, { page: pathname, status: 'pre-loading', valueOperation: stake, operation: 'approve' }];
+        const arr = [
+          ...prev,
+          {
+            page: pathname,
+            status: CONTRACT_OPERATION.status.preLoading,
+            valueOperation: stake,
+            operation: 'approve',
+          },
+        ];
         return arr;
       });
       approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)] });
