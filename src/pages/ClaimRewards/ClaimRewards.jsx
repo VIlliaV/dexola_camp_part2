@@ -5,9 +5,14 @@ import { PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/consta
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useContractRead, useAccount, useContractWrite } from 'wagmi';
 import Form from '../../components/Form/Form';
+import toast from 'react-hot-toast';
+import { useLocation } from 'react-router';
+import { useContextContract } from '../../Context';
 
 const ClaimRewards = () => {
   const { address } = useAccount();
+  const { pathname } = useLocation();
+  const { setDataOperation } = useContextContract();
   const { data: availableRewards = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
@@ -25,16 +30,16 @@ const ClaimRewards = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    writeRewards();
 
-    // const { error } = validateData(userData);
-
-    // !error
-    //   ? toast.success(`Enjoy ${userData[email]} your number: ${userData[tel]} and password : ${userData[password]}`)
-    //   : toast.error(error.message);
-    // if (!error) {
-    //   setUserData({});
-    // }
+    if (available !== '0') {
+      setDataOperation(prev => {
+        const arr = [...prev, { page: pathname, status: 'pre-loading', valueOperation: available, operation: 'claim' }];
+        return arr;
+      });
+      writeRewards();
+    } else {
+      toast.error('у вас немає rewards');
+    }
   };
 
   return (

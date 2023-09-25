@@ -45,7 +45,6 @@ const Withdraw = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
     const { error } = validateData(withdrawValue, available);
 
     if (!error) {
@@ -59,6 +58,21 @@ const Withdraw = () => {
       withdraw({ args: [parseEther(withdrawValue)] });
     } else {
       toast.error(error.message);
+    }
+  };
+
+  const handleWithdrawExit = () => {
+    if (available !== '0') {
+      setDataOperation(prev => {
+        const arr = [
+          ...prev,
+          { page: pathname, status: 'pre-loading', valueOperation: available, operation: 'withdraw-exit' },
+        ];
+        return arr;
+      });
+      withdrawExit();
+    } else {
+      toast.error('у вас немає rewards');
     }
   };
 
@@ -77,7 +91,7 @@ const Withdraw = () => {
         <Button typeButton="submit" form={PAGES_NAME.withdraw}>
           {PAGES_NAME.withdraw}
         </Button>
-        <Button onClick={() => withdrawExit()} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
+        <Button onClick={handleWithdrawExit} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
           withdraw all & Claim rewards
         </Button>
       </ButtonContainer>

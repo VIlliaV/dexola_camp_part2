@@ -6,9 +6,12 @@ import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
 import { useAccount, useContractReads } from 'wagmi';
+import { useContextContract } from '../../Context';
 
 const HeroSection = () => {
   const { address } = useAccount();
+  const { updateInfo } = useContextContract();
+  console.log('🚀 ~ updateInfo Hero:', updateInfo);
 
   const { data } = useContractReads({
     contracts: [
@@ -17,26 +20,31 @@ const HeroSection = () => {
         functionName: 'balanceOf',
         args: [address],
         chainId: 11155111,
+        watch: updateInfo,
       },
       {
         ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'getRewardForDuration',
         chainId: 11155111,
+        watch: updateInfo,
       },
       {
         ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'totalSupply',
         chainId: 11155111,
+        watch: updateInfo,
       },
       {
         ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'periodFinish',
         chainId: 11155111,
+        watch: updateInfo,
       },
       {
         ...STAR_RUNNER_STAKING_CONTRACT,
         functionName: 'earned',
         args: [address],
+        watch: updateInfo,
         // chainId: 11155111,
       },
     ],

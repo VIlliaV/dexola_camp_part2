@@ -6,6 +6,7 @@ import {
 } from './constants/constants';
 import { parseEther } from 'viem';
 import { useAccount, useBalance, useContractWrite, useWaitForTransaction } from 'wagmi';
+import { operationChangeStatus } from './utils/helpers/operation';
 
 const ContractContext = createContext();
 
@@ -14,10 +15,9 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(false);
-
-  // const [isError, setIsError] = useState(false);
+  console.log('🚀 ~ updateInfo:', updateInfo);
   const [dataOperation, setDataOperation] = useState([]);
-  // console.log('🚀 ~ dataOperation:', dataOperation);
+  console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
   const { address } = useAccount();
   const { data: balance } = useBalance({
@@ -66,11 +66,29 @@ export const Context = ({ children }) => {
   });
 
   const {
-    data: dataWaitTransaction,
+    data: dataWaitTransactionApprove,
     isSuccess: isSuccessApprove,
     isError: isErrorApprove,
   } = useWaitForTransaction({
     hash: dataApprove?.hash,
+  });
+
+  const {
+    data: dataWaitTransactionWithdraw,
+    isSuccess: isSuccessWithdraw,
+    isError: isErrorWithdraw,
+    isFetched: isFetchedWithdraw,
+  } = useWaitForTransaction({
+    hash: dataWithdraw?.hash,
+  });
+
+  const {
+    data: dataWaitTransactionWithdrawExit,
+    isSuccess: isSuccessWithdrawExit,
+    isError: isErrorWithdrawExit,
+    isFetched: isFetchedWithdrawExit,
+  } = useWaitForTransaction({
+    hash: dataWithdrawExit?.hash,
   });
 
   const {
@@ -82,7 +100,7 @@ export const Context = ({ children }) => {
     hash: dataStake?.hash,
   });
 
-  const filteredData = dataOperation.filter(item => item.hash === dataWaitTransaction?.transactionHash);
+  const filteredData = dataOperation.filter(item => item.hash === dataWaitTransactionApprove?.transactionHash);
 
   const findValue = filteredData.map(({ valueOperation }) => valueOperation);
   const [valueOperation] = findValue.length > 0 ? findValue : ['0'];
@@ -91,86 +109,77 @@ export const Context = ({ children }) => {
   const [PathOperation] = findPath.length > 0 ? findPath : ['0'];
 
   useEffect(() => {
-    if (isErrorStake || isErrorApprove) {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.hash === dataApprove?.hash || item.hash === dataStake?.hash ? { ...item, status: 'error' } : item
-        );
-        return arr;
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isErrorStake, isErrorApprove]);
+    setDataOperation(prev =>
+      operationChangeStatus({
+        status: statusApprove,
+        prevData: prev,
+        isSuccess: isSuccessApprove,
+        isError: isErrorApprove,
+        data: dataApprove,
+        dataWaitTransaction: dataWaitTransactionApprove,
+        nameOPeration: 'approve',
+        isMoreOperation: true,
+        path: PathOperation,
+        nameOPerationNext: 'stake',
+        valueOperation: valueOperation,
+      })
+    );
+    if (isSuccessApprove) stake({ args: [parseEther(valueOperation)] });
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusApprove, isSuccessApprove, isErrorApprove]);
 
   useEffect(() => {
-    if (statusApprove === 'error') {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.status === 'pre-loading' && item.operation === 'approve' ? { ...item, status: 'error' } : item
-        );
-        return arr;
-      });
-    } else if (statusApprove === 'success') {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.status === 'pre-loading' && item.operation === 'approve'
-            ? { ...item, status: 'loading', hash: dataApprove?.hash }
-            : item
-        );
-        return arr;
-      });
-    }
-    if (isSuccessApprove) {
-      setDataOperation(prev => {
-        const arrApprove = prev.map(item =>
-          item.hash === dataWaitTransaction?.transactionHash ? { ...item, status: 'success' } : item
-        );
-        const arr = [...arrApprove, { page: PathOperation, status: 'pre-loading', operation: 'stake', valueOperation }];
-        return arr;
-      });
-      stake({ args: [parseEther(valueOperation)] });
-    }
-
+    setDataOperation(prev =>
+      operationChangeStatus({
+        status: statusStake,
+        prevData: prev,
+        isSuccess: isSuccessStake,
+        isError: isErrorStake,
+        data: dataStake,
+        dataWaitTransaction: dataWaitTransactionStake,
+        nameOPeration: 'stake',
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusApprove, isSuccessApprove]);
+  }, [statusStake, isSuccessStake, isErrorStake]);
 
   useEffect(() => {
-    if (statusStake === 'error') {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.status === 'pre-loading' && item.operation === 'stake' ? { ...item, status: 'error' } : item
-        );
-        return arr;
-      });
-    } else if (statusStake === 'success') {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.status === 'pre-loading' && item.operation === 'stake'
-            ? { ...item, status: 'loading', hash: dataStake?.hash }
-            : item
-        );
-        return arr;
-      });
-    }
-
-    if (isSuccessStake) {
-      setDataOperation(prev => {
-        const arr = prev.map(item =>
-          item.hash === dataWaitTransactionStake?.transactionHash ? { ...item, status: 'success' } : item
-        );
-        return arr;
-      });
-    }
+    setDataOperation(prev =>
+      operationChangeStatus({
+        status: statusWithdraw,
+        prevData: prev,
+        isSuccess: isSuccessWithdraw,
+        isError: isErrorWithdraw,
+        data: dataWithdraw,
+        dataWaitTransaction: dataWaitTransactionWithdraw,
+        nameOPeration: 'withdraw',
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusStake, isSuccessStake]);
+  }, [statusWithdraw, isSuccessWithdraw, isErrorWithdraw]);
 
   useEffect(() => {
-    if (isFetchedStake) {
+    setDataOperation(prev =>
+      operationChangeStatus({
+        status: statusWithdrawExit,
+        prevData: prev,
+        isSuccess: isSuccessWithdrawExit,
+        isError: isErrorWithdrawExit,
+        data: dataWithdrawExit,
+        dataWaitTransaction: dataWaitTransactionWithdrawExit,
+        nameOPeration: 'withdraw-exit',
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
+
+  useEffect(() => {
+    if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit) {
       setUpdateInfo(true);
     } else {
       setUpdateInfo(false);
     }
-  }, [isFetchedStake]);
+  }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit]);
 
   return (
     <ContractContext.Provider

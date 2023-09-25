@@ -8,6 +8,15 @@ export const CONTRACT_INFO = {
   rewards: { text: 'Rewards', tip: 'Rewards get allocated \nevery second' },
 };
 
+export const CONTRACT_OPERATION = {
+  stake: { operation: { stake: 'stake', approve: 'approve' } },
+
+  withdraw: { operation: { withdraw: 'withdraw', withdrawAll: 'withdrawAll' } },
+  claim: {
+    operation: { claim: 'claim' },
+  },
+};
+
 export const INPUT_INFO = {
   initial: {
     nameInput: '',
