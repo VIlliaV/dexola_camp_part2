@@ -16,11 +16,26 @@ export const NavStyled = styled.nav`
 `;
 
 export const StyledNavLink = styled(NavLink)`
+  position: relative;
   display: flex;
   padding: 16px 0px;
   justify-content: center;
   align-items: center;
   color: var(--secondary);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    height: 6px;
+    background-color: var(--accent);
+    transform: translate(-50%, 0);
+    transition: width 250ms var(--cubic-bezier);
+    @media ${media.tablet} {
+      height: 8px;
+    }
+  }
 
   @media ${media.tablet} {
     padding: 16px 32px;

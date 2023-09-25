@@ -66,8 +66,10 @@ export const ContractInfoStyled = styled.div`
   & .text_variable {
     color: var(--primary);
     font-size: 12px;
+    text-align: center;
     @media ${media.tablet} {
       font-size: 16px;
+      text-align: start;
     }
   }
 `;
