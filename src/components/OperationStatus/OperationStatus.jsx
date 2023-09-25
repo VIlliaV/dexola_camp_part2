@@ -19,7 +19,13 @@ const OperationStatus = ({ media }) => {
 
   const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
 
-  const isStatus = dataOperation.find(option => option.page === pathname) || dataOperation.find(option => option);
+  const isStatus = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
+  const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
+  const isOldStatus = dataOperation.find(
+    item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
+  );
+
+  const clearOldStatus = isNewStatus && isOldStatus;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,7 +39,9 @@ const OperationStatus = ({ media }) => {
   useEffect(() => {
     setDataOperation(prev => {
       const index = prev.findIndex(
-        item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
+        item =>
+          (item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success) &&
+          item.page === pathname
       );
       if (index !== -1) {
         const arr = [...prev];
@@ -46,7 +54,7 @@ const OperationStatus = ({ media }) => {
     setClearStatus(false);
     if (updateInfo) setUpdateInfo(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearStatus]);
+  }, [clearStatus, clearOldStatus]);
 
   if (!isStatus) return;
   const { status, valueOperation, operation } = isStatus;
