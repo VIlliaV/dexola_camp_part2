@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { inputInfo } from '../../../../utils/inputInfo';
 import { InputStyled } from './Input.styled';
 import { validateData } from '../../../../utils/validation';
+import { debounce } from 'debounce';
 
 const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed }) => {
   const [inputValue, setInputValue] = useState('');
   const { nameInput, typeInput, placeholderInput, requiredInput } = inputInfo(type);
+  const debounceHandler = debounce(setInputValue, 100);
 
   const handleChange = event => {
     const value = event.target.value;
-
     const { error } = validateData(value, maxAllowed);
     if (!error || error?.details[0].type === 'any.required') {
-      setInputValue(value);
+      debounceHandler(value);
       formValue(value);
       handleErrorMessage(undefined);
     } else handleErrorMessage(error.message);

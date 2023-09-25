@@ -19,7 +19,7 @@ const OperationStatus = ({ media }) => {
 
   const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
 
-  const isStatus = dataOperation.find(option => option.page === pathname);
+  const isStatus = dataOperation.find(option => option.page === pathname) || dataOperation.find(option => option);
 
   useEffect(() => {
     const timer = setTimeout(() => {
