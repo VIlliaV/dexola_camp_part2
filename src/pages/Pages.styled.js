@@ -49,6 +49,9 @@ export const PagesHead = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 32px;
+  & h2 {
+    text-transform: capitalize;
+  }
   &::after {
     content: '';
     position: absolute;

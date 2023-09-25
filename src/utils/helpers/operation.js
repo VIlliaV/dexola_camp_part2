@@ -46,21 +46,3 @@ export const operationChangeStatus = ({
   }
   return arr;
 };
-
-// function updateDataOperation(prevData, statusStake, isSuccessStake, isErrorStake, dataStake, dataWaitTransactionStake) {
-//   return prevData.map(item => {
-//     if (statusStake === 'error' && item.status === 'CONTRACT_OPERATION.status.preLoading' && item.operation === 'stake') {
-//       return { ...item, status: 'error' };
-//     }
-//     if (statusStake === 'success' && item.status === 'CONTRACT_OPERATION.status.preLoading' && item.operation === 'stake') {
-//       return { ...item, status: 'loading', hash: dataStake?.hash };
-//     }
-//     if (isSuccessStake && item.hash === dataWaitTransactionStake?.transactionHash) {
-//       return { ...item, status: 'success' };
-//     }
-//     if (isErrorStake && item.hash === dataStake?.hash) {
-//       return { ...item, status: 'error' };
-//     }
-//     return item;
-//   });
-// }

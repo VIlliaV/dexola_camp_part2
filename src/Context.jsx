@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
+  CONTRACT_OPERATION,
   STAR_RUNNER_STAKING_CONTRACT,
   STAR_RUNNER_TOKEN_ADDRESS,
   STAR_RUNNER_TOKEN_CONTRACT,
@@ -117,10 +118,10 @@ export const Context = ({ children }) => {
         isError: isErrorApprove,
         data: dataApprove,
         dataWaitTransaction: dataWaitTransactionApprove,
-        nameOPeration: 'approve',
+        nameOPeration: CONTRACT_OPERATION.stake.operation.approve,
         isMoreOperation: true,
         path: PathOperation,
-        nameOPerationNext: 'stake',
+        nameOPerationNext: CONTRACT_OPERATION.stake.operation.stake,
         valueOperation: valueOperation,
       })
     );
@@ -137,7 +138,7 @@ export const Context = ({ children }) => {
         isError: isErrorStake,
         data: dataStake,
         dataWaitTransaction: dataWaitTransactionStake,
-        nameOPeration: 'stake',
+        nameOPeration: CONTRACT_OPERATION.stake.operation.stake,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,7 +153,7 @@ export const Context = ({ children }) => {
         isError: isErrorWithdraw,
         data: dataWithdraw,
         dataWaitTransaction: dataWaitTransactionWithdraw,
-        nameOPeration: 'withdraw',
+        nameOPeration: CONTRACT_OPERATION.withdraw.operation.withdraw,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,7 +168,7 @@ export const Context = ({ children }) => {
         isError: isErrorWithdrawExit,
         data: dataWithdrawExit,
         dataWaitTransaction: dataWaitTransactionWithdrawExit,
-        nameOPeration: 'withdraw-exit',
+        nameOPeration: CONTRACT_OPERATION.withdraw.operation.withdrawAll,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

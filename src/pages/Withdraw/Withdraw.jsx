@@ -55,7 +55,7 @@ const Withdraw = () => {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: withdrawValue,
-            operation: 'withdraw',
+            operation: CONTRACT_OPERATION.withdraw.operation.withdraw,
           },
         ];
         return arr;
@@ -75,7 +75,7 @@ const Withdraw = () => {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: available,
-            operation: 'withdraw-exit',
+            operation: CONTRACT_OPERATION.withdraw.operation.withdrawAll,
           },
         ];
         return arr;
