@@ -24,9 +24,9 @@ export const Container = styled.div`
       @media ${media.tablet} {
         padding-bottom: 16px;
       }
-      @media ${media.desktop} {
+      /* @media ${media.desktop} {
         padding-bottom: 0px;
-      }
+      } */
     }
 
     @media ${media.mobTab} {
