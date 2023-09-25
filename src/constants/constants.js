@@ -15,7 +15,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Adding', second: 'to Staking' },
       preLoading: { first: 'Adding', second: 'to Staking' },
-      success: 'added to Staking',
+      success: { first: '', second: 'added to Staking' },
     },
   },
   approve: {
@@ -23,7 +23,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Approving', second: '' },
       preLoading: { first: 'Approving', second: '' },
-      success: 'approved',
+      success: { first: '', second: 'approved' },
     },
   },
   withdraw: {
@@ -31,7 +31,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Withdrawing', second: 'from Staking' },
       preLoading: { first: 'Withdrawing', second: 'from Staking' },
-      success: 'withdraw from Staking',
+      success: { first: '', second: 'withdraw from Staking' },
     },
   },
   withdrawAll: {
@@ -39,7 +39,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Withdrawing all & Claiming rewards', second: '' },
       preLoading: { first: 'Withdrawing all & Claiming rewards', second: '' },
-      success: 'Withdraw all & Claim rewards',
+      success: { first: '', second: 'Withdraw all & Claim rewards' },
     },
   },
   claim: {
@@ -47,7 +47,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Claiming', second: 'rewards' },
       preLoading: { first: 'Claiming', second: 'rewards' },
-      success: 'claim rewards',
+      success: { first: '', second: 'claim rewards' },
     },
   },
 };

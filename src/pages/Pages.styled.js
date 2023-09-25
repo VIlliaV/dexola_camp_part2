@@ -38,8 +38,10 @@ export const PagesContainer = styled.div`
   & button {
     /* align-items: center; */
     align-self: start;
+
     @media ${media.mobTab} {
-      margin-top: 20px;
+      /* margin-top: 20px; */
+      flex: 1;
     }
   }
 `;

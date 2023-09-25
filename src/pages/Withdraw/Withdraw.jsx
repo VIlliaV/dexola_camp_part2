@@ -99,11 +99,12 @@ const Withdraw = () => {
           <Available available={available} />
         </Form>
       </div>
+      <OperationStatus media="mobile" />
       <ButtonContainer>
         <Button typeButton="submit" form={PAGES_NAME.withdraw}>
           {PAGES_NAME.withdraw}
         </Button>
-        <OperationStatus media="mobile" />
+
         <Button onClick={handleWithdrawExit} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
           withdraw all & Claim rewards
         </Button>

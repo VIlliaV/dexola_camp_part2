@@ -23,12 +23,25 @@ export const OperationStatusStyled = styled.div`
 
 export const SvgPending = styled(operationPending)`
   border-radius: 50%;
+  animation: rotateIndicator 1s linear infinite;
+
   & #indicator {
     /* fill: red; */
   }
   & #circle {
     stroke-width: 3px;
     /* stroke: red; */
+  }
+  & #track {
+    fill: #6e758b;
+  }
+  @keyframes rotateIndicator {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 

@@ -53,29 +53,23 @@ const OperationStatus = ({ media }) => {
 
   return (
     <OperationStatusStyled $media={media}>
-      {status === CONTRACT_OPERATION.status.loading || status === CONTRACT_OPERATION.status.preLoading ? (
+      {status !== CONTRACT_OPERATION.status.error ? (
         <>
-          <SvgPending />
+          {status === CONTRACT_OPERATION.status.success ? <SvgSuccess /> : <SvgPending />}
           <OperationInfo>
             {CONTRACT_OPERATION[operation].statusText[status].first}{' '}
             <SpanStyled>
               {valueOperation} {unit}
             </SpanStyled>{' '}
+            {status === CONTRACT_OPERATION.status.success && (
+              <>
+                successfully <br />
+              </>
+            )}
             {CONTRACT_OPERATION[operation].statusText[status].second}
           </OperationInfo>
         </>
-      ) : status === CONTRACT_OPERATION.status.success ? (
-        <>
-          <SvgSuccess />
-          <OperationInfo>
-            <SpanStyled>
-              {valueOperation} {unit}{' '}
-            </SpanStyled>
-            successfully <br />
-            added to Staking
-          </OperationInfo>
-        </>
-      ) : status === CONTRACT_OPERATION.status.error ? (
+      ) : (
         <>
           <SvgError />
           <OperationInfo>
@@ -84,8 +78,6 @@ const OperationStatus = ({ media }) => {
             Please try again
           </OperationInfo>
         </>
-      ) : (
-        <> </>
       )}
     </OperationStatusStyled>
   );
