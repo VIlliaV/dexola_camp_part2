@@ -49,7 +49,7 @@ const OperationStatus = ({ media }) => {
   }, [clearStatus]);
 
   if (!isStatus) return;
-  const { status, valueOperation } = isStatus;
+  const { status, valueOperation, operation } = isStatus;
 
   return (
     <OperationStatusStyled $media={media}>
@@ -57,11 +57,11 @@ const OperationStatus = ({ media }) => {
         <>
           <SvgPending />
           <OperationInfo>
-            Adding{' '}
+            {CONTRACT_OPERATION[operation].statusText[status].first}{' '}
             <SpanStyled>
               {valueOperation} {unit}
             </SpanStyled>{' '}
-            to Staking
+            {CONTRACT_OPERATION[operation].statusText[status].second}
           </OperationInfo>
         </>
       ) : status === CONTRACT_OPERATION.status.success ? (

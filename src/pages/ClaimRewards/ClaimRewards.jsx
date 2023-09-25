@@ -1,31 +1,25 @@
 import { formatEther } from 'viem';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
-import { PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { useContractRead, useAccount, useContractWrite } from 'wagmi';
+// import { useContractRead, useAccount } from 'wagmi';
 import Form from '../../components/Form/Form';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
 import { useContextContract } from '../../Context';
 
 const ClaimRewards = () => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
   const { pathname } = useLocation();
-  const { setDataOperation } = useContextContract();
-  const { data: availableRewards = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'earned',
-    args: [address],
-    // chainId: 11155111,
-  });
+  const { setDataOperation, writeRewards, availableRewards } = useContextContract();
 
-  const { write: writeRewards } = useContractWrite({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'claimReward',
-    chainId: 11155111,
-    // args: [parseEther(withdraw)],
-  });
+  // const { write: writeRewards } = useContractWrite({
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'claimReward',
+  //   chainId: 11155111,
+  //   // args: [parseEther(withdraw)],
+  // });
   const available = formatEther(availableRewards);
 
   const handleSubmit = event => {
@@ -37,16 +31,16 @@ const ClaimRewards = () => {
           ...prev,
           {
             page: pathname,
-            status: 'CONTRACT_OPERATION.status.preLoading',
+            status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: available,
-            operation: 'claim',
+            operation: CONTRACT_OPERATION.claim.operation,
           },
         ];
         return arr;
       });
       writeRewards();
     } else {
-      toast.error('у вас немає rewards');
+      toast.error('you have no rewards');
     }
   };
 

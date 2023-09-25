@@ -13,13 +13,14 @@ import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
+import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { address } = useAccount();
   const { pathname } = useLocation();
 
-  const { setDataOperation, withdraw, withdrawExit } = useContextContract();
+  const { setDataOperation, withdraw, withdrawExit, availableRewards } = useContextContract();
 
   const { data: stakedBalance = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
@@ -42,6 +43,7 @@ const Withdraw = () => {
   // });
 
   const available = +formatEther(stakedBalance);
+  const availableForClaim = formatEther(availableRewards);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -55,7 +57,7 @@ const Withdraw = () => {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: withdrawValue,
-            operation: CONTRACT_OPERATION.withdraw.operation.withdraw,
+            operation: CONTRACT_OPERATION.withdraw.operation,
           },
         ];
         return arr;
@@ -67,22 +69,22 @@ const Withdraw = () => {
   };
 
   const handleWithdrawExit = () => {
-    if (available !== '0') {
+    if (available !== 0) {
       setDataOperation(prev => {
         const arr = [
           ...prev,
           {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: available,
-            operation: CONTRACT_OPERATION.withdraw.operation.withdrawAll,
+            valueOperation: available + ' + ' + availableForClaim,
+            operation: CONTRACT_OPERATION.withdrawAll.operation,
           },
         ];
         return arr;
       });
       withdrawExit();
     } else {
-      toast.error('у вас немає rewards');
+      toast.error('you do not have on the Staked balance');
     }
   };
 
@@ -101,6 +103,7 @@ const Withdraw = () => {
         <Button typeButton="submit" form={PAGES_NAME.withdraw}>
           {PAGES_NAME.withdraw}
         </Button>
+        <OperationStatus media="mobile" />
         <Button onClick={handleWithdrawExit} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
           withdraw all & Claim rewards
         </Button>

@@ -6,7 +6,7 @@ import {
   STAR_RUNNER_TOKEN_CONTRACT,
 } from './constants/constants';
 import { parseEther } from 'viem';
-import { useAccount, useBalance, useContractWrite, useWaitForTransaction } from 'wagmi';
+import { useAccount, useBalance, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi';
 import { operationChangeStatus } from './utils/helpers/operation';
 
 const ContractContext = createContext();
@@ -26,7 +26,13 @@ export const Context = ({ children }) => {
     token: STAR_RUNNER_TOKEN_ADDRESS,
     watch: updateInfo,
   });
-
+  const { data: availableRewards = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'earned',
+    args: [address],
+    watch: updateInfo,
+    // chainId: 11155111,
+  });
   const {
     write: approve,
     data: dataApprove,
@@ -67,6 +73,16 @@ export const Context = ({ children }) => {
   });
 
   const {
+    write: writeRewards,
+    status: statusRewards,
+    data: dataRewards,
+  } = useContractWrite({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'claimReward',
+    chainId: 11155111,
+  });
+
+  const {
     data: dataWaitTransactionApprove,
     isSuccess: isSuccessApprove,
     isError: isErrorApprove,
@@ -101,6 +117,15 @@ export const Context = ({ children }) => {
     hash: dataStake?.hash,
   });
 
+  const {
+    data: dataWaitTransactionRewards,
+    isSuccess: isSuccessRewards,
+    isError: isErrorRewards,
+    isFetched: isFetchedRewards,
+  } = useWaitForTransaction({
+    hash: dataRewards?.hash,
+  });
+
   const filteredData = dataOperation.filter(item => item.hash === dataWaitTransactionApprove?.transactionHash);
 
   const findValue = filteredData.map(({ valueOperation }) => valueOperation);
@@ -118,10 +143,10 @@ export const Context = ({ children }) => {
         isError: isErrorApprove,
         data: dataApprove,
         dataWaitTransaction: dataWaitTransactionApprove,
-        nameOPeration: CONTRACT_OPERATION.stake.operation.approve,
+        nameOPeration: CONTRACT_OPERATION.approve.operation,
         isMoreOperation: true,
         path: PathOperation,
-        nameOPerationNext: CONTRACT_OPERATION.stake.operation.stake,
+        nameOPerationNext: CONTRACT_OPERATION.stake.operation,
         valueOperation: valueOperation,
       })
     );
@@ -138,7 +163,7 @@ export const Context = ({ children }) => {
         isError: isErrorStake,
         data: dataStake,
         dataWaitTransaction: dataWaitTransactionStake,
-        nameOPeration: CONTRACT_OPERATION.stake.operation.stake,
+        nameOPeration: CONTRACT_OPERATION.stake.operation,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,7 +178,7 @@ export const Context = ({ children }) => {
         isError: isErrorWithdraw,
         data: dataWithdraw,
         dataWaitTransaction: dataWaitTransactionWithdraw,
-        nameOPeration: CONTRACT_OPERATION.withdraw.operation.withdraw,
+        nameOPeration: CONTRACT_OPERATION.withdraw.operation,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,20 +192,36 @@ export const Context = ({ children }) => {
         isSuccess: isSuccessWithdrawExit,
         isError: isErrorWithdrawExit,
         data: dataWithdrawExit,
+
         dataWaitTransaction: dataWaitTransactionWithdrawExit,
-        nameOPeration: CONTRACT_OPERATION.withdraw.operation.withdrawAll,
+        nameOPeration: CONTRACT_OPERATION.withdrawAll.operation,
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
+  // console.log('🚀 ~ dataWithdrawExit:', dataWithdrawExit);
+  useEffect(() => {
+    setDataOperation(prev =>
+      operationChangeStatus({
+        status: statusRewards,
+        prevData: prev,
+        isSuccess: isSuccessRewards,
+        isError: isErrorRewards,
+        data: dataRewards,
+        dataWaitTransaction: dataWaitTransactionRewards,
+        nameOPeration: CONTRACT_OPERATION.claim.operation,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusRewards, isSuccessRewards, isErrorRewards]);
 
   useEffect(() => {
-    if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit) {
+    if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit || isFetchedRewards) {
       setUpdateInfo(true);
     } else {
       setUpdateInfo(false);
     }
-  }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit]);
+  }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit, isFetchedRewards]);
 
   return (
     <ContractContext.Provider
@@ -195,6 +236,8 @@ export const Context = ({ children }) => {
         setUpdateInfo,
         withdraw,
         withdrawExit,
+        writeRewards,
+        availableRewards,
       }}
     >
       {children}

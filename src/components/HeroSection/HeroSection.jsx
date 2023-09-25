@@ -11,7 +11,6 @@ import { useContextContract } from '../../Context';
 const HeroSection = () => {
   const { address } = useAccount();
   const { updateInfo } = useContextContract();
-  console.log('🚀 ~ updateInfo Hero:', updateInfo);
 
   const { data } = useContractReads({
     contracts: [
@@ -48,6 +47,7 @@ const HeroSection = () => {
         // chainId: 11155111,
       },
     ],
+    watch: updateInfo,
   });
 
   const [

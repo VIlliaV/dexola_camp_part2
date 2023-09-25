@@ -9,13 +9,47 @@ export const CONTRACT_INFO = {
 };
 
 export const CONTRACT_OPERATION = {
-  stake: { operation: { stake: 'stake', approve: 'approve' } },
-
-  withdraw: { operation: { withdraw: 'withdraw', withdrawAll: 'withdraw-exit' } },
-  claim: {
-    operation: { claim: 'claim' },
+  status: { preLoading: 'preLoading', loading: 'loading', error: 'error', success: 'success' },
+  stake: {
+    operation: 'stake',
+    statusText: {
+      loading: { first: 'Adding', second: 'to Staking' },
+      preLoading: { first: 'Adding', second: 'to Staking' },
+      success: 'added to Staking',
+    },
   },
-  status: { preLoading: 'pre-loading', loading: 'loading', error: 'error', success: 'success' },
+  approve: {
+    operation: 'approve',
+    statusText: {
+      loading: { first: 'Approving', second: '' },
+      preLoading: { first: 'Approving', second: '' },
+      success: 'approved',
+    },
+  },
+  withdraw: {
+    operation: 'withdraw',
+    statusText: {
+      loading: { first: 'Withdrawing', second: 'from Staking' },
+      preLoading: { first: 'Withdrawing', second: 'from Staking' },
+      success: 'withdraw from Staking',
+    },
+  },
+  withdrawAll: {
+    operation: 'withdrawAll',
+    statusText: {
+      loading: { first: 'Withdrawing all & Claiming rewards', second: '' },
+      preLoading: { first: 'Withdrawing all & Claiming rewards', second: '' },
+      success: 'Withdraw all & Claim rewards',
+    },
+  },
+  claim: {
+    operation: 'claim',
+    statusText: {
+      loading: { first: 'Claiming', second: 'rewards' },
+      preLoading: { first: 'Claiming', second: 'rewards' },
+      success: 'claim rewards',
+    },
+  },
 };
 
 export const INPUT_INFO = {

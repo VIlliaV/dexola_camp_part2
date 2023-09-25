@@ -33,7 +33,7 @@ const Stake = () => {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: stake,
-            operation: CONTRACT_OPERATION.stake.operation.approve,
+            operation: CONTRACT_OPERATION.approve.operation,
           },
         ];
         return arr;
