@@ -1,6 +1,6 @@
-import { CONTRACT_INFO } from '../constants/constants';
+// import { CONTRACT_INFO } from '../constants/constants';
 
-const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
+// const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
 
 export const formatDecimalPlaces = (data, quantity = 2) => {
   return data.toFixed(quantity);
@@ -11,21 +11,25 @@ export const formatApproximately = data => {
   return `≈${formatData}%`;
 };
 
-//? переробити на світч////////////////
+export const resultType = {
+  minType: 'min',
+  maxType: 'max',
+  dateType: 'date',
+  approxType: 'approx',
+};
 
 export const result = (type, data) => {
-  if (type === stakedBalance) {
+  if (type === resultType.maxType) {
     return data < 10
       ? formatDecimalPlaces(data, 4)
       : data < 1000
       ? formatDecimalPlaces(data)
       : formatDecimalPlaces(data, 0);
-  } else if (type === apr) {
+  } else if (type === resultType.approxType) {
     return formatApproximately(data);
-  } else if (type === days) {
+  } else if (type === resultType.dateType) {
     return formatDecimalPlaces(data, 0);
-  } else if (type === rewards) {
-    // console.log('🚀 ~ rewards:', rewards);
+  } else if (type === resultType.minType) {
     return data < 10
       ? formatDecimalPlaces(data, 4)
       : data > 100

@@ -11,7 +11,7 @@ const ContractInfo = ({ data = 0, variable = {} }) => {
   return (
     <ContractInfoStyled>
       <div className="contract_data contract_item">
-        <p className="contract_result">{result(variable, data)}</p>
+        <p className="contract_result">{result(variable.type, data)}</p>
         {(variable === stakedBalance || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
       </div>
       {variable !== days ? <SignTip variable={variable} className="contract_item" /> : <div></div>}

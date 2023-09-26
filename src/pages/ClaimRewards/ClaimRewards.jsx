@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
+import { result, resultType } from '../../utils/formating';
 
 const ClaimRewards = () => {
   // const { address } = useAccount();
@@ -22,7 +23,7 @@ const ClaimRewards = () => {
   //   // args: [parseEther(withdraw)],
   // });
   const available = formatEther(availableRewards);
-
+  const { maxType } = resultType;
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -33,7 +34,7 @@ const ClaimRewards = () => {
           {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: available,
+            valueOperation: result(available, maxType),
             operation: CONTRACT_OPERATION.claim.operation,
           },
         ];
