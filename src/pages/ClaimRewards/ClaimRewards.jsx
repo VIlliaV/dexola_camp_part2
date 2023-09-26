@@ -34,7 +34,7 @@ const ClaimRewards = () => {
           {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: result(available, maxType),
+            valueOperation: result(maxType, +available),
             operation: CONTRACT_OPERATION.claim.operation,
           },
         ];
