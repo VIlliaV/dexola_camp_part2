@@ -8,6 +8,7 @@ import Form from '../../components/Form/Form';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
 import { useContextContract } from '../../Context';
+import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
 const ClaimRewards = () => {
   // const { address } = useAccount();
@@ -54,6 +55,7 @@ const ClaimRewards = () => {
           <Available available={+available} formatDecimal={4} />
         </Form>
       </div>
+      <OperationStatus media="mobile" />
       <Button typeButton="submit" form={PAGES_NAME.rewards}>
         {PAGES_NAME.rewards}
       </Button>
