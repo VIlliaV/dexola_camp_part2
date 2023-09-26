@@ -21,11 +21,12 @@ export const Context = ({ children }) => {
   // console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
   const { address } = useAccount();
-  const { data: balance } = useBalance({
+  const { data: balanceNoFormatting } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
     watch: updateInfo,
   });
+  const balance = +balanceNoFormatting?.formatted || 0;
 
   const { data: tokenData } = useToken({
     address: STAR_RUNNER_TOKEN_ADDRESS,

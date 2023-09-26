@@ -9,8 +9,8 @@ import { useContextContract } from '../../../../Context';
 
 const Reward = ({ startBalance }) => {
   const { address } = useAccount();
-  const { updateInfo } = useContextContract();
-  const { tokenName } = useContextContract();
+  const { updateInfo, tokenName } = useContextContract();
+
   // const d = 'STRU/week';
   // const { address } = useAccount();
   const { data: periodFinish = '0' } = useContractRead({

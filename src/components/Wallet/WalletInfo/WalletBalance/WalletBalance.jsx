@@ -2,20 +2,21 @@ import stru from '@/images/STRU.webp';
 import stru2x from '@/images/STRU@2x.webp';
 import struDef from '@/images/STRU.jpg';
 import { WalletBalanceStyled } from './WalletBalance.styled';
-import { useBalance } from 'wagmi';
-import { useAccount } from 'wagmi';
+// import { useBalance } from 'wagmi';
+// import { useAccount } from 'wagmi';
 import { formatDecimalPlaces } from '@/utils/formating';
-import { STAR_RUNNER_TOKEN_ADDRESS } from '../../../../constants/constants';
+// import { STAR_RUNNER_TOKEN_ADDRESS } from '../../../../constants/constants';
 import { useContextContract } from '../../../../Context';
 
 const WalletBalance = () => {
-  const { address } = useAccount();
-  const { data } = useBalance({
-    address,
-    token: STAR_RUNNER_TOKEN_ADDRESS,
-  });
+  // const { address } = useAccount();
+  // const { data } = useBalance({
+  //   address,
+  //   token: STAR_RUNNER_TOKEN_ADDRESS,
+  // });
+  // console.log('🚀 ~ data:', data);
 
-  const { tokenName } = useContextContract();
+  const { tokenName, balance } = useContextContract();
 
   return (
     <WalletBalanceStyled>
@@ -24,7 +25,7 @@ const WalletBalance = () => {
         <img src={`${struDef}`} alt={tokenName} />
       </picture>
       <h3>
-        {formatDecimalPlaces(+data?.formatted, 0)} {tokenName}
+        {formatDecimalPlaces(balance, 0)} {tokenName}
       </h3>
     </WalletBalanceStyled>
   );

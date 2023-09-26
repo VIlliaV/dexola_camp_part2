@@ -10,7 +10,7 @@ const Currency = () => {
   const { data } = useBalance({
     address,
   });
-
+  const currency = +data?.formatted || 0;
   const tokenName = 'ETH';
 
   const { open } = useWeb3Modal();
@@ -18,7 +18,7 @@ const Currency = () => {
     <CurrencyStyled onClick={() => open()}>
       <SvgStyled />
       <h3>
-        {formatDecimalPlaces(+data?.formatted)} {tokenName}
+        {formatDecimalPlaces(currency)} {tokenName}
       </h3>
       <span>|</span>
       <WalletAddress />

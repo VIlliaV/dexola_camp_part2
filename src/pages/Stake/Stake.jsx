@@ -19,11 +19,9 @@ const Stake = () => {
   const { pathname } = useLocation();
   const { setDataOperation, approve, balance } = useContextContract();
 
-  const available = +balance?.formatted;
-
   const handleSubmit = event => {
     event.preventDefault();
-    const { error } = validateData(stake, available);
+    const { error } = validateData(stake, balance);
 
     if (!error) {
       setDataOperation(prev => {
@@ -52,8 +50,8 @@ const Stake = () => {
           <Reward startBalance={stake} />
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
-          <Label type={PAGES_NAME.stake} formValue={setStake} maxAllowed={available}></Label>
-          <Available available={available} />
+          <Label type={PAGES_NAME.stake} formValue={setStake} maxAllowed={balance}></Label>
+          <Available available={balance} />
         </Form>
       </div>
       <OperationStatus media="mobile" />

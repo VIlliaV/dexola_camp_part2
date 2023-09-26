@@ -16,6 +16,7 @@ export const resultType = {
   maxType: 'max',
   dateType: 'date',
   approxType: 'approx',
+  mobileType: 'mobile',
 };
 
 export const result = (type, data) => {
@@ -35,6 +36,8 @@ export const result = (type, data) => {
       : data > 100
       ? formatDecimalPlaces(data, 0)
       : formatDecimalPlaces(data);
+  } else if (type === resultType.mobileType) {
+    return data < 10 ? formatDecimalPlaces(data) : formatDecimalPlaces(data, 0);
   } else {
     return data;
   }
