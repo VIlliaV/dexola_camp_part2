@@ -29,6 +29,7 @@ export const Context = ({ children }) => {
 
   const { data: tokenData } = useToken({
     address: STAR_RUNNER_TOKEN_ADDRESS,
+    chainId: 11155111,
   });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
 
