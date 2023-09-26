@@ -1,15 +1,21 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from '@/styles/media';
-import { headerBackground } from '../styles/styledConst.js';
+import background_header_mob from '@/images/background/technology_background_mob.webp';
+import background_header_mob2x from '@/images/background/technology_background_mob@2x.webp';
+// import { headerBackground } from '../styles/styledConst.js';
 
 export const GlobalStyles = createGlobalStyle`
   body {
     font-family: var(--font-body);
     font-size: var(--font-size_body-mob);
     letter-spacing: -0.02em;
-    ${headerBackground}
+     background-image: url(${background_header_mob});
+     @media ${media.mobile + media.retina} {
+    background-image: url(${background_header_mob2x});
+     }
     @media ${media.tablet} {
       font-size: var(--font-size_body-tab);
+      background: none;
        background-color: var(--background);
     }
     @media ${media.desktop} {

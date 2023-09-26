@@ -78,6 +78,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--primary);
+  /* background-color: var(--background); */
   overflow-x: hidden;
 }
 

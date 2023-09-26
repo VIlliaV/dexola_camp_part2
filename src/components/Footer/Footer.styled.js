@@ -1,9 +1,14 @@
 import styled from 'styled-components';
-import { media } from '@/styles/media';
+import { media, size } from '@/styles/media';
 
 export const FooterContainer = styled.footer`
   border-top: 1px solid var(--accent);
   flex-grow: 0;
+
+  @media ${media.mobTab} {
+    background-color: var(--background);
+  }
+
   & .container {
     flex-direction: row;
     justify-content: space-between;
@@ -24,7 +29,8 @@ export const FooterContainer = styled.footer`
     }
 
     @media ${media.desktop} {
-      width: 100vw;
+      width: ${size.desktop};
+      margin: 0 auto;
       padding: 16px 40px 26px;
     }
   }

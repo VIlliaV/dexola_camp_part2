@@ -24,6 +24,7 @@ export const Container = styled.div`
       @media ${media.tablet} {
         background-color: transparent;
         padding-bottom: 16px;
+        border-radius: none;
       }
     }
 

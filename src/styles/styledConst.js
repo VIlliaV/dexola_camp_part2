@@ -7,6 +7,7 @@ import background_header_mob2x from '@/images/background/technology_background_m
 export const headerBackground = `background-image: url(${background_header_mob});
   @media ${media.mobile + media.retina} {
     background-image: url(${background_header_mob2x});
+    
   }
   @media ${media.tablet} {
     background-image: url(${background_header});
@@ -23,6 +24,7 @@ export const headerBackground = `background-image: url(${background_header_mob})
   @media ${media.desktop + media.retina} {
     background-image: url(${background_header2x});
      background-size: 100vw auto;
+     z-index: 3;
   }
   background-size: 100vw auto;
   background-repeat: no-repeat;

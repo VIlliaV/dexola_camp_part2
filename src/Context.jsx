@@ -16,7 +16,6 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
-  console.log('🚀 ~ updateInfo:', updateInfo);
 
   const [dataOperation, setDataOperation] = useState([]);
   // console.log('🚀 ~ dataOperation:', dataOperation);
