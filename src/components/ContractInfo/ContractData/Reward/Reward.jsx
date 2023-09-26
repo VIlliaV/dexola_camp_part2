@@ -43,13 +43,13 @@ const Reward = ({ startBalance }) => {
 
   const remaining = Number(periodFinish) - Math.floor(Date.now()) / 1000 || 0;
   const available = remaining * formatEther(rewardRate || 0);
-  const totalAvailableRewards =
+  const totalAvailableRewardsNoFormatting =
     Number((formatEther(stakedBalance) * available) / formatEther(totalSupply) + startBalance) || 0;
-
+  const totalAvailableRewards = formatDecimalPlaces(totalAvailableRewardsNoFormatting, 0);
   return (
     <RewardStyled>
       Reward rate:
-      <RewardValue>{formatDecimalPlaces(totalAvailableRewards, 0)}</RewardValue>
+      <RewardValue>{totalAvailableRewards}</RewardValue>
       <RewardUnit>{tokenName}/week</RewardUnit>
     </RewardStyled>
   );
