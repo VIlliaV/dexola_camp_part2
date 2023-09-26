@@ -1,14 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from '@/styles/media';
+import { headerBackground } from '../styles/styledConst.js';
 
 export const GlobalStyles = createGlobalStyle`
   body {
     font-family: var(--font-body);
     font-size: var(--font-size_body-mob);
     letter-spacing: -0.02em;
-    
+    ${headerBackground}
     @media ${media.tablet} {
       font-size: var(--font-size_body-tab);
+       background-color: var(--background);
     }
     @media ${media.desktop} {
 

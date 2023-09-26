@@ -19,7 +19,10 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     & .pages_section {
+      background-color: var(--background);
+      border-radius: 16px 16px 0px 0px;
       @media ${media.tablet} {
+        background-color: transparent;
         padding-bottom: 16px;
       }
     }
