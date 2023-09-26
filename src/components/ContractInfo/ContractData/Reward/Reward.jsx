@@ -10,8 +10,8 @@ import { useContextContract } from '../../../../Context';
 const Reward = ({ startBalance }) => {
   const { address } = useAccount();
   const { updateInfo } = useContextContract();
-  // const reward = 1;
-  const unit = 'STRU/week';
+  const { tokenName } = useContextContract();
+  // const d = 'STRU/week';
   // const { address } = useAccount();
   const { data: periodFinish = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
@@ -50,7 +50,7 @@ const Reward = ({ startBalance }) => {
     <RewardStyled>
       Reward rate:
       <RewardValue>{formatDecimalPlaces(+totalAvailableRewards, 0)}</RewardValue>
-      <RewardUnit>{unit}</RewardUnit>
+      <RewardUnit>{tokenName}/week</RewardUnit>
     </RewardStyled>
   );
 };

@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { CONTRACT_OPERATION } from '../../constants/constants';
 
 const OperationStatus = ({ media }) => {
-  const unit = 'STRU';
+  const { tokenName } = useContextContract();
   const { pathname } = useLocation();
   const [clearStatus, setClearStatus] = useState(false);
   // useEffect(() => {}, [pathname]);
@@ -67,7 +67,7 @@ const OperationStatus = ({ media }) => {
           <OperationInfo>
             {CONTRACT_OPERATION[operation].statusText[status].first}{' '}
             <SpanStyled>
-              {valueOperation} {unit}
+              {valueOperation} {tokenName}
             </SpanStyled>{' '}
             {status === CONTRACT_OPERATION.status.success && (
               <>

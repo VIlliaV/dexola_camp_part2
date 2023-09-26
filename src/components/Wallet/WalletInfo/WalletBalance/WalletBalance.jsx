@@ -6,6 +6,7 @@ import { useBalance } from 'wagmi';
 import { useAccount } from 'wagmi';
 import { formatDecimalPlaces } from '@/utils/formating';
 import { STAR_RUNNER_TOKEN_ADDRESS } from '../../../../constants/constants';
+import { useContextContract } from '../../../../Context';
 
 const WalletBalance = () => {
   const { address } = useAccount();
@@ -14,7 +15,7 @@ const WalletBalance = () => {
     token: STAR_RUNNER_TOKEN_ADDRESS,
   });
 
-  const tokenName = 'STRU';
+  const { tokenName } = useContextContract();
 
   return (
     <WalletBalanceStyled>

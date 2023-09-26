@@ -3,10 +3,11 @@ import { ContractInfoStyled } from './ContractInfo.styled';
 
 import SignTip from '../Tip/SignTip/SignTip';
 import { result } from '../../utils/formating';
+import { useContextContract } from '../../Context';
 
-const ContractInfo = ({ data = 0, variable = {}, tokenName = 'TEST' }) => {
+const ContractInfo = ({ data = 0, variable = {} }) => {
   const { stakedBalance, rewards, days } = CONTRACT_INFO;
-
+  const { tokenName } = useContextContract();
   return (
     <ContractInfoStyled>
       <div className="contract_data contract_item">

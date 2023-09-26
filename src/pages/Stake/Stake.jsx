@@ -53,7 +53,7 @@ const Stake = () => {
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
           <Label type={PAGES_NAME.stake} formValue={setStake} maxAllowed={available}></Label>
-          <Available available={available} tokenName="STRU" />
+          <Available available={available} />
         </Form>
       </div>
       <OperationStatus media="mobile" />

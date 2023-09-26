@@ -73,7 +73,7 @@ const HeroSection = () => {
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
-            <ContractInfo data={+stakedBalanceResult} variable={stakedBalance} tokenName="STRU" />
+            <ContractInfo data={+stakedBalanceResult} variable={stakedBalance} />
           </li>
           <li>
             <ContractInfo data={aprResult} variable={apr} />
@@ -82,7 +82,7 @@ const HeroSection = () => {
             <ContractInfo data={daysResult} variable={days} />
           </li>
           <li>
-            <ContractInfo data={+earnedResult} variable={rewards} tokenName="STRU" />
+            <ContractInfo data={+earnedResult} variable={rewards} />
           </li>
         </ul>
       </SectionWrapper>

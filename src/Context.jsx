@@ -6,7 +6,7 @@ import {
   STAR_RUNNER_TOKEN_CONTRACT,
 } from './constants/constants';
 import { parseEther } from 'viem';
-import { useAccount, useBalance, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi';
+import { useAccount, useBalance, useContractRead, useContractWrite, useToken, useWaitForTransaction } from 'wagmi';
 import { operationChangeStatus } from './utils/helpers/operation';
 
 const ContractContext = createContext();
@@ -26,6 +26,12 @@ export const Context = ({ children }) => {
     token: STAR_RUNNER_TOKEN_ADDRESS,
     watch: updateInfo,
   });
+
+  const { data: tokenData } = useToken({
+    address: STAR_RUNNER_TOKEN_ADDRESS,
+  });
+  const tokenName = !tokenData.name ? ':(' : tokenData.name === 'StarRunner' ? 'STRU' : tokenData.name;
+
   const { data: availableRewards = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
@@ -238,6 +244,7 @@ export const Context = ({ children }) => {
         withdrawExit,
         writeRewards,
         availableRewards,
+        tokenName,
       }}
     >
       {children}
