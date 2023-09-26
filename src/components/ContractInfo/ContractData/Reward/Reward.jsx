@@ -41,15 +41,15 @@ const Reward = ({ startBalance }) => {
     // chainId: 11155111,
   });
 
-  const remaining = Number(periodFinish) - Math.floor(Date.now()) / 1000;
-  const available = remaining * formatEther(rewardRate);
-
-  const totalAvailableRewards = (formatEther(stakedBalance) * available) / formatEther(totalSupply) + +startBalance;
+  const remaining = Number(periodFinish) - Math.floor(Date.now()) / 1000 || 0;
+  const available = remaining * formatEther(rewardRate || 0);
+  const totalAvailableRewards =
+    Number((formatEther(stakedBalance) * available) / formatEther(totalSupply) + startBalance) || 0;
 
   return (
     <RewardStyled>
       Reward rate:
-      <RewardValue>{formatDecimalPlaces(+totalAvailableRewards, 0)}</RewardValue>
+      <RewardValue>{formatDecimalPlaces(totalAvailableRewards, 0)}</RewardValue>
       <RewardUnit>{tokenName}/week</RewardUnit>
     </RewardStyled>
   );
