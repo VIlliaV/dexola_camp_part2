@@ -19,9 +19,6 @@ export const NoConnectStyled = styled(PagesContainer)`
       @media ${media.tablet} {
         line-height: 1.5;
         letter-spacing: normal;
-        & br {
-          display: none;
-        }
       }
     }
     @media ${media.tablet} {

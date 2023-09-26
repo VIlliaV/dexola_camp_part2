@@ -123,4 +123,9 @@ export const GlobalStyles = createGlobalStyle`
     display: none;
     }
   }
+    & br {
+    @media ${media.tablet} {
+      display: none;
+    }
+  }
 `;

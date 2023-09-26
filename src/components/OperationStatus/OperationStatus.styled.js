@@ -66,11 +66,6 @@ export const OperationInfo = styled.p`
   color: var(--primary);
   /* flex-wrap: wrap; */
   white-space: wrap;
-  & br {
-    @media ${media.tablet} {
-      display: none;
-    }
-  }
 `;
 
 export const SpanStyled = styled.span`

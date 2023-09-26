@@ -7,4 +7,5 @@ export const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,
   appName: 'Web3Modal',
+  autoConnect: true,
 });
