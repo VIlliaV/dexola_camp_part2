@@ -30,7 +30,7 @@ export const Context = ({ children }) => {
   const { data: tokenData } = useToken({
     address: STAR_RUNNER_TOKEN_ADDRESS,
   });
-  const tokenName = !tokenData.name ? ':(' : tokenData.name === 'StarRunner' ? 'STRU' : tokenData.name;
+  const tokenName = !tokenData.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
 
   const { data: availableRewards = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
