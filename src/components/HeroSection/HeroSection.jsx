@@ -44,7 +44,6 @@ const HeroSection = () => {
         functionName: 'earned',
         args: [address],
         watch: updateInfo,
-        // chainId: 11155111,
       },
     ],
     watch: updateInfo,

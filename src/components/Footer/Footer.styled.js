@@ -10,8 +10,7 @@ export const FooterContainer = styled.footer`
     align-items: center;
     padding-top: 8px;
     padding-bottom: 17px;
-    /* height: 100%; */
-    /* margin-top: 5px; */
+
     & p {
       font-size: 11px;
     }

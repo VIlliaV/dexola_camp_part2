@@ -39,7 +39,6 @@ export const Context = ({ children }) => {
     functionName: 'earned',
     args: [address],
     watch: updateInfo,
-    // chainId: 11155111,
   });
   const {
     write: approve,
@@ -207,7 +206,7 @@ export const Context = ({ children }) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
-  // console.log('🚀 ~ dataWithdrawExit:', dataWithdrawExit);
+
   useEffect(() => {
     setDataOperation(prev =>
       operationChangeStatus({

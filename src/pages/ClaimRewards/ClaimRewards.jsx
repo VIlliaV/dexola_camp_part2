@@ -12,16 +12,9 @@ import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
 
 const ClaimRewards = () => {
-  // const { address } = useAccount();
   const { pathname } = useLocation();
   const { setDataOperation, writeRewards, availableRewards } = useContextContract();
 
-  // const { write: writeRewards } = useContractWrite({
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'claimReward',
-  //   chainId: 11155111,
-  //   // args: [parseEther(withdraw)],
-  // });
   const available = formatEther(availableRewards);
   const { maxType } = resultType;
   const handleSubmit = event => {

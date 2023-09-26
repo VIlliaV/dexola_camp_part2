@@ -1,9 +1,6 @@
 // import { useAuth } from 'utils/hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import {
-  useAccount,
-  // , useDisconnect, useEnsAvatar, useEnsName  useConnect,
-} from 'wagmi';
+import { useAccount } from 'wagmi';
 
 export const PrivateRoute = ({ component: Component, redirectTo = '/' }) => {
   const { isConnected = false } = useAccount();

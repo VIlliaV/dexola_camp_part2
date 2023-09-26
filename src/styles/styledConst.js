@@ -29,10 +29,6 @@ export const headerBackground = `background-image: url(${background_header_mob})
   background-position: top center;
 `;
 
-export const pagesContainer = `
-
-`;
-
 export const visualHidden = `
   position: absolute;
   width: 1px;

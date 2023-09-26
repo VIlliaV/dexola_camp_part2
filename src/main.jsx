@@ -4,7 +4,6 @@ import App from './App.jsx';
 import './styles/modern-normalize.css';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-// import { Context } from './Context/Context.jsx';
 import { Wagmi } from './Wagmi/Wagmi.jsx';
 import { Context } from './Context.jsx';
 

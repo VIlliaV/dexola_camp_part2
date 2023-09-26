@@ -10,8 +10,6 @@ import SectionWrapper from '../Section/SectionWrapper';
 import HeroSection from '../HeroSection/HeroSection';
 import OperationStatus from '../OperationStatus/OperationStatus';
 
-// import Loader from 'components/Loader/Loader';
-
 const SharedLayout = () => {
   return (
     <Container>

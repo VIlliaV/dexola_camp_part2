@@ -26,21 +26,7 @@ const Withdraw = () => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
     args: [address],
-    // chainId: 11155111,
   });
-
-  // const { write: writeWithdraw, status } = useContractWrite({
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'withdraw',
-  //   chainId: 11155111,
-  //   args: [parseEther(withdrawValue)],
-  // });
-
-  // const { write: writewithdrawValueExit } = useContractWrite({
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'exit',
-  //   chainId: 11155111,
-  // });
 
   const available = +formatEther(stakedBalance);
   const availableForClaim = formatEther(availableRewards);

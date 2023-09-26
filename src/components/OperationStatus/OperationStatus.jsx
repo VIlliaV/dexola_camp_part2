@@ -15,7 +15,6 @@ const OperationStatus = ({ media }) => {
   const { tokenName } = useContextContract();
   const { pathname } = useLocation();
   const [clearStatus, setClearStatus] = useState(false);
-  // useEffect(() => {}, [pathname]);
 
   const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
 

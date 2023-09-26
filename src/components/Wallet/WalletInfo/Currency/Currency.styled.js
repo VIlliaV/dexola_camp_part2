@@ -9,11 +9,6 @@ export const CurrencyStyled = styled.button`
   color: var(--primary);
   background-color: transparent;
   border: none;
-  /* padding: 8px 24px; */
-  &:hover {
-    /* border-radius: 4px; */
-    /* background-color: var(--button_hover); */
-  }
 
   & .wallet_address,
   span {

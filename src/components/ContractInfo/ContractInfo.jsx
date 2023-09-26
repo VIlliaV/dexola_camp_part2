@@ -1,6 +1,5 @@
 import { CONTRACT_INFO } from '../../constants/constants';
 import { ContractInfoStyled } from './ContractInfo.styled';
-
 import SignTip from '../Tip/SignTip/SignTip';
 import { result, resultType } from '../../utils/formating';
 import { useContextContract } from '../../Context';

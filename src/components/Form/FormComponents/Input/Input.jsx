@@ -34,7 +34,6 @@ const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed }
       onBlur={handleBlur}
       $errorMessage={errorMessage}
       aria-label={nameInput}
-      // onFocus={handleFocus}
     />
   );
 };

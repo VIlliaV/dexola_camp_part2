@@ -1,14 +1,11 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { lazy, useEffect, useState } from 'react';
-
+import { lazy, useEffect } from 'react';
 import SharedLayout from './components/SharedLayout/SharedLayout.jsx';
 import { Toaster } from 'react-hot-toast';
-
 import { GlobalStyles } from './styles/GlobalStyles.js';
-// import NoConnect from './pages/NoConnect/NoConnect.jsx';
 import { PrivateRoute } from './PrivateRoute.jsx';
 import { useAccount } from 'wagmi';
-// const SharedLayout = lazy(() => import('./components/SharedLayout/SharedLayout.jsx'));
+
 const NoConnect = lazy(() => import('./pages/NoConnect/NoConnect.jsx'));
 const Stake = lazy(() => import('./pages/Stake/Stake.jsx'));
 const Withdraw = lazy(() => import('./pages/Withdraw/Withdraw.jsx'));
