@@ -38,7 +38,8 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
     args: [address],
-    watch: updateInfo,
+
+    watch: !updateInfo,
   });
   const {
     write: approve,
@@ -93,22 +94,26 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'periodFinish',
     watch: updateInfo,
+    chainId: 11155111,
   });
 
   const { data: rewardRate = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'rewardRate',
+
     watch: updateInfo,
   });
   const { data: stakedBalance = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
     args: [address],
+    chainId: 11155111,
     watch: updateInfo,
   });
   const { data: totalSupply = '0n' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'totalSupply',
+    chainId: 11155111,
     watch: updateInfo,
   });
 
