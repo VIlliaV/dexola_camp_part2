@@ -15,7 +15,12 @@ const SignTip = ({ variable = {}, className = '' }) => {
     setIsActive(false);
   };
   const handleClick = () => {
-    if (!isActive) setIsActive(true);
+    if (!isActive) {
+      setIsActive(true);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   };
   const clearBackdrop = e => {
     if (e.target === e.currentTarget) {

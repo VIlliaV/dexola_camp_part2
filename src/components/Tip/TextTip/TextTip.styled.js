@@ -27,6 +27,11 @@ export const TextTipStyled = styled.div`
       background-color: rgba(60, 60, 67, 0.3);
     }
   }
+  @media ${media.tabDesk} {
+    height: 100%;
+
+    top: 50vh;
+  }
 
   @media ${media.desktop} {
     top: -5px;

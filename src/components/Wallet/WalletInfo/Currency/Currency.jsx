@@ -3,7 +3,7 @@ import { CurrencyStyled, SvgStyled } from './Currency.styled';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 import { useBalance } from 'wagmi';
 import { useAccount } from 'wagmi';
-import { formatDecimalPlaces } from '../../../../utils/formating';
+import { formatDecimalPlaces } from '@/utils/formating';
 
 const Currency = () => {
   const { address } = useAccount();

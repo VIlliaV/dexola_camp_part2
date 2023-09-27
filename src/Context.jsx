@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { parseEther } from 'viem';
+import { useAccount, useBalance, useContractRead, useContractWrite, useToken, useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
   STAR_RUNNER_STAKING_CONTRACT,
   STAR_RUNNER_TOKEN_ADDRESS,
   STAR_RUNNER_TOKEN_CONTRACT,
 } from './constants/constants';
-import { parseEther } from 'viem';
-import { useAccount, useBalance, useContractRead, useContractWrite, useToken, useWaitForTransaction } from 'wagmi';
+
 import { operationChangeStatus } from './utils/helpers/operation';
 
 const ContractContext = createContext();
@@ -18,8 +19,9 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  // console.log('🚀 ~ dataOperation:', dataOperation);
+  console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
+
   const { address } = useAccount();
   const { data: balanceNoFormatting } = useBalance({
     address,
@@ -33,14 +35,14 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
+  const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash || false;
+  useEffect(() => {
+    if (isHaveOldOperation !== hash) {
+      setHash(isHaveOldOperation);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hash]);
 
-  const { data: availableRewards = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'earned',
-    args: [address],
-
-    watch: !updateInfo,
-  });
   const {
     write: approve,
     data: dataApprove,
@@ -90,6 +92,14 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
 
+  const { data: availableRewards = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'earned',
+    args: [address],
+
+    watch: !updateInfo,
+  });
+
   const { data: periodFinish = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'periodFinish',
@@ -103,6 +113,7 @@ export const Context = ({ children }) => {
 
     watch: updateInfo,
   });
+
   const { data: stakedBalance = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
@@ -110,6 +121,7 @@ export const Context = ({ children }) => {
     chainId: 11155111,
     watch: updateInfo,
   });
+
   const { data: totalSupply = '0n' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'totalSupply',
@@ -124,47 +136,53 @@ export const Context = ({ children }) => {
     watch: updateInfo,
   });
 
-  const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash;
-
-  useEffect(() => {
-    if (isHaveOldOperation !== hash) {
-      setHash(isHaveOldOperation);
-    }
-  }, [isHaveOldOperation, hash]);
-
+  const isHash = isHaveOldOperation !== hash;
   const {
     data: dataWaitTransaction,
     isSuccess,
     isError,
     isFetched,
   } = useWaitForTransaction({
-    hash: isHaveOldOperation,
+    hash: isHash ? isHaveOldOperation : isHash,
   });
+
+  // console.log('🚀 ~ isHaveOldOperation:', isHash, isHaveOldOperation);
+
+  const getOperationData = operation => {
+    switch (operation) {
+      case CONTRACT_OPERATION.stake.operation:
+        return dataStake;
+      case CONTRACT_OPERATION.approve.operation:
+        return dataApprove;
+      case CONTRACT_OPERATION.withdraw.operation:
+        return dataWithdraw;
+      case CONTRACT_OPERATION.withdrawAll.operation:
+        return dataWithdrawExit;
+      default:
+        return dataRewards;
+    }
+  };
+
+  const getOperationStatus = operation => {
+    switch (operation) {
+      case CONTRACT_OPERATION.stake.operation:
+        return statusStake;
+      case CONTRACT_OPERATION.approve.operation:
+        return statusApprove;
+      case CONTRACT_OPERATION.withdraw.operation:
+        return statusWithdraw;
+      case CONTRACT_OPERATION.withdrawAll.operation:
+        return statusWithdrawExit;
+      default:
+        return statusRewards;
+    }
+  };
 
   useEffect(() => {
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
-
-    const takeAData =
-      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation
-        ? dataStake
-        : whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
-        ? dataApprove
-        : whatIsOperation?.operation === CONTRACT_OPERATION.withdraw.operation
-        ? dataWithdraw
-        : whatIsOperation?.operation === CONTRACT_OPERATION.withdrawAll.operation
-        ? dataWithdrawExit
-        : dataRewards;
-
-    const takeAStatus =
-      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation
-        ? statusStake
-        : whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
-        ? statusApprove
-        : whatIsOperation?.operation === CONTRACT_OPERATION.withdraw.operation
-        ? statusWithdraw
-        : whatIsOperation?.operation === CONTRACT_OPERATION.withdrawAll.operation
-        ? statusWithdrawExit
-        : statusRewards;
+    // console.log('🚀 ~ whatIsOperation?.operation:', whatIsOperation);
+    const takeAData = getOperationData(whatIsOperation?.operation);
+    const takeAStatus = getOperationStatus(whatIsOperation?.operation);
 
     setDataOperation(prev =>
       operationChangeStatus({
@@ -185,11 +203,14 @@ export const Context = ({ children }) => {
       })
     );
 
+    //? чи потрібно запускати stake
     if (
-      isSuccess &&
-      whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation &&
-      statusStake !== CONTRACT_OPERATION.status.loading
+      // isSuccess &&
+      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation &&
+      statusStake === 'idle' &&
+      whatIsOperation?.status === CONTRACT_OPERATION.status.preLoading
     ) {
+      console.log('object :>> ', whatIsOperation, statusStake, statusApprove, isSuccess);
       stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -16,26 +16,27 @@ export const resultType = {
 };
 
 export const result = (type, data) => {
-  if (type === resultType.maxType) {
-    return data < 10
-      ? formatDecimalPlaces(data, 4)
-      : data < 1000
-      ? formatDecimalPlaces(data)
-      : formatDecimalPlaces(data, 0);
-  } else if (type === resultType.approxType) {
-    return formatApproximately(data);
-  } else if (type === resultType.dateType) {
-    return formatDecimalPlaces(data, 0);
-  } else if (type === resultType.minType) {
-    return data < 10
-      ? formatDecimalPlaces(data, 4)
-      : data > 100
-      ? formatDecimalPlaces(data, 0)
-      : formatDecimalPlaces(data);
-  } else if (type === resultType.mobileType) {
-    return data < 10 ? formatDecimalPlaces(data) : formatDecimalPlaces(data, 0);
-  } else {
-    return data;
+  switch (type) {
+    case resultType.maxType:
+      return data < 10
+        ? formatDecimalPlaces(data, 4)
+        : data < 1000
+        ? formatDecimalPlaces(data)
+        : formatDecimalPlaces(data, 0);
+    case resultType.approxType:
+      return formatApproximately(data);
+    case resultType.dateType:
+      return formatDecimalPlaces(data, 0);
+    case resultType.minType:
+      return data < 10
+        ? formatDecimalPlaces(data, 4)
+        : data > 100
+        ? formatDecimalPlaces(data, 0)
+        : formatDecimalPlaces(data);
+    case resultType.mobileType:
+      return data < 10 ? formatDecimalPlaces(data) : formatDecimalPlaces(data, 0);
+    default:
+      return data;
   }
 };
 

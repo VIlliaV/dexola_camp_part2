@@ -5,7 +5,6 @@ const Wallet = ({ children }) => {
   return (
     <WalletWrapperStyled>
       <WalletBalance />
-
       {children}
     </WalletWrapperStyled>
   );

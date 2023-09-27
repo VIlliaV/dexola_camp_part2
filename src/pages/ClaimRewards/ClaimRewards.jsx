@@ -1,11 +1,12 @@
 import { formatEther } from 'viem';
+import toast from 'react-hot-toast';
+import { useLocation } from 'react-router';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import Form from '../../components/Form/Form';
-import toast from 'react-hot-toast';
-import { useLocation } from 'react-router';
+
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
