@@ -19,7 +19,6 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
@@ -146,8 +145,6 @@ export const Context = ({ children }) => {
     hash: isHash ? isHaveOldOperation : isHash,
   });
 
-  // console.log('🚀 ~ isHaveOldOperation:', isHash, isHaveOldOperation);
-
   const getOperationData = operation => {
     switch (operation) {
       case CONTRACT_OPERATION.stake.operation:
@@ -180,7 +177,6 @@ export const Context = ({ children }) => {
 
   useEffect(() => {
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
-    // console.log('🚀 ~ whatIsOperation?.operation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
     const takeAStatus = getOperationStatus(whatIsOperation?.operation);
 
@@ -205,12 +201,10 @@ export const Context = ({ children }) => {
 
     //? чи потрібно запускати stake
     if (
-      // isSuccess &&
       whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation &&
       statusStake === 'idle' &&
       whatIsOperation?.status === CONTRACT_OPERATION.status.preLoading
     ) {
-      console.log('object :>> ', whatIsOperation, statusStake, statusApprove, isSuccess);
       stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
