@@ -47,7 +47,7 @@ const OperationStatus = ({ media }) => {
       }
       return prev;
     });
-    // }
+
     setClearStatus(false);
     if (updateInfo) setUpdateInfo(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

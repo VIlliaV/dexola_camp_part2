@@ -1,4 +1,3 @@
-// import { useAuth } from 'utils/hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 

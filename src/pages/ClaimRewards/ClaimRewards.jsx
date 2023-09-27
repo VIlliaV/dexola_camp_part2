@@ -3,7 +3,6 @@ import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-// import { useContractRead, useAccount } from 'wagmi';
 import Form from '../../components/Form/Form';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';

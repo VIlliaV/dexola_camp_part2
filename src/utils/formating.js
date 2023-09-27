@@ -1,7 +1,3 @@
-// import { CONTRACT_INFO } from '../constants/constants';
-
-// const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
-
 export const formatDecimalPlaces = (data, quantity = 2) => {
   return data.toFixed(quantity);
 };

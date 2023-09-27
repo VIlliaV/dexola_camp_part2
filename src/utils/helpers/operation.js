@@ -46,12 +46,3 @@ export const operationChangeStatus = ({
   }
   return arr;
 };
-
-// export const isOperationOnThisPage = ({ arr = [], path = '' }) => {
-//   return arr.find(
-//     item =>
-//       item.page === path &&
-//       item.status !== CONTRACT_OPERATION.status.error &&
-//       item.status !== CONTRACT_OPERATION.status.success
-//   );
-// };

@@ -89,14 +89,6 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
 
-  // const {
-  //   data: dataWaitTransactionApprove,
-  //   isSuccess: isSuccessApprove,
-  //   isError: isErrorApprove,
-  // } = useWaitForTransaction({
-  //   hash: dataApprove?.hash,
-  // });
-
   const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash;
   const [hash, setHash] = useState(null);
 
@@ -113,87 +105,7 @@ export const Context = ({ children }) => {
     isFetched,
   } = useWaitForTransaction({
     hash: isHaveOldOperation,
-    // enabled: false,
   });
-
-  // const {
-  //   data: dataWaitTransactionWithdraw,
-  //   isSuccess: isSuccessWithdraw,
-  //   isError: isErrorWithdraw,
-  //   isFetched: isFetchedWithdraw,
-  // } = useWaitForTransaction({
-  //   hash: isHaveOldOperation,
-  // });
-
-  // const {
-  //   data: dataWaitTransactionWithdrawExit,
-  //   isSuccess: isSuccessWithdrawExit,
-  //   isError: isErrorWithdrawExit,
-  //   isFetched: isFetchedWithdrawExit,
-  // } = useWaitForTransaction({
-  //   hash: dataWithdrawExit?.hash,
-  // });
-
-  // const {
-  //   data: dataWaitTransactionStake,
-  //   isSuccess: isSuccessStake,
-  //   isError: isErrorStake,
-  //   isFetched: isFetchedStake,
-  // } = useWaitForTransaction({
-  //   hash: dataStake?.hash,
-  // });
-
-  // const {
-  //   data: dataWaitTransactionRewards,
-  //   isSuccess: isSuccessRewards,
-  //   isError: isErrorRewards,
-  //   isFetched: isFetchedRewards,
-  // } = useWaitForTransaction({
-  //   hash: dataRewards?.hash,
-  // });
-
-  // const filteredData = dataOperation.filter(item => item.hash === dataWaitTransactionApprove?.transactionHash);
-
-  // const findValue = filteredData.map(({ valueOperation }) => valueOperation);
-  // const [valueOperation] = findValue.length > 0 ? findValue : ['0'];
-
-  // const findPath = filteredData.map(({ page }) => page);
-  // const [PathOperation] = findPath.length > 0 ? findPath : ['0'];
-
-  // useEffect(() => {
-  //   setDataOperation(prev =>
-  //     operationChangeStatus({
-  //       status: statusApprove,
-  //       prevData: prev,
-  //       isSuccess: isSuccessApprove,
-  //       isError: isErrorApprove,
-  //       data: dataApprove,
-  //       dataWaitTransaction: dataWaitTransactionApprove,
-  //       nameOPeration: CONTRACT_OPERATION.approve.operation,
-  //       isMoreOperation: true,
-  //       path: PathOperation,
-  //       nameOPerationNext: CONTRACT_OPERATION.stake.operation,
-  //       valueOperation: valueOperation,
-  //     })
-  //   );
-  //   if (isSuccessApprove) stake({ args: [parseEther(valueOperation)] });
-  //   //   eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusApprove, isSuccessApprove, isErrorApprove]);
-
-  // useEffect(() => {
-  //   setDataOperation(prev =>
-  //     operationChangeStatus({
-  //       status: statusStake,
-  //       prevData: prev,
-  //       isSuccess: isSuccessStake,
-  //       isError: isErrorStake,
-  //       data: dataStake,
-  //       dataWaitTransaction: dataWaitTransactionStake,
-  //       nameOPeration: CONTRACT_OPERATION.stake.operation,
-  //     })
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusStake, isSuccessStake, isErrorStake]);
 
   useEffect(() => {
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
@@ -249,61 +161,13 @@ export const Context = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]);
 
-  // useEffect(() => {
-  //   setDataOperation(prev =>
-  //     operationChangeStatus({
-  //       status: statusWithdraw,
-  //       prevData: prev,
-  //       isSuccess: isSuccessWithdraw,
-  //       isError: isErrorWithdraw,
-  //       data: dataWithdraw,
-  //       dataWaitTransaction: dataWaitTransactionWithdraw,
-  //       nameOPeration: CONTRACT_OPERATION.withdraw.operation,
-  //     })
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusWithdraw, isSuccessWithdraw, isErrorWithdraw]);
-
-  // useEffect(() => {
-  //   setDataOperation(prev =>
-  //     operationChangeStatus({
-  //       status: statusWithdrawExit,
-  //       prevData: prev,
-  //       isSuccess: isSuccessWithdrawExit,
-  //       isError: isErrorWithdrawExit,
-  //       data: dataWithdrawExit,
-
-  //       dataWaitTransaction: dataWaitTransactionWithdrawExit,
-  //       nameOPeration: CONTRACT_OPERATION.withdrawAll.operation,
-  //     })
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
-
-  // useEffect(() => {
-  //   setDataOperation(prev =>
-  //     operationChangeStatus({
-  //       status: statusRewards,
-  //       prevData: prev,
-  //       isSuccess: isSuccessRewards,
-  //       isError: isErrorRewards,
-  //       data: dataRewards,
-  //       dataWaitTransaction: dataWaitTransactionRewards,
-  //       nameOPeration: CONTRACT_OPERATION.claim.operation,
-  //     })
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusRewards, isSuccessRewards, isErrorRewards]);
-
   useEffect(() => {
     if (isFetched) {
-      // if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit || isFetchedRewards) {
       setUpdateInfo(true);
     } else {
       setUpdateInfo(false);
     }
   }, [isFetched]);
-  // }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit, isFetchedRewards]);
 
   return (
     <ContractContext.Provider

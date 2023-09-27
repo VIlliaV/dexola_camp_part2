@@ -8,8 +8,6 @@ import { HeroSectionStyled } from './HeroSection.styled';
 import { useAccount, useContractRead, useContractReads } from 'wagmi';
 import { useContextContract } from '../../Context';
 
-// import { readContract } from 'wagmi/actions';
-
 const HeroSection = () => {
   const { address } = useAccount();
   const { updateInfo } = useContextContract();
@@ -48,12 +46,6 @@ const HeroSection = () => {
         chainId: 11155111,
         watch: updateInfo,
       },
-      // {
-      //   ...STAR_RUNNER_STAKING_CONTRACT,
-      //   functionName: 'earned',
-      //   args: [address],
-      //   watch: updateInfo,
-      // },
     ],
     watch: updateInfo,
   });
@@ -63,7 +55,6 @@ const HeroSection = () => {
     { result: rewardForDuration = BigInt('0') } = {},
     { result: totalAmountUsers = BigInt('1') } = {},
     { result: periodFinish = '0' } = {},
-    // { result: earned = BigInt('0') } = {},
   ] = dataTest || [];
 
   const stakedBalanceResult = formatEther(stakedBalanceResultBig);
