@@ -3,14 +3,22 @@ import abiToken from '@/dataBase/token_abi.json';
 import { resultType } from '../utils/formating';
 const { dateType, approxType, maxType, minType } = resultType;
 export const CONTRACT_INFO = {
-  stakedBalance: { text: 'Staked balance', tip: 'Staking rewards get \nallocated on this sum', type: maxType },
+  stakedBalance: {
+    text: 'Staked balance',
+    tip: { first: 'Staking rewards get ', second: 'allocated on this sum' },
+    type: maxType,
+  },
   apr: {
     text: 'APR',
-    tip: 'Displays the average for APR.\nInterest rate is calculated for each amount of tokens.',
+    tip: { first: 'Displays the average for APR. ', second: 'Interest rate is calculated for each amount of tokens.' },
     type: approxType,
   },
-  days: { text: 'Days', tip: 'Days', type: dateType },
-  rewards: { text: 'Rewards', tip: 'Rewards get allocated \nevery second', type: minType },
+  days: {
+    text: 'Days',
+    tip: { first: 'Days', second: '' },
+    type: dateType,
+  },
+  rewards: { text: 'Rewards', tip: { first: 'Rewards get allocated ', second: 'every second' }, type: minType },
 };
 
 export const CONTRACT_OPERATION = {

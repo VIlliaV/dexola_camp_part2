@@ -18,7 +18,10 @@ const OperationStatus = ({ media }) => {
 
   const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
 
+  //? перевірка чи прийшов новий статус на цю сторінку
   const isStatus = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
+
+  //? перевірка чи прийшла додаткова операція
   const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
   const isOldStatus = dataOperation.find(
     item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success

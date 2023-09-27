@@ -5,7 +5,11 @@ const TextTip = ({ tip = '', text = '' }) => {
     <>
       <TextTipStyled className="text_tip">
         <TipTitle>{text}</TipTitle>
-        <TipInfo>{tip}</TipInfo>
+        <TipInfo>
+          {tip.first}
+          <br />
+          {tip.second}
+        </TipInfo>
       </TextTipStyled>
       <SvgStyled className="tip_svg" />
     </>

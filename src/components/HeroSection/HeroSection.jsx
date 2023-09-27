@@ -11,44 +11,6 @@ import { useContextContract } from '../../Context';
 const HeroSection = () => {
   const { availableRewards, stakedBalance, rewardForDuration, totalSupply, periodFinish } = useContextContract();
 
-  // const { data: dataTest } = useContractReads({
-  //   contracts: [
-  // {
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'balanceOf',
-  //   args: [address],
-  //   chainId: 11155111,
-  //   watch: updateInfo,
-  // },
-  // {
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'getRewardForDuration',
-  //   chainId: 11155111,
-  //   watch: updateInfo,
-  // },
-  // {
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'totalSupply',
-  //   chainId: 11155111,
-  //   watch: updateInfo,
-  // },
-  // {
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'periodFinish',
-  //   chainId: 11155111,
-  //   watch: updateInfo,
-  // },
-  //   ],
-  //   watch: updateInfo,
-  // });
-
-  // const [
-  //   // { result: stakedBalanceResultBig = BigInt('0') } = {},
-  //   // { result: rewardForDuration = BigInt('0') } = {},
-  //   // { result: totalAmountUsers = BigInt('1') } = {},
-  //   { result: periodFinish = '0' } = {},
-  // ] = dataTest || [];
-
   const stakedBalanceResult = formatEther(stakedBalance);
 
   const aprResult = (Number(rewardForDuration) * 100) / Number(totalSupply);
