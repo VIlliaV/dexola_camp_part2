@@ -1,15 +1,16 @@
-import { CONTRACT_INFO } from '../../constants/constants';
+import { CONTRACT_INFO } from '@/constants/constants';
 import { ContractInfoStyled } from './ContractInfo.styled';
 import SignTip from '../Tip/SignTip/SignTip';
-import { result, resultType } from '../../utils/formating';
+import { result, resultType } from '@/utils/formating';
 import { useContextContract } from '../../Context';
-import { useResize } from '../../utils/hooks/useResize';
-import { size } from '../../styles/media';
+import { useResize } from '@/utils/hooks/useResize';
+import { size } from '@/styles/media';
 
 const ContractInfo = ({ data = 0, variable = {} }) => {
   const { stakedBalance, rewards, days } = CONTRACT_INFO;
   const { tokenName } = useContextContract();
   const { widthResize } = useResize();
+
   const isMobile =
     widthResize < size.tablet && variable.type !== resultType.dateType && variable.type !== resultType.approxType
       ? resultType.mobileType

@@ -16,7 +16,7 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
-
+  const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
   // console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
@@ -89,8 +89,37 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
 
+  const { data: periodFinish = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'periodFinish',
+    watch: updateInfo,
+  });
+
+  const { data: rewardRate = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'rewardRate',
+    watch: updateInfo,
+  });
+  const { data: stakedBalance = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'balanceOf',
+    args: [address],
+    watch: updateInfo,
+  });
+  const { data: totalSupply = '0n' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'totalSupply',
+    watch: updateInfo,
+  });
+
+  const { data: rewardForDuration = '0' } = useContractRead({
+    ...STAR_RUNNER_STAKING_CONTRACT,
+    functionName: 'getRewardForDuration',
+    chainId: 11155111,
+    watch: updateInfo,
+  });
+
   const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash;
-  const [hash, setHash] = useState(null);
 
   useEffect(() => {
     if (isHaveOldOperation !== hash) {
@@ -185,6 +214,11 @@ export const Context = ({ children }) => {
         writeRewards,
         availableRewards,
         tokenName,
+        periodFinish,
+        rewardRate,
+        stakedBalance,
+        totalSupply,
+        rewardForDuration,
       }}
     >
       {children}

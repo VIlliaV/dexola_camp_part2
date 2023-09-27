@@ -26,11 +26,9 @@ export const SvgPending = styled(operationPending)`
   animation: rotateIndicator 1s linear infinite;
 
   & #indicator {
-    /* fill: red; */
   }
   & #circle {
     stroke-width: 3px;
-    /* stroke: red; */
   }
   & #track {
     fill: #6e758b;
@@ -45,26 +43,14 @@ export const SvgPending = styled(operationPending)`
   }
 `;
 
-export const SvgError = styled(operationError)`
-  /* max-width: 50; */
-  /* grid-row: span 2; */
-`;
+export const SvgError = styled(operationError)``;
 
-export const SvgSuccess = styled(operationSuccess)`
-  /* fill: red;
-  stroke: green; */
-`;
+export const SvgSuccess = styled(operationSuccess)``;
 
 export const OperationInfo = styled.p`
-  /* display: inline-flex;
-  align-items: baseline; */
-  /* max-width: 36vh; */
-  /* gap: 8px; */
-
   line-height: 1.71429;
   letter-spacing: normal;
   color: var(--primary);
-  /* flex-wrap: wrap; */
   white-space: wrap;
 `;
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { inputInfo } from '../../../../utils/inputInfo';
+import { inputInfo } from '@/utils/inputInfo';
 import { InputStyled } from './Input.styled';
-import { validateData } from '../../../../utils/validation';
+import { validateData } from '@/utils/validation';
 import { debounce } from 'debounce';
 
 const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed }) => {
@@ -23,6 +23,7 @@ const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed }
     const { error } = validateData(inputValue, maxAllowed);
     if (error) handleErrorMessage(error.message);
   };
+
   return (
     <InputStyled
       type={typeInput}

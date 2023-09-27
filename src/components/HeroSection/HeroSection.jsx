@@ -1,78 +1,70 @@
 import { formatEther } from 'viem';
-import { CONTRACT_INFO, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
+import { CONTRACT_INFO } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
-import { useAccount, useContractRead, useContractReads } from 'wagmi';
+// import { useContractReads } from 'wagmi';
 import { useContextContract } from '../../Context';
 
 const HeroSection = () => {
-  const { address } = useAccount();
-  const { updateInfo } = useContextContract();
+  const { availableRewards, stakedBalance, rewardForDuration, totalSupply, periodFinish } = useContextContract();
 
-  const { data: earned = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'earned',
-    args: [address],
-    watch: !updateInfo,
-  });
+  // const { data: dataTest } = useContractReads({
+  //   contracts: [
+  // {
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'balanceOf',
+  //   args: [address],
+  //   chainId: 11155111,
+  //   watch: updateInfo,
+  // },
+  // {
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'getRewardForDuration',
+  //   chainId: 11155111,
+  //   watch: updateInfo,
+  // },
+  // {
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'totalSupply',
+  //   chainId: 11155111,
+  //   watch: updateInfo,
+  // },
+  // {
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'periodFinish',
+  //   chainId: 11155111,
+  //   watch: updateInfo,
+  // },
+  //   ],
+  //   watch: updateInfo,
+  // });
 
-  const { data: dataTest } = useContractReads({
-    contracts: [
-      {
-        ...STAR_RUNNER_STAKING_CONTRACT,
-        functionName: 'balanceOf',
-        args: [address],
-        chainId: 11155111,
-        watch: updateInfo,
-      },
-      {
-        ...STAR_RUNNER_STAKING_CONTRACT,
-        functionName: 'getRewardForDuration',
-        chainId: 11155111,
-        watch: updateInfo,
-      },
-      {
-        ...STAR_RUNNER_STAKING_CONTRACT,
-        functionName: 'totalSupply',
-        chainId: 11155111,
-        watch: updateInfo,
-      },
-      {
-        ...STAR_RUNNER_STAKING_CONTRACT,
-        functionName: 'periodFinish',
-        chainId: 11155111,
-        watch: updateInfo,
-      },
-    ],
-    watch: updateInfo,
-  });
+  // const [
+  //   // { result: stakedBalanceResultBig = BigInt('0') } = {},
+  //   // { result: rewardForDuration = BigInt('0') } = {},
+  //   // { result: totalAmountUsers = BigInt('1') } = {},
+  //   { result: periodFinish = '0' } = {},
+  // ] = dataTest || [];
 
-  const [
-    { result: stakedBalanceResultBig = BigInt('0') } = {},
-    { result: rewardForDuration = BigInt('0') } = {},
-    { result: totalAmountUsers = BigInt('1') } = {},
-    { result: periodFinish = '0' } = {},
-  ] = dataTest || [];
+  const stakedBalanceResult = formatEther(stakedBalance);
 
-  const stakedBalanceResult = formatEther(stakedBalanceResultBig);
-
-  const aprResult = (Number(rewardForDuration) * 100) / Number(totalAmountUsers);
+  const aprResult = (Number(rewardForDuration) * 100) / Number(totalSupply);
 
   const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
 
-  const earnedResult = formatEther(earned);
+  const earnedResult = formatEther(availableRewards);
 
-  const { stakedBalance, apr, days, rewards } = CONTRACT_INFO;
+  const { stakedBalance: StakedBalanceFromInfo, apr, days, rewards } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>
       <SectionWrapper>
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
-            <ContractInfo data={+stakedBalanceResult} variable={stakedBalance} />
+            <ContractInfo data={+stakedBalanceResult} variable={StakedBalanceFromInfo} />
           </li>
           <li>
             <ContractInfo data={aprResult} variable={apr} />

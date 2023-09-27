@@ -6,7 +6,6 @@ export const ContractInfoStyled = styled.div`
   grid-template-columns: 1fr auto;
   align-items: baseline;
   gap: 4px;
-  /* width: 100%; */
   & .contract_item {
     &:nth-child(3) {
       grid-column: span 2;
