@@ -13,6 +13,7 @@ import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
 import { useContextContract } from '../../Context';
 import { useLocation } from 'react-router-dom';
+// import { isOperationOnThisPage } from '../../utils/helpers/operation';
 
 const Stake = () => {
   const [stake, setStake] = useState('0');
@@ -41,6 +42,7 @@ const Stake = () => {
       toast.error(error.message);
     }
   };
+  // const isOperation = isOperationOnThisPage({ arr: dataOperation, path: pathname });
 
   return (
     <PagesContainer>

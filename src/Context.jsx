@@ -89,146 +89,221 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
 
-  const {
-    data: dataWaitTransactionApprove,
-    isSuccess: isSuccessApprove,
-    isError: isErrorApprove,
-  } = useWaitForTransaction({
-    hash: dataApprove?.hash,
-  });
+  // const {
+  //   data: dataWaitTransactionApprove,
+  //   isSuccess: isSuccessApprove,
+  //   isError: isErrorApprove,
+  // } = useWaitForTransaction({
+  //   hash: dataApprove?.hash,
+  // });
 
-  const {
-    data: dataWaitTransactionWithdraw,
-    isSuccess: isSuccessWithdraw,
-    isError: isErrorWithdraw,
-    isFetched: isFetchedWithdraw,
-  } = useWaitForTransaction({
-    hash: dataWithdraw?.hash,
-  });
-
-  const {
-    data: dataWaitTransactionWithdrawExit,
-    isSuccess: isSuccessWithdrawExit,
-    isError: isErrorWithdrawExit,
-    isFetched: isFetchedWithdrawExit,
-  } = useWaitForTransaction({
-    hash: dataWithdrawExit?.hash,
-  });
-
-  const {
-    data: dataWaitTransactionStake,
-    isSuccess: isSuccessStake,
-    isError: isErrorStake,
-    isFetched: isFetchedStake,
-  } = useWaitForTransaction({
-    hash: dataStake?.hash,
-  });
-
-  const {
-    data: dataWaitTransactionRewards,
-    isSuccess: isSuccessRewards,
-    isError: isErrorRewards,
-    isFetched: isFetchedRewards,
-  } = useWaitForTransaction({
-    hash: dataRewards?.hash,
-  });
-
-  const filteredData = dataOperation.filter(item => item.hash === dataWaitTransactionApprove?.transactionHash);
-
-  const findValue = filteredData.map(({ valueOperation }) => valueOperation);
-  const [valueOperation] = findValue.length > 0 ? findValue : ['0'];
-
-  const findPath = filteredData.map(({ page }) => page);
-  const [PathOperation] = findPath.length > 0 ? findPath : ['0'];
+  const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash;
+  const [hash, setHash] = useState(null);
 
   useEffect(() => {
-    setDataOperation(prev =>
-      operationChangeStatus({
-        status: statusApprove,
-        prevData: prev,
-        isSuccess: isSuccessApprove,
-        isError: isErrorApprove,
-        data: dataApprove,
-        dataWaitTransaction: dataWaitTransactionApprove,
-        nameOPeration: CONTRACT_OPERATION.approve.operation,
-        isMoreOperation: true,
-        path: PathOperation,
-        nameOPerationNext: CONTRACT_OPERATION.stake.operation,
-        valueOperation: valueOperation,
-      })
-    );
-    if (isSuccessApprove) stake({ args: [parseEther(valueOperation)] });
-    //   eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusApprove, isSuccessApprove, isErrorApprove]);
+    if (isHaveOldOperation !== hash) {
+      setHash(isHaveOldOperation);
+    }
+  }, [isHaveOldOperation, hash]);
+
+  const {
+    data: dataWaitTransaction,
+    isSuccess,
+    isError,
+    isFetched,
+  } = useWaitForTransaction({
+    hash: isHaveOldOperation,
+    // enabled: false,
+  });
+
+  // const {
+  //   data: dataWaitTransactionWithdraw,
+  //   isSuccess: isSuccessWithdraw,
+  //   isError: isErrorWithdraw,
+  //   isFetched: isFetchedWithdraw,
+  // } = useWaitForTransaction({
+  //   hash: isHaveOldOperation,
+  // });
+
+  // const {
+  //   data: dataWaitTransactionWithdrawExit,
+  //   isSuccess: isSuccessWithdrawExit,
+  //   isError: isErrorWithdrawExit,
+  //   isFetched: isFetchedWithdrawExit,
+  // } = useWaitForTransaction({
+  //   hash: dataWithdrawExit?.hash,
+  // });
+
+  // const {
+  //   data: dataWaitTransactionStake,
+  //   isSuccess: isSuccessStake,
+  //   isError: isErrorStake,
+  //   isFetched: isFetchedStake,
+  // } = useWaitForTransaction({
+  //   hash: dataStake?.hash,
+  // });
+
+  // const {
+  //   data: dataWaitTransactionRewards,
+  //   isSuccess: isSuccessRewards,
+  //   isError: isErrorRewards,
+  //   isFetched: isFetchedRewards,
+  // } = useWaitForTransaction({
+  //   hash: dataRewards?.hash,
+  // });
+
+  // const filteredData = dataOperation.filter(item => item.hash === dataWaitTransactionApprove?.transactionHash);
+
+  // const findValue = filteredData.map(({ valueOperation }) => valueOperation);
+  // const [valueOperation] = findValue.length > 0 ? findValue : ['0'];
+
+  // const findPath = filteredData.map(({ page }) => page);
+  // const [PathOperation] = findPath.length > 0 ? findPath : ['0'];
+
+  // useEffect(() => {
+  //   setDataOperation(prev =>
+  //     operationChangeStatus({
+  //       status: statusApprove,
+  //       prevData: prev,
+  //       isSuccess: isSuccessApprove,
+  //       isError: isErrorApprove,
+  //       data: dataApprove,
+  //       dataWaitTransaction: dataWaitTransactionApprove,
+  //       nameOPeration: CONTRACT_OPERATION.approve.operation,
+  //       isMoreOperation: true,
+  //       path: PathOperation,
+  //       nameOPerationNext: CONTRACT_OPERATION.stake.operation,
+  //       valueOperation: valueOperation,
+  //     })
+  //   );
+  //   if (isSuccessApprove) stake({ args: [parseEther(valueOperation)] });
+  //   //   eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusApprove, isSuccessApprove, isErrorApprove]);
+
+  // useEffect(() => {
+  //   setDataOperation(prev =>
+  //     operationChangeStatus({
+  //       status: statusStake,
+  //       prevData: prev,
+  //       isSuccess: isSuccessStake,
+  //       isError: isErrorStake,
+  //       data: dataStake,
+  //       dataWaitTransaction: dataWaitTransactionStake,
+  //       nameOPeration: CONTRACT_OPERATION.stake.operation,
+  //     })
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusStake, isSuccessStake, isErrorStake]);
 
   useEffect(() => {
+    const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
+
+    const takeAData =
+      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation
+        ? dataStake
+        : whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
+        ? dataApprove
+        : whatIsOperation?.operation === CONTRACT_OPERATION.withdraw.operation
+        ? dataWithdraw
+        : whatIsOperation?.operation === CONTRACT_OPERATION.withdrawAll.operation
+        ? dataWithdrawExit
+        : dataRewards;
+
+    const takeAStatus =
+      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation
+        ? statusStake
+        : whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
+        ? statusApprove
+        : whatIsOperation?.operation === CONTRACT_OPERATION.withdraw.operation
+        ? statusWithdraw
+        : whatIsOperation?.operation === CONTRACT_OPERATION.withdrawAll.operation
+        ? statusWithdrawExit
+        : statusRewards;
+
     setDataOperation(prev =>
       operationChangeStatus({
-        status: statusStake,
+        status: takeAStatus,
         prevData: prev,
-        isSuccess: isSuccessStake,
-        isError: isErrorStake,
-        data: dataStake,
-        dataWaitTransaction: dataWaitTransactionStake,
-        nameOPeration: CONTRACT_OPERATION.stake.operation,
+        isSuccess: isSuccess,
+        isError: isError,
+        data: takeAData,
+        dataWaitTransaction: dataWaitTransaction,
+        nameOPeration: whatIsOperation?.operation,
+        isMoreOperation: whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation,
+        path: whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation ? whatIsOperation?.page : null,
+        nameOPerationNext:
+          whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
+            ? CONTRACT_OPERATION.stake.operation
+            : null,
+        valueOperation: whatIsOperation?.valueOperation,
       })
     );
+
+    if (
+      isSuccess &&
+      whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation &&
+      statusStake !== CONTRACT_OPERATION.status.loading
+    ) {
+      stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusStake, isSuccessStake, isErrorStake]);
+  }, [statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]);
+
+  // useEffect(() => {
+  //   setDataOperation(prev =>
+  //     operationChangeStatus({
+  //       status: statusWithdraw,
+  //       prevData: prev,
+  //       isSuccess: isSuccessWithdraw,
+  //       isError: isErrorWithdraw,
+  //       data: dataWithdraw,
+  //       dataWaitTransaction: dataWaitTransactionWithdraw,
+  //       nameOPeration: CONTRACT_OPERATION.withdraw.operation,
+  //     })
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusWithdraw, isSuccessWithdraw, isErrorWithdraw]);
+
+  // useEffect(() => {
+  //   setDataOperation(prev =>
+  //     operationChangeStatus({
+  //       status: statusWithdrawExit,
+  //       prevData: prev,
+  //       isSuccess: isSuccessWithdrawExit,
+  //       isError: isErrorWithdrawExit,
+  //       data: dataWithdrawExit,
+
+  //       dataWaitTransaction: dataWaitTransactionWithdrawExit,
+  //       nameOPeration: CONTRACT_OPERATION.withdrawAll.operation,
+  //     })
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
+
+  // useEffect(() => {
+  //   setDataOperation(prev =>
+  //     operationChangeStatus({
+  //       status: statusRewards,
+  //       prevData: prev,
+  //       isSuccess: isSuccessRewards,
+  //       isError: isErrorRewards,
+  //       data: dataRewards,
+  //       dataWaitTransaction: dataWaitTransactionRewards,
+  //       nameOPeration: CONTRACT_OPERATION.claim.operation,
+  //     })
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusRewards, isSuccessRewards, isErrorRewards]);
 
   useEffect(() => {
-    setDataOperation(prev =>
-      operationChangeStatus({
-        status: statusWithdraw,
-        prevData: prev,
-        isSuccess: isSuccessWithdraw,
-        isError: isErrorWithdraw,
-        data: dataWithdraw,
-        dataWaitTransaction: dataWaitTransactionWithdraw,
-        nameOPeration: CONTRACT_OPERATION.withdraw.operation,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusWithdraw, isSuccessWithdraw, isErrorWithdraw]);
-
-  useEffect(() => {
-    setDataOperation(prev =>
-      operationChangeStatus({
-        status: statusWithdrawExit,
-        prevData: prev,
-        isSuccess: isSuccessWithdrawExit,
-        isError: isErrorWithdrawExit,
-        data: dataWithdrawExit,
-
-        dataWaitTransaction: dataWaitTransactionWithdrawExit,
-        nameOPeration: CONTRACT_OPERATION.withdrawAll.operation,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusWithdrawExit, isSuccessWithdrawExit, isErrorWithdrawExit]);
-
-  useEffect(() => {
-    setDataOperation(prev =>
-      operationChangeStatus({
-        status: statusRewards,
-        prevData: prev,
-        isSuccess: isSuccessRewards,
-        isError: isErrorRewards,
-        data: dataRewards,
-        dataWaitTransaction: dataWaitTransactionRewards,
-        nameOPeration: CONTRACT_OPERATION.claim.operation,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusRewards, isSuccessRewards, isErrorRewards]);
-
-  useEffect(() => {
-    if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit || isFetchedRewards) {
+    if (isFetched) {
+      // if (isFetchedStake || isFetchedWithdraw || isFetchedWithdrawExit || isFetchedRewards) {
       setUpdateInfo(true);
     } else {
       setUpdateInfo(false);
     }
-  }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit, isFetchedRewards]);
+  }, [isFetched]);
+  // }, [isFetchedStake, isFetchedWithdraw, isFetchedWithdrawExit, isFetchedRewards]);
 
   return (
     <ContractContext.Provider

@@ -38,9 +38,7 @@ const OperationStatus = ({ media }) => {
   useEffect(() => {
     setDataOperation(prev => {
       const index = prev.findIndex(
-        item =>
-          (item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success) &&
-          item.page === pathname
+        item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
       );
       if (index !== -1) {
         const arr = [...prev];

@@ -27,4 +27,7 @@ export const ButtonStyle = styled.button`
   &:focus {
     background-color: var(--button_hover);
   }
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
