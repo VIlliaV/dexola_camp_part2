@@ -19,6 +19,7 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
+
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
@@ -95,7 +96,6 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
     args: [address],
-
     watch: !updateInfo,
   });
 
@@ -109,7 +109,6 @@ export const Context = ({ children }) => {
   const { data: rewardRate = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'rewardRate',
-
     watch: updateInfo,
   });
 
@@ -177,8 +176,18 @@ export const Context = ({ children }) => {
 
   useEffect(() => {
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
+    console.log('🚀 ~ dataOperation:', dataOperation);
+    console.log('🚀 ~ isSuccess, isError, isFetched, statusStake:', isSuccess, isError, isFetched, statusStake);
+    console.log('🚀 ~ whatIsOperation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
     const takeAStatus = getOperationStatus(whatIsOperation?.operation);
+    const shouldStake =
+      whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation &&
+      isSuccess &&
+      isFetched &&
+      whatIsOperation?.hash === dataWaitTransaction?.transactionHash;
+
+    if (shouldStake && statusApprove === 'success') return;
 
     setDataOperation(prev =>
       operationChangeStatus({
@@ -200,11 +209,9 @@ export const Context = ({ children }) => {
     );
 
     //? чи потрібно запускати stake
-    if (
-      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation &&
-      statusStake === 'idle' &&
-      whatIsOperation?.status === CONTRACT_OPERATION.status.preLoading
-    ) {
+
+    if (shouldStake && statusStake !== 'loading') {
+      console.log(' зайшов:', isSuccess, isError, isFetched, statusStake, whatIsOperation);
       stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
