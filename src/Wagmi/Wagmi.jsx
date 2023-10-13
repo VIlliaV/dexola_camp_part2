@@ -2,11 +2,10 @@ import { createWeb3Modal } from '@web3modal/wagmi/react';
 import { WagmiConfig } from 'wagmi';
 import { wagmiConfig } from './wagmiConfig';
 
-const { VITE_PROJECT_ID } = import.meta.env;
-console.log('🚀 ~ process.env:', process.env);
+const { VITE_VERCEL_PROJECT_ID } = import.meta.env;
 
 console.log('🚀 ~ import.meta.env:', import.meta.env);
-const projectId = VITE_PROJECT_ID;
+const projectId = VITE_VERCEL_PROJECT_ID;
 
 createWeb3Modal({ wagmiConfig, projectId });
 
