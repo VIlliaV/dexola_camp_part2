@@ -23,6 +23,22 @@ export const Context = ({ children }) => {
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
+
+  function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
+    const { write, data, status } = useContractWrite({
+      ...contract,
+      // ...STAR_RUNNER_TOKEN_CONTRACT,
+      chainId: 11155111,
+      functionName: functionName,
+    });
+
+    return {
+      write,
+      data,
+      status,
+    };
+  }
+
   const { data: balanceNoFormatting } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
@@ -47,50 +63,15 @@ export const Context = ({ children }) => {
     write: approve,
     data: dataApprove,
     status: statusApprove,
-  } = useContractWrite({
-    ...STAR_RUNNER_TOKEN_CONTRACT,
-    functionName: 'approve',
-  });
+  } = useCustomContractWrite('approve', STAR_RUNNER_TOKEN_CONTRACT);
 
-  const {
-    write: stake,
-    data: dataStake,
-    status: statusStake,
-  } = useContractWrite({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'stake',
-    chainId: 11155111,
-  });
+  const { write: stake, data: dataStake, status: statusStake } = useCustomContractWrite('stake');
 
-  const {
-    write: withdraw,
-    status: statusWithdraw,
-    data: dataWithdraw,
-  } = useContractWrite({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'withdraw',
-    chainId: 11155111,
-  });
+  const { write: withdraw, data: dataWithdraw, status: statusWithdraw } = useCustomContractWrite('withdraw');
 
-  const {
-    write: withdrawExit,
-    status: statusWithdrawExit,
-    data: dataWithdrawExit,
-  } = useContractWrite({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'exit',
-    chainId: 11155111,
-  });
+  const { write: withdrawExit, data: dataWithdrawExit, status: statusWithdrawExit } = useCustomContractWrite('exit');
 
-  const {
-    write: writeRewards,
-    status: statusRewards,
-    data: dataRewards,
-  } = useContractWrite({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'claimReward',
-    chainId: 11155111,
-  });
+  const { write: writeRewards, data: dataRewards, status: statusRewards } = useCustomContractWrite('claimReward');
 
   const { data: availableRewards = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
@@ -98,6 +79,8 @@ export const Context = ({ children }) => {
     args: [address],
 
     watch: !updateInfo,
+    // //? для тесту
+    // watch: updateInfo,
   });
 
   const { data: periodFinish = '0' } = useContractRead({
@@ -146,7 +129,7 @@ export const Context = ({ children }) => {
     hash: isHash ? isHaveOldOperation : isHash,
   });
 
-  // console.log('🚀 ~ isHaveOldOperation:', isHash, isHaveOldOperation);
+  // console.log('🚀 ~ isHaveOldOperation:', isFetched, isHash, isHaveOldOperation);
 
   const getOperationData = operation => {
     switch (operation) {
@@ -179,6 +162,17 @@ export const Context = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log(
+      '🚀 ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+      statusStake,
+      statusApprove,
+      statusWithdraw,
+      statusWithdrawExit,
+      statusRewards,
+      isSuccess,
+      isError
+    );
+
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     // console.log('🚀 ~ whatIsOperation?.operation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
@@ -210,11 +204,11 @@ export const Context = ({ children }) => {
       statusStake === 'idle' &&
       whatIsOperation?.status === CONTRACT_OPERATION.status.preLoading
     ) {
-      console.log('object :>> ', whatIsOperation, statusStake, statusApprove, isSuccess);
+      // console.log('object :>> ', whatIsOperation, statusStake, isSuccess);
       stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]);
+  }, [statusApprove, statusStake, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]);
 
   useEffect(() => {
     if (isFetched) {

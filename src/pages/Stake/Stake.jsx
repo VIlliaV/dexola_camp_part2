@@ -17,8 +17,9 @@ import { useLocation } from 'react-router-dom';
 const Stake = () => {
   const [stake, setStake] = useState('0');
   const { pathname } = useLocation();
-  const { setDataOperation, approve, balance } = useContextContract();
-
+  const { setDataOperation, balance, approve } = useContextContract();
+  // const { write, data, status } = useCustomContractWrite('approve');
+  // console.log('🚀 ~ data:', data, status);
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stake, balance);
@@ -36,7 +37,9 @@ const Stake = () => {
         ];
         return arr;
       });
+      console.log('object');
       approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)] });
+      // approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)] });
     } else {
       toast.error(error.message);
     }

@@ -13,25 +13,32 @@ export const operationChangeStatus = ({
   nameOPerationNext = null,
   valueOperation = null,
 }) => {
+  let itemFirst = true;
   const arr = prevData.map(item => {
     if (
+      itemFirst &&
       status === CONTRACT_OPERATION.status.error &&
       item.status === CONTRACT_OPERATION.status.preLoading &&
       item.operation === nameOPeration
     ) {
+      itemFirst = false;
       return { ...item, status: CONTRACT_OPERATION.status.error };
     }
     if (
+      itemFirst &&
       status === CONTRACT_OPERATION.status.success &&
       item.status === CONTRACT_OPERATION.status.preLoading &&
       item.operation === nameOPeration
     ) {
+      itemFirst = false;
       return { ...item, status: CONTRACT_OPERATION.status.loading, hash: data?.hash };
     }
-    if (isSuccess && item.hash === dataWaitTransaction?.transactionHash) {
+    if (itemFirst && isSuccess && item.hash === dataWaitTransaction?.transactionHash) {
+      itemFirst = false;
       return { ...item, status: CONTRACT_OPERATION.status.success };
     }
-    if (isError && item.hash === dataWaitTransaction?.transactionHash) {
+    if (itemFirst && isError && item.hash === dataWaitTransaction?.transactionHash) {
+      itemFirst = false;
       return { ...item, status: CONTRACT_OPERATION.status.error };
     }
     return item;
