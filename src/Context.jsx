@@ -6,6 +6,7 @@ import {
   STAR_RUNNER_STAKING_CONTRACT,
   STAR_RUNNER_TOKEN_ADDRESS,
   STAR_RUNNER_TOKEN_CONTRACT,
+  STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
 import { operationChangeStatus } from './utils/helpers/operation';
@@ -19,15 +20,15 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
+  // console.log('🚀 ~ dataOperation:', dataOperation);
 
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
 
   function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
-    const { write, data, status } = useContractWrite({
+    const { write, data, status, reset } = useContractWrite({
       ...contract,
-      // ...STAR_RUNNER_TOKEN_CONTRACT,
       chainId: 11155111,
       functionName: functionName,
     });
@@ -36,6 +37,7 @@ export const Context = ({ children }) => {
       write,
       data,
       status,
+      reset,
     };
   }
 
@@ -51,7 +53,9 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
-  const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash || false;
+  // const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash || false;
+  const isHaveOldOperation = dataOperation[0]?.hash || false;
+
   useEffect(() => {
     if (isHaveOldOperation !== hash) {
       setHash(isHaveOldOperation);
@@ -63,9 +67,10 @@ export const Context = ({ children }) => {
     write: approve,
     data: dataApprove,
     status: statusApprove,
+    reset: resetApprove,
   } = useCustomContractWrite('approve', STAR_RUNNER_TOKEN_CONTRACT);
 
-  const { write: stake, data: dataStake, status: statusStake } = useCustomContractWrite('stake');
+  const { write: stake, data: dataStake, status: statusStake, reset: resetStake } = useCustomContractWrite('stake');
 
   const { write: withdraw, data: dataWithdraw, status: statusWithdraw } = useCustomContractWrite('withdraw');
 
@@ -127,8 +132,6 @@ export const Context = ({ children }) => {
     hash: isHash ? isHaveOldOperation : isHash,
   });
 
-  // console.log('🚀 ~ isHaveOldOperation:', isFetched, isHash, isHaveOldOperation);
-
   const getOperationData = operation => {
     switch (operation) {
       case CONTRACT_OPERATION.stake.operation:
@@ -160,30 +163,20 @@ export const Context = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
-      statusStake,
-      statusApprove,
-      statusWithdraw,
-      statusWithdrawExit,
-      statusRewards,
-      isSuccess,
-      isError
-    );
+    // console.log(
+    //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+    //   statusStake,
+    //   statusApprove,
+    //   statusWithdraw,
+    //   statusWithdrawExit,
+    //   statusRewards,
+    //   isSuccess,
+    //   isError
+    // );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
-    console.log('🚀 ~ dataOperation:', dataOperation);
-    console.log('🚀 ~ isSuccess, isError, isFetched, statusStake:', isSuccess, isError, isFetched, statusStake);
-    console.log('🚀 ~ whatIsOperation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
     const takeAStatus = getOperationStatus(whatIsOperation?.operation);
-    const shouldStake =
-      whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation &&
-      isSuccess &&
-      isFetched &&
-      whatIsOperation?.hash === dataWaitTransaction?.transactionHash;
-
-    if (shouldStake && statusApprove === 'success') return;
 
     setDataOperation(prev =>
       operationChangeStatus({
@@ -194,28 +187,53 @@ export const Context = ({ children }) => {
         data: takeAData,
         dataWaitTransaction: dataWaitTransaction,
         nameOPeration: whatIsOperation?.operation,
-        isMoreOperation: whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation,
-        path: whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation ? whatIsOperation?.page : null,
-        nameOPerationNext:
-          whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation
-            ? CONTRACT_OPERATION.stake.operation
-            : null,
-        valueOperation: whatIsOperation?.valueOperation,
       })
     );
 
-    //? чи потрібно запускати stake
     if (
-      // isSuccess &&
-      whatIsOperation?.operation === CONTRACT_OPERATION.stake.operation &&
-      statusStake === 'idle' &&
-      whatIsOperation?.status === CONTRACT_OPERATION.status.preLoading
+      dataOperation[0]?.operation === CONTRACT_OPERATION.stake.operation &&
+      dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
+      statusStake === 'idle'
     ) {
-      // console.log('object :>> ', whatIsOperation, statusStake, isSuccess);
-      stake({ args: [parseEther(whatIsOperation?.valueOperation)] });
+      stake({ args: [parseEther(dataOperation[0].valueOperation)] });
     }
+    if (
+      dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
+      dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
+      statusApprove === 'idle'
+    ) {
+      approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
+    }
+    if (statusStake === 'success' || statusStake === 'error') {
+      resetStake();
+    }
+    if (statusApprove === 'success' || statusApprove === 'error') {
+      resetApprove();
+    }
+
+    if (
+      isSuccess &&
+      dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
+      (statusStake === 'idle' || statusStake === 'success')
+    ) {
+      setDataOperation(prev => {
+        const arr = [...prev];
+        arr.splice(0, 1);
+        return arr;
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusApprove, statusStake, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]);
+  }, [
+    statusApprove,
+    statusStake,
+    statusWithdraw,
+    statusWithdrawExit,
+    statusRewards,
+    isSuccess,
+    isError,
+    dataOperation.length,
+  ]);
 
   useEffect(() => {
     if (isFetched) {
@@ -223,6 +241,8 @@ export const Context = ({ children }) => {
     } else {
       setUpdateInfo(false);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetched]);
 
   return (

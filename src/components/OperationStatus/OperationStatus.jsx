@@ -23,9 +23,11 @@ const OperationStatus = ({ media }) => {
 
   //? перевірка чи прийшла додаткова операція
   const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
+  // console.log('🚀 ~ isNewStatus:', isNewStatus);
   const isOldStatus = dataOperation.find(
     item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
   );
+  // console.log('🚀 ~ isOldStatus:', isOldStatus);
 
   const clearOldStatus = isNewStatus && isOldStatus;
 
@@ -39,17 +41,19 @@ const OperationStatus = ({ media }) => {
   }, [isStatus]);
 
   useEffect(() => {
-    setDataOperation(prev => {
-      const index = prev.findIndex(
-        item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
-      );
-      if (index !== -1) {
-        const arr = [...prev];
-        arr.splice(index, 1);
-        return arr;
-      }
-      return prev;
-    });
+    if (clearStatus) {
+      setDataOperation(prev => {
+        const index = prev.findIndex(
+          item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
+        );
+        if (index !== -1) {
+          const arr = [...prev];
+          arr.splice(index, 1);
+          return arr;
+        }
+        return prev;
+      });
+    }
 
     setClearStatus(false);
     if (updateInfo) setUpdateInfo(false);

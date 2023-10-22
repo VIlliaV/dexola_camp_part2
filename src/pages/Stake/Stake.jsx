@@ -6,9 +6,8 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import { CONTRACT_OPERATION, PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { parseEther } from 'viem';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
 import { useContextContract } from '../../Context';
@@ -17,9 +16,8 @@ import { useLocation } from 'react-router-dom';
 const Stake = () => {
   const [stake, setStake] = useState('0');
   const { pathname } = useLocation();
-  const { setDataOperation, balance, approve } = useContextContract();
-  // const { write, data, status } = useCustomContractWrite('approve');
-  // console.log('🚀 ~ data:', data, status);
+  const { setDataOperation, balance } = useContextContract();
+
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stake, balance);
@@ -34,12 +32,15 @@ const Stake = () => {
             valueOperation: stake,
             operation: CONTRACT_OPERATION.approve.operation,
           },
+          {
+            page: pathname,
+            status: CONTRACT_OPERATION.status.preLoading,
+            valueOperation: stake,
+            operation: CONTRACT_OPERATION.stake.operation,
+          },
         ];
         return arr;
       });
-      console.log('object');
-      approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)] });
-      // approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stake)] });
     } else {
       toast.error(error.message);
     }
