@@ -5,7 +5,6 @@ import ContractInfo from '../ContractInfo/ContractInfo';
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
-// import { useContractReads } from 'wagmi';
 import { useContextContract } from '../../Context';
 
 const HeroSection = () => {

@@ -53,7 +53,6 @@ export const Context = ({ children }) => {
     chainId: 11155111,
   });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
-  // const isHaveOldOperation = dataOperation.find(item => typeof item === 'object')?.hash || false;
   const isHaveOldOperation = dataOperation[0]?.hash || false;
 
   useEffect(() => {
@@ -83,8 +82,6 @@ export const Context = ({ children }) => {
     functionName: 'earned',
     args: [address],
     watch: !updateInfo,
-    // //? для тесту
-    // watch: updateInfo,
   });
 
   const { data: periodFinish = '0' } = useContractRead({
