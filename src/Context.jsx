@@ -19,7 +19,7 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ dataOperation:', dataOperation);
+
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
@@ -77,7 +77,6 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
     args: [address],
-
     watch: !updateInfo,
     // //? для тесту
     // watch: updateInfo,
@@ -93,7 +92,6 @@ export const Context = ({ children }) => {
   const { data: rewardRate = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'rewardRate',
-
     watch: updateInfo,
   });
 
@@ -174,9 +172,18 @@ export const Context = ({ children }) => {
     );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
-    // console.log('🚀 ~ whatIsOperation?.operation:', whatIsOperation);
+    console.log('🚀 ~ dataOperation:', dataOperation);
+    console.log('🚀 ~ isSuccess, isError, isFetched, statusStake:', isSuccess, isError, isFetched, statusStake);
+    console.log('🚀 ~ whatIsOperation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
     const takeAStatus = getOperationStatus(whatIsOperation?.operation);
+    const shouldStake =
+      whatIsOperation?.operation === CONTRACT_OPERATION.approve.operation &&
+      isSuccess &&
+      isFetched &&
+      whatIsOperation?.hash === dataWaitTransaction?.transactionHash;
+
+    if (shouldStake && statusApprove === 'success') return;
 
     setDataOperation(prev =>
       operationChangeStatus({
