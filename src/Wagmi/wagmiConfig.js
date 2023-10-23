@@ -3,7 +3,7 @@ import { sepolia, mainnet } from 'wagmi/chains';
 const { VITE_VERCEL_PROJECT_ID } = import.meta.env;
 const projectId = VITE_VERCEL_PROJECT_ID;
 
-const chains = [mainnet, sepolia];
+const chains = [sepolia, mainnet];
 export const wagmiConfig = defaultWagmiConfig({
   chains,
   projectId,

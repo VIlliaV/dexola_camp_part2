@@ -29,7 +29,7 @@ export const Context = ({ children }) => {
   function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
     const { write, data, status, reset } = useContractWrite({
       ...contract,
-      chainId: 11155111,
+
       functionName: functionName,
     });
 
@@ -50,7 +50,6 @@ export const Context = ({ children }) => {
 
   const { data: tokenData } = useToken({
     address: STAR_RUNNER_TOKEN_ADDRESS,
-    chainId: 11155111,
   });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
   const isHaveOldOperation = dataOperation[0]?.hash || false;
@@ -81,6 +80,7 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'earned',
     args: [address],
+
     watch: !updateInfo,
   });
 
@@ -88,7 +88,6 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'periodFinish',
     watch: updateInfo,
-    chainId: 11155111,
   });
 
   const { data: rewardRate = '0' } = useContractRead({
@@ -101,21 +100,18 @@ export const Context = ({ children }) => {
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'balanceOf',
     args: [address],
-    chainId: 11155111,
     watch: updateInfo,
   });
 
   const { data: totalSupply = '0n' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'totalSupply',
-    chainId: 11155111,
     watch: updateInfo,
   });
 
   const { data: rewardForDuration = '0' } = useContractRead({
     ...STAR_RUNNER_STAKING_CONTRACT,
     functionName: 'getRewardForDuration',
-    chainId: 11155111,
     watch: updateInfo,
   });
 
