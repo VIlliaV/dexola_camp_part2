@@ -1,15 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { parseEther } from 'viem';
-import { useAccount, useBalance, useContractRead, useContractWrite, useToken, useWaitForTransaction } from 'wagmi';
+import { useAccount, useBalance, useToken, useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
-  STAR_RUNNER_STAKING_CONTRACT,
   STAR_RUNNER_TOKEN_ADDRESS,
   STAR_RUNNER_TOKEN_CONTRACT,
   STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
 import { operationChangeStatus } from './utils/helpers/operation';
+import useCustomContractRead from './utils/hooks/useCustomContractRead';
+import useCustomContractWrite from './utils/hooks/useCustomContractWrite';
 
 const ContractContext = createContext();
 
@@ -21,25 +22,19 @@ export const Context = ({ children }) => {
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
   // console.log('🚀 ~ dataOperation:', dataOperation);
-
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
 
-  function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
-    const { write, data, status, reset } = useContractWrite({
-      ...contract,
+  // function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
+  //   const { write, data, status, reset } = useContractWrite({ ...contract, functionName });
+  //   return { write, data, status, reset };
+  // }
 
-      functionName: functionName,
-    });
-
-    return {
-      write,
-      data,
-      status,
-      reset,
-    };
-  }
+  // function useCustomContractRead({ functionName, contract = STAR_RUNNER_STAKING_CONTRACT, args = [], watch = true }) {
+  //   const { data } = useContractRead({ ...contract, functionName, args, watch });
+  //   return { data };
+  // }
 
   const { data: balanceNoFormatting } = useBalance({
     address,
@@ -66,51 +61,43 @@ export const Context = ({ children }) => {
     data: dataApprove,
     status: statusApprove,
     reset: resetApprove,
-  } = useCustomContractWrite('approve', STAR_RUNNER_TOKEN_CONTRACT);
+  } = useCustomContractWrite({ functionName: 'approve', contract: STAR_RUNNER_TOKEN_CONTRACT });
+  const {
+    write: stake,
+    data: dataStake,
+    status: statusStake,
+    reset: resetStake,
+  } = useCustomContractWrite({ functionName: 'stake' });
+  const {
+    write: withdraw,
+    data: dataWithdraw,
+    status: statusWithdraw,
+  } = useCustomContractWrite({ functionName: 'withdraw' });
+  const {
+    write: withdrawExit,
+    data: dataWithdrawExit,
+    status: statusWithdrawExit,
+  } = useCustomContractWrite({ functionName: 'exit' });
+  const {
+    write: writeRewards,
+    data: dataRewards,
+    status: statusRewards,
+  } = useCustomContractWrite({ functionName: 'claimReward' });
 
-  const { write: stake, data: dataStake, status: statusStake, reset: resetStake } = useCustomContractWrite('stake');
-
-  const { write: withdraw, data: dataWithdraw, status: statusWithdraw } = useCustomContractWrite('withdraw');
-
-  const { write: withdrawExit, data: dataWithdrawExit, status: statusWithdrawExit } = useCustomContractWrite('exit');
-
-  const { write: writeRewards, data: dataRewards, status: statusRewards } = useCustomContractWrite('claimReward');
-
-  const { data: availableRewards = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
+  const { data: availableRewards = '0' } = useCustomContractRead({
     functionName: 'earned',
     args: [address],
-
     watch: !updateInfo,
   });
-
-  const { data: periodFinish = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'periodFinish',
-    watch: updateInfo,
-  });
-
-  const { data: rewardRate = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'rewardRate',
-    watch: updateInfo,
-  });
-
-  const { data: stakedBalance = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
+  const { data: periodFinish = '0' } = useCustomContractRead({ functionName: 'periodFinish', watch: updateInfo });
+  const { data: rewardRate = '0' } = useCustomContractRead({ functionName: 'rewardRate', watch: updateInfo });
+  const { data: stakedBalance = '0' } = useCustomContractRead({
     functionName: 'balanceOf',
     args: [address],
     watch: updateInfo,
   });
-
-  const { data: totalSupply = '0n' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'totalSupply',
-    watch: updateInfo,
-  });
-
-  const { data: rewardForDuration = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
+  const { data: totalSupply = '0n' } = useCustomContractRead({ functionName: 'totalSupply', watch: updateInfo });
+  const { data: rewardForDuration = '0' } = useCustomContractRead({
     functionName: 'getRewardForDuration',
     watch: updateInfo,
   });
