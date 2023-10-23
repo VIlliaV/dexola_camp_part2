@@ -14,54 +14,38 @@ import { CONTRACT_OPERATION } from '../../constants/constants';
 const OperationStatus = ({ media }) => {
   const { tokenName } = useContextContract();
   const { pathname } = useLocation();
-  const [clearStatus, setClearStatus] = useState(false);
+  const [successStatus, setSuccessStatus] = useState(false);
+  const [operationData, setOperationData] = useState(null);
 
-  const { dataOperation, setDataOperation, updateInfo, setUpdateInfo } = useContextContract();
+  const { dataOperation } = useContextContract();
 
   //? перевірка чи прийшов новий статус на цю сторінку
-  const isStatus = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
+  const statusCheck = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
 
-  //? перевірка чи прийшла додаткова операція
-  const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
-  // console.log('🚀 ~ isNewStatus:', isNewStatus);
-  const isOldStatus = dataOperation.find(
-    item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
-  );
-  // console.log('🚀 ~ isOldStatus:', isOldStatus);
-
-  const clearOldStatus = isNewStatus && isOldStatus;
+  // //? перевірка чи прийшла додаткова операція
+  // const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
+  // const isOldStatus = dataOperation.find(
+  //   item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
+  // );
+  // const clearOldStatus = isNewStatus && isOldStatus;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setClearStatus(true);
-    }, 7000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isStatus]);
+    if (!statusCheck || successStatus) return;
+    setOperationData(statusCheck);
+    if (statusCheck.status === CONTRACT_OPERATION.status.success) {
+      setSuccessStatus(true);
+    } else return;
 
-  useEffect(() => {
-    if (clearStatus) {
-      setDataOperation(prev => {
-        const index = prev.findIndex(
-          item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
-        );
-        if (index !== -1) {
-          const arr = [...prev];
-          arr.splice(index, 1);
-          return arr;
-        }
-        return prev;
-      });
-    }
-
-    setClearStatus(false);
-    if (updateInfo) setUpdateInfo(false);
+    setTimeout(() => {
+      setSuccessStatus(false);
+      setOperationData(null);
+    }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearStatus, clearOldStatus]);
+  }, [statusCheck]);
 
-  if (!isStatus) return;
-  const { status, valueOperation, operation } = isStatus;
+  if (!operationData) return;
+
+  const { status, valueOperation, operation } = operationData;
 
   return (
     <OperationStatusStyled $media={media}>

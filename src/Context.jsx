@@ -20,7 +20,7 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ dataOperation:', dataOperation);
+  // console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
@@ -28,7 +28,7 @@ export const Context = ({ children }) => {
   const { data: balanceNoFormatting } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
-    watch: updateInfo,
+    watch: true,
   });
   const balance = +balanceNoFormatting?.formatted || 0;
 
@@ -74,19 +74,16 @@ export const Context = ({ children }) => {
   const { data: availableRewards = '0' } = useCustomContractRead({
     functionName: 'earned',
     args: [address],
-    watch: !updateInfo,
   });
-  const { data: periodFinish = '0' } = useCustomContractRead({ functionName: 'periodFinish', watch: updateInfo });
-  const { data: rewardRate = '0' } = useCustomContractRead({ functionName: 'rewardRate', watch: updateInfo });
+  const { data: periodFinish = '0' } = useCustomContractRead({ functionName: 'periodFinish' });
+  const { data: rewardRate = '0' } = useCustomContractRead({ functionName: 'rewardRate' });
   const { data: stakedBalance = '0' } = useCustomContractRead({
     functionName: 'balanceOf',
     args: [address],
-    watch: updateInfo,
   });
-  const { data: totalSupply = '0n' } = useCustomContractRead({ functionName: 'totalSupply', watch: updateInfo });
+  const { data: totalSupply = '0n' } = useCustomContractRead({ functionName: 'totalSupply' });
   const { data: rewardForDuration = '0' } = useCustomContractRead({
     functionName: 'getRewardForDuration',
-    watch: updateInfo,
   });
 
   const isHash = isHaveOldOperation !== hash;
@@ -94,7 +91,7 @@ export const Context = ({ children }) => {
     data: dataWaitTransaction,
     isSuccess,
     isError,
-    isFetched,
+    // isFetched,
   } = useWaitForTransaction({
     hash: isHash ? isHaveOldOperation : isHash,
   });
@@ -128,18 +125,30 @@ export const Context = ({ children }) => {
         return statusRewards;
     }
   };
-
   useEffect(() => {
-    console.log(
-      '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
-      statusStake,
-      statusApprove,
-      statusWithdraw,
-      statusWithdrawExit,
-      statusRewards,
-      isSuccess,
-      isError
-    );
+    if (
+      dataOperation[0]?.status === CONTRACT_OPERATION.status.success ||
+      dataOperation[0]?.status === CONTRACT_OPERATION.status.error
+    ) {
+      setDataOperation(prev => {
+        const arr = [...prev];
+        arr.splice(0, 1);
+        return arr;
+      });
+    }
+  }, [dataOperation]);
+  useEffect(() => {
+    // console.log(
+    //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+    //   statusStake,
+    //   statusApprove,
+    //   statusWithdraw,
+    //   statusWithdrawExit,
+    //   statusRewards,
+    //   isSuccess,
+    //   isError
+    //   // isFetched
+    // );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     const takeAData = getOperationData(whatIsOperation?.operation);
@@ -178,18 +187,6 @@ export const Context = ({ children }) => {
       resetApprove();
     }
 
-    if (
-      isSuccess &&
-      dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
-      (statusStake === 'idle' || statusStake === 'success')
-    ) {
-      setDataOperation(prev => {
-        const arr = [...prev];
-        arr.splice(0, 1);
-        return arr;
-      });
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     statusApprove,
@@ -199,18 +196,9 @@ export const Context = ({ children }) => {
     statusRewards,
     isSuccess,
     isError,
+    // isFetched,
     dataOperation.length,
   ]);
-
-  useEffect(() => {
-    if (isFetched) {
-      setUpdateInfo(true);
-    } else {
-      setUpdateInfo(false);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetched]);
 
   return (
     <ContractContext.Provider
