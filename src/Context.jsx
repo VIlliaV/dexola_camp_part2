@@ -171,10 +171,10 @@ export const Context = ({ children }) => {
     ) {
       approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
     }
-    if (statusStake === 'success' || statusStake === 'error') {
+    if ((statusStake === 'success' || statusStake === 'error') && dataOperation[0].hash) {
       resetStake();
     }
-    if (statusApprove === 'success' || statusApprove === 'error') {
+    if ((statusApprove === 'success' || statusApprove === 'error') && dataOperation[0].hash) {
       resetApprove();
     }
 
