@@ -13,7 +13,6 @@ import useCustomContractRead from './utils/hooks/useCustomContractRead';
 import useCustomContractWrite from './utils/hooks/useCustomContractWrite';
 
 const ContractContext = createContext();
-
 // eslint-disable-next-line react-refresh/only-export-components
 export const useContextContract = () => useContext(ContractContext);
 
@@ -26,16 +25,6 @@ export const Context = ({ children }) => {
 
   const { address } = useAccount();
 
-  // function useCustomContractWrite(functionName, contract = STAR_RUNNER_STAKING_CONTRACT) {
-  //   const { write, data, status, reset } = useContractWrite({ ...contract, functionName });
-  //   return { write, data, status, reset };
-  // }
-
-  // function useCustomContractRead({ functionName, contract = STAR_RUNNER_STAKING_CONTRACT, args = [], watch = true }) {
-  //   const { data } = useContractRead({ ...contract, functionName, args, watch });
-  //   return { data };
-  // }
-
   const { data: balanceNoFormatting } = useBalance({
     address,
     token: STAR_RUNNER_TOKEN_ADDRESS,
@@ -43,9 +32,7 @@ export const Context = ({ children }) => {
   });
   const balance = +balanceNoFormatting?.formatted || 0;
 
-  const { data: tokenData } = useToken({
-    address: STAR_RUNNER_TOKEN_ADDRESS,
-  });
+  const { data: tokenData } = useToken({ address: STAR_RUNNER_TOKEN_ADDRESS });
   const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
   const isHaveOldOperation = dataOperation[0]?.hash || false;
 
