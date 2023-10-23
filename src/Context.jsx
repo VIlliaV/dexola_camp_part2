@@ -20,7 +20,7 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  // console.log('🚀 ~ dataOperation:', dataOperation);
+  console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
 
   const { address } = useAccount();
@@ -130,16 +130,16 @@ export const Context = ({ children }) => {
   };
 
   useEffect(() => {
-    // console.log(
-    //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
-    //   statusStake,
-    //   statusApprove,
-    //   statusWithdraw,
-    //   statusWithdrawExit,
-    //   statusRewards,
-    //   isSuccess,
-    //   isError
-    // );
+    console.log(
+      '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+      statusStake,
+      statusApprove,
+      statusWithdraw,
+      statusWithdrawExit,
+      statusRewards,
+      isSuccess,
+      isError
+    );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     const takeAData = getOperationData(whatIsOperation?.operation);
