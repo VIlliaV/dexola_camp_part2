@@ -32,7 +32,10 @@ const OperationStatus = ({ media }) => {
   useEffect(() => {
     if (!statusCheck || successStatus) return;
     setOperationData(statusCheck);
-    if (statusCheck.status === CONTRACT_OPERATION.status.success) {
+    if (
+      statusCheck.status === CONTRACT_OPERATION.status.success ||
+      statusCheck.status === CONTRACT_OPERATION.status.error
+    ) {
       setSuccessStatus(true);
     } else return;
 
