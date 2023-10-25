@@ -45,3 +45,40 @@ export const operationChangeStatus = ({
 
   return arr;
 };
+
+export const addOperation = ({
+  prev,
+  page,
+  status = CONTRACT_OPERATION.status.preLoading,
+  valueOperation = null,
+  operation,
+}) => {
+  console.log('🚀 ~ prev:', prev);
+  const foundIndex = prev.findIndex(item => item.page === page);
+
+  if (foundIndex !== -1) {
+    return prev.map((item, index) => {
+      if (index === foundIndex) {
+        return {
+          ...item,
+          operationPage: [...item.operationPage, { status, valueOperation, operation }],
+        };
+      }
+      return item;
+    });
+  } else {
+    return [
+      ...prev,
+      {
+        page,
+        operationPage: [
+          {
+            status,
+            valueOperation,
+            operation,
+          },
+        ],
+      },
+    ];
+  }
+};

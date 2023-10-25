@@ -5,28 +5,30 @@ import Available from '../../components/ContractInfo/ContractData/Available/Avai
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
-import { CONTRACT_OPERATION, PAGES_NAME, STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { useContractRead, useAccount } from 'wagmi';
+// import { useContractRead, useAccount } from 'wagmi';
 import { useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
+import { addOperation } from '../../utils/helpers/operation';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
-  const { address } = useAccount();
+  // const { address } = useAccount();
   const { pathname } = useLocation();
 
-  const { setDataOperation, withdraw, withdrawExit, availableRewards } = useContextContract();
+  const { setDataOperation, withdraw, withdrawExit, availableRewards, dataOperation, stakedBalance } =
+    useContextContract();
 
-  const { data: stakedBalance = '0' } = useContractRead({
-    ...STAR_RUNNER_STAKING_CONTRACT,
-    functionName: 'balanceOf',
-    args: [address],
-  });
+  // const { data: stakedBalanceTEST = '0' } = useContractRead({
+  //   ...STAR_RUNNER_STAKING_CONTRACT,
+  //   functionName: 'balanceOf',
+  //   args: [address],
+  // });
 
   const available = +formatEther(stakedBalance);
   const availableForClaim = formatEther(availableRewards);
@@ -37,30 +39,12 @@ const Withdraw = () => {
 
     if (!error) {
       setDataOperation(prev => {
-        const foundIndex = prev.findIndex(item => item.page === pathname);
-        if (foundIndex !== -1) {
-          const arr = prev;
-          arr[foundIndex].operationPage.push({
-            status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: withdrawValue,
-            operation: CONTRACT_OPERATION.withdraw.operation,
-          });
-          return arr;
-        } else {
-          return [
-            ...prev,
-            {
-              page: pathname,
-              operationPage: [
-                {
-                  status: CONTRACT_OPERATION.status.preLoading,
-                  valueOperation: withdrawValue,
-                  operation: CONTRACT_OPERATION.withdraw.operation,
-                },
-              ],
-            },
-          ];
-        }
+        return addOperation({
+          prev,
+          page: pathname,
+          valueOperation: withdrawValue,
+          operation: CONTRACT_OPERATION.withdraw.operation,
+        });
       });
       withdraw({ args: [parseEther(withdrawValue)] });
     } else {
@@ -87,18 +71,26 @@ const Withdraw = () => {
   // };
 
   const handleWithdrawExit = () => {
+    console.log(dataOperation);
     if (available !== 0) {
       setDataOperation(prev => {
-        const arr = [
-          ...prev,
-          {
-            page: pathname,
-            status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: available + ' + ' + availableForClaim,
-            operation: CONTRACT_OPERATION.withdrawAll.operation,
-          },
-        ];
-        return arr;
+        //     const arr = [
+        //       ...prev,
+        //       {
+        //         page: pathname,
+        //         status: CONTRACT_OPERATION.status.preLoading,
+        //         valueOperation: available + ' + ' + availableForClaim,
+        //         operation: CONTRACT_OPERATION.withdrawAll.operation,
+        //       },
+        //     ];
+        //     return arr;
+        //   });
+        return addOperation({
+          prev,
+          page: pathname,
+          valueOperation: available + ' + ' + availableForClaim,
+          operation: CONTRACT_OPERATION.withdrawAll.operation,
+        });
       });
       withdrawExit();
     } else {
