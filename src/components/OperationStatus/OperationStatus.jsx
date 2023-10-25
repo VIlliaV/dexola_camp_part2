@@ -22,6 +22,7 @@ const OperationStatus = ({ media }) => {
   //? перевірка чи прийшов новий статус на цю сторінку
   const statusCheck = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
 
+  return;
   // //? перевірка чи прийшла додаткова операція
   // const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
   // const isOldStatus = dataOperation.find(

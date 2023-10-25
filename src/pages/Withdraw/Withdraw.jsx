@@ -37,22 +37,54 @@ const Withdraw = () => {
 
     if (!error) {
       setDataOperation(prev => {
-        const arr = [
-          ...prev,
-          {
-            page: pathname,
+        const foundIndex = prev.findIndex(item => item.page === pathname);
+        if (foundIndex !== -1) {
+          const arr = prev;
+          arr[foundIndex].operationPage.push({
             status: CONTRACT_OPERATION.status.preLoading,
             valueOperation: withdrawValue,
             operation: CONTRACT_OPERATION.withdraw.operation,
-          },
-        ];
-        return arr;
+          });
+          return arr;
+        } else {
+          return [
+            ...prev,
+            {
+              page: pathname,
+              operationPage: [
+                {
+                  status: CONTRACT_OPERATION.status.preLoading,
+                  valueOperation: withdrawValue,
+                  operation: CONTRACT_OPERATION.withdraw.operation,
+                },
+              ],
+            },
+          ];
+        }
       });
       withdraw({ args: [parseEther(withdrawValue)] });
     } else {
       toast.error(error.message);
     }
   };
+  //   if (!error) {
+  //     setDataOperation(prev => {
+  //       const arr = [
+  //         ...prev,
+  //         {
+  //           page: pathname,
+  //           status: CONTRACT_OPERATION.status.preLoading,
+  //           valueOperation: withdrawValue,
+  //           operation: CONTRACT_OPERATION.withdraw.operation,
+  //         },
+  //       ];
+  //       return arr;
+  //     });
+  //     withdraw({ args: [parseEther(withdrawValue)] });
+  //   } else {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   const handleWithdrawExit = () => {
     if (available !== 0) {
