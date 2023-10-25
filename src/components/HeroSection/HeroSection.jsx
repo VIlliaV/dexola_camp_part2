@@ -14,7 +14,7 @@ const HeroSection = () => {
 
   const aprResult = (Number(rewardForDuration) * 100) / Number(totalSupply);
 
-  const daysResult = (Number(periodFinish) - Math.floor(Date.now()) / 1000) / 86400 || 0;
+  const daysResult = Math.ceil((Number(periodFinish) - Date.now() / 1000) / 86400) || 0;
 
   const earnedResult = formatEther(availableRewards);
 

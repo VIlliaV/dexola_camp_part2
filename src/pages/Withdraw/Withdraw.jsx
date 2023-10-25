@@ -7,7 +7,6 @@ import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-// import { useContractRead, useAccount } from 'wagmi';
 import { useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
@@ -18,17 +17,10 @@ import { addOperation } from '../../utils/helpers/operation';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
-  // const { address } = useAccount();
   const { pathname } = useLocation();
 
   const { setDataOperation, withdraw, withdrawExit, availableRewards, dataOperation, stakedBalance } =
     useContextContract();
-
-  // const { data: stakedBalanceTEST = '0' } = useContractRead({
-  //   ...STAR_RUNNER_STAKING_CONTRACT,
-  //   functionName: 'balanceOf',
-  //   args: [address],
-  // });
 
   const available = +formatEther(stakedBalance);
   const availableForClaim = formatEther(availableRewards);
