@@ -23,6 +23,7 @@ const Withdraw = () => {
     useContextContract();
 
   const available = +formatEther(stakedBalance);
+  console.log('🚀 ~ available:', available);
   const availableForClaim = formatEther(availableRewards);
 
   const handleSubmit = event => {

@@ -11,6 +11,7 @@ const HeroSection = () => {
   const { availableRewards, stakedBalance, rewardForDuration, totalSupply, periodFinish } = useContextContract();
 
   const stakedBalanceResult = formatEther(stakedBalance);
+  console.log('🚀 ~ stakedBalanceResult:', stakedBalanceResult);
 
   const aprResult = (Number(rewardForDuration) * 100) / Number(totalSupply);
 
@@ -18,14 +19,14 @@ const HeroSection = () => {
 
   const earnedResult = formatEther(availableRewards);
 
-  const { stakedBalance: StakedBalanceFromInfo, apr, days, rewards } = CONTRACT_INFO;
+  const { stakedBalanceInfo, apr, days, rewards } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>
       <SectionWrapper>
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
-            <ContractInfo data={+stakedBalanceResult} variable={StakedBalanceFromInfo} />
+            <ContractInfo data={+stakedBalanceResult} variable={stakedBalanceInfo} />
           </li>
           <li>
             <ContractInfo data={aprResult} variable={apr} />

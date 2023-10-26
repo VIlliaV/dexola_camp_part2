@@ -3,7 +3,7 @@ import abiToken from '@/dataBase/token_abi.json';
 import { resultType } from '../utils/formating';
 const { dateType, approxType, maxType, minType } = resultType;
 export const CONTRACT_INFO = {
-  stakedBalance: {
+  stakedBalanceInfo: {
     text: 'Staked balance',
     tip: { first: 'Staking rewards get ', second: 'allocated on this sum' },
     type: maxType,
