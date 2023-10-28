@@ -7,7 +7,8 @@ import { useResize } from '@/utils/hooks/useResize';
 import { size } from '@/styles/media';
 
 const ContractInfo = ({ data = 0, variable = {} }) => {
-  const { stakedBalanceInfo, rewards, days } = CONTRACT_INFO;
+  // console.log('🚀 ~ data:', data);
+  const { stakedBalanceInfo, rewardsInfo, daysInfo } = CONTRACT_INFO;
   const { tokenName } = useContextContract();
   const { widthResize } = useResize();
 
@@ -21,9 +22,11 @@ const ContractInfo = ({ data = 0, variable = {} }) => {
     <ContractInfoStyled>
       <div className="contract_data contract_item">
         <p className="contract_result">{contractResult}</p>
-        {(variable === stakedBalanceInfo || variable === rewards) && <p className="contract_token_name">{tokenName}</p>}
+        {(variable === stakedBalanceInfo || variable === rewardsInfo) && (
+          <p className="contract_token_name">{tokenName}</p>
+        )}
       </div>
-      {variable.text !== days.text ? <SignTip variable={variable} className="contract_item" /> : <div></div>}
+      {variable.text !== daysInfo.text ? <SignTip variable={variable} className="contract_item" /> : <div></div>}
       <p className="text_variable contract_item">{variable.text}</p>
     </ContractInfoStyled>
   );

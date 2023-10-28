@@ -1,41 +1,32 @@
-import { formatEther } from 'viem';
+// import { formatEther } from 'viem';
 import { CONTRACT_INFO } from '../../constants/constants';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
 
-import { useContextContract } from '../../Context';
+import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const HeroSection = () => {
-  const { availableRewards, stakedBalance, rewardForDuration, totalSupply, periodFinish } = useContextContract();
+  const { stakedBalance, apr, days, availableRewards } = useContractReadData({});
 
-  const stakedBalanceResult = formatEther(stakedBalance);
-  console.log('🚀 ~ stakedBalanceResult:', stakedBalanceResult);
-
-  const aprResult = (formatEther(rewardForDuration) * 100) / formatEther(totalSupply);
-
-  const daysResult = Math.ceil((Number(periodFinish) - Date.now() / 1000) / 86400) || 0;
-
-  const earnedResult = formatEther(availableRewards);
-
-  const { stakedBalanceInfo, apr, days, rewards } = CONTRACT_INFO;
+  const { stakedBalanceInfo, aprInfo, daysInfo, rewardsInfo } = CONTRACT_INFO;
   return (
     <HeroSectionStyled>
       <SectionWrapper>
         <h1>StarRunner Token staking</h1>
         <ul className="contract_info">
           <li>
-            <ContractInfo data={+stakedBalanceResult} variable={stakedBalanceInfo} />
+            <ContractInfo data={stakedBalance} variable={stakedBalanceInfo} />
           </li>
           <li>
-            <ContractInfo data={aprResult} variable={apr} />
+            <ContractInfo data={apr} variable={aprInfo} />
           </li>
           <li>
-            <ContractInfo data={daysResult} variable={days} />
+            <ContractInfo data={days} variable={daysInfo} />
           </li>
           <li>
-            <ContractInfo data={+earnedResult} variable={rewards} />
+            <ContractInfo data={availableRewards} variable={rewardsInfo} />
           </li>
         </ul>
       </SectionWrapper>

@@ -51,7 +51,7 @@ const Stake = () => {
       <div>
         <PagesHead>
           <h2>{PAGES_NAME.stake}</h2>
-          <Reward amountToStake={stake} />
+          <Reward amountToStake={+stake} />
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
           <Label type={PAGES_NAME.stake} formValue={setStake} maxAllowed={balance}></Label>

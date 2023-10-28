@@ -8,17 +8,17 @@ export const CONTRACT_INFO = {
     tip: { first: 'Staking rewards get ', second: 'allocated on this sum' },
     type: maxType,
   },
-  apr: {
+  aprInfo: {
     text: 'APR',
     tip: { first: 'Displays the average for APR. ', second: 'Interest rate is calculated for each amount of tokens.' },
     type: approxType,
   },
-  days: {
+  daysInfo: {
     text: 'Days',
     tip: { first: 'Days', second: '' },
     type: dateType,
   },
-  rewards: { text: 'Rewards', tip: { first: 'Rewards get allocated ', second: 'every second' }, type: minType },
+  rewardsInfo: { text: 'Rewards', tip: { first: 'Rewards get allocated ', second: 'every second' }, type: minType },
 };
 
 export const CONTRACT_OPERATION = {

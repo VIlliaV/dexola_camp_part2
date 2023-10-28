@@ -4,7 +4,7 @@ import { useContextContract } from '../../../../Context';
 import { formatDecimalPlaces } from '@/utils/formating';
 import { useContractReadData } from '../../../../utils/hooks/useCustomContractRead';
 
-const Reward = ({ amountToStake }) => {
+const Reward = ({ amountToStake = 0 }) => {
   const { tokenName } = useContextContract();
   const { totalAvailableRewards } = useContractReadData({ amountToStake });
 
