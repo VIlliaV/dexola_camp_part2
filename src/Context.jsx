@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { parseEther } from 'viem';
 import { useAccount, useBalance, useToken, useWaitForTransaction } from 'wagmi';
 import {
@@ -77,14 +77,14 @@ export const Context = ({ children }) => {
   });
   const { data: periodFinish = '0' } = useCustomContractRead({ functionName: 'periodFinish' });
   const { data: rewardRate = '0' } = useCustomContractRead({ functionName: 'rewardRate' });
-  const { data: stakedBalanceTest = '0' } = useCustomContractRead({
-    functionName: 'balanceOf',
-    args: [address],
-  });
+  // const { data: stakedBalanceTest = '0' } = useCustomContractRead({
+  //   functionName: 'balanceOf',
+  //   args: [address],
+  // });
 
-  const stakedBalance = useMemo(() => {
-    return stakedBalanceTest;
-  }, [stakedBalanceTest]);
+  // const stakedBalance = useMemo(() => {
+  //   return stakedBalanceTest;
+  // }, [stakedBalanceTest]);
 
   const { data: totalSupply = '0n' } = useCustomContractRead({ functionName: 'totalSupply' });
   const { data: rewardForDuration = '0' } = useCustomContractRead({
@@ -223,7 +223,7 @@ export const Context = ({ children }) => {
         tokenName,
         periodFinish,
         rewardRate,
-        stakedBalance,
+        // stakedBalance,
         totalSupply,
         rewardForDuration,
       }}

@@ -1,4 +1,4 @@
-import { formatEther, parseEther } from 'viem';
+import { parseEther } from 'viem';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
 
@@ -14,21 +14,21 @@ import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { addOperation } from '../../utils/helpers/operation';
+import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { pathname } = useLocation();
+  const { stakedBalance, availableRewards } = useContractReadData({});
+  const { setDataOperation, withdraw, withdrawExit, dataOperation } = useContextContract();
 
-  const { setDataOperation, withdraw, withdrawExit, availableRewards, dataOperation, stakedBalance } =
-    useContextContract();
+  // const available = +formatEther(stakedBalance);
 
-  const available = +formatEther(stakedBalance);
-  console.log('🚀 ~ available:', available);
-  const availableForClaim = formatEther(availableRewards);
+  // const availableForClaim = formatEther(availableRewards);
 
   const handleSubmit = event => {
     event.preventDefault();
-    const { error } = validateData(withdrawValue, available);
+    const { error } = validateData(withdrawValue, stakedBalance);
 
     if (!error) {
       setDataOperation(prev => {
@@ -65,14 +65,14 @@ const Withdraw = () => {
 
   const handleWithdrawExit = () => {
     console.log(dataOperation);
-    if (available !== 0) {
+    if (stakedBalance !== 0) {
       setDataOperation(prev => {
         //     const arr = [
         //       ...prev,
         //       {
         //         page: pathname,
         //         status: CONTRACT_OPERATION.status.preLoading,
-        //         valueOperation: available + ' + ' + availableForClaim,
+        //         valueOperation: stakedBalance + ' + ' + availableRewards,
         //         operation: CONTRACT_OPERATION.withdrawAll.operation,
         //       },
         //     ];
@@ -81,7 +81,7 @@ const Withdraw = () => {
         return addOperation({
           prev,
           page: pathname,
-          valueOperation: available + ' + ' + availableForClaim,
+          valueOperation: stakedBalance + ' + ' + availableRewards,
           operation: CONTRACT_OPERATION.withdrawAll.operation,
         });
       });
@@ -98,8 +98,8 @@ const Withdraw = () => {
           <h2>{PAGES_NAME.withdraw}</h2>
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.withdraw}>
-          <Label type={PAGES_NAME.withdraw} formValue={setWithdrawValue} maxAllowed={available}></Label>
-          <Available available={available} />
+          <Label type={PAGES_NAME.withdraw} formValue={setWithdrawValue} maxAllowed={stakedBalance}></Label>
+          <Available available={stakedBalance} />
         </Form>
       </div>
       <OperationStatus media="mobile" />

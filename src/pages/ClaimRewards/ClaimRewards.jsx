@@ -1,4 +1,3 @@
-import { formatEther } from 'viem';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router';
 import Button from '../../components/Buttons/Button';
@@ -10,24 +9,25 @@ import Form from '../../components/Form/Form';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
+import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const ClaimRewards = () => {
   const { pathname } = useLocation();
-  const { setDataOperation, writeRewards, availableRewards } = useContextContract();
+  const { availableRewards } = useContractReadData({});
+  const { setDataOperation, writeRewards } = useContextContract();
 
-  const available = formatEther(availableRewards);
   const { maxType } = resultType;
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (available !== '0') {
+    if (availableRewards !== '0') {
       setDataOperation(prev => {
         const arr = [
           ...prev,
           {
             page: pathname,
             status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: result(maxType, +available),
+            valueOperation: result(maxType, availableRewards),
             operation: CONTRACT_OPERATION.claim.operation,
           },
         ];
@@ -46,7 +46,7 @@ const ClaimRewards = () => {
           <h2>{PAGES_NAME.rewards}</h2>
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.rewards}>
-          <Available available={+available} formatDecimal={4} />
+          <Available available={availableRewards} formatDecimal={4} />
         </Form>
       </div>
       <OperationStatus media="mobile" />
