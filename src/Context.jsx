@@ -9,7 +9,6 @@ import {
 } from './constants/constants';
 
 import { operationChangeStatus } from './utils/helpers/operation';
-import { useCustomContractRead } from './utils/hooks/useCustomContractRead';
 import useCustomContractWrite from './utils/hooks/useCustomContractWrite';
 
 const ContractContext = createContext();
@@ -70,26 +69,6 @@ export const Context = ({ children }) => {
     data: dataRewards,
     status: statusRewards,
   } = useCustomContractWrite({ functionName: 'claimReward' });
-
-  const { data: availableRewards = '0' } = useCustomContractRead({
-    functionName: 'earned',
-    args: [address],
-  });
-  const { data: periodFinish = '0' } = useCustomContractRead({ functionName: 'periodFinish' });
-  const { data: rewardRate = '0' } = useCustomContractRead({ functionName: 'rewardRate' });
-  // const { data: stakedBalanceTest = '0' } = useCustomContractRead({
-  //   functionName: 'balanceOf',
-  //   args: [address],
-  // });
-
-  // const stakedBalance = useMemo(() => {
-  //   return stakedBalanceTest;
-  // }, [stakedBalanceTest]);
-
-  const { data: totalSupply = '0n' } = useCustomContractRead({ functionName: 'totalSupply' });
-  const { data: rewardForDuration = '0' } = useCustomContractRead({
-    functionName: 'getRewardForDuration',
-  });
 
   const isHash = isHaveOldOperation !== hash;
   const {
@@ -219,13 +198,7 @@ export const Context = ({ children }) => {
         withdraw,
         withdrawExit,
         writeRewards,
-        availableRewards,
         tokenName,
-        periodFinish,
-        rewardRate,
-        // stakedBalance,
-        totalSupply,
-        rewardForDuration,
       }}
     >
       {children}

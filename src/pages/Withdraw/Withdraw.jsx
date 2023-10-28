@@ -22,10 +22,6 @@ const Withdraw = () => {
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { setDataOperation, withdraw, withdrawExit, dataOperation } = useContextContract();
 
-  // const available = +formatEther(stakedBalance);
-
-  // const availableForClaim = formatEther(availableRewards);
-
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(withdrawValue, stakedBalance);
