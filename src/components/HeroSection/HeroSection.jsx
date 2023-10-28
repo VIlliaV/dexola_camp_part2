@@ -13,7 +13,7 @@ const HeroSection = () => {
   const stakedBalanceResult = formatEther(stakedBalance);
   console.log('🚀 ~ stakedBalanceResult:', stakedBalanceResult);
 
-  const aprResult = (Number(rewardForDuration) * 100) / Number(totalSupply);
+  const aprResult = (formatEther(rewardForDuration) * 100) / formatEther(totalSupply);
 
   const daysResult = Math.ceil((Number(periodFinish) - Date.now() / 1000) / 86400) || 0;
 
