@@ -8,8 +8,9 @@ import {
   STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
-import { operationChangeStatus } from './utils/helpers/operation';
-import useCustomContractWrite from './utils/hooks/useCustomContractWrite';
+import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
+import { useCustomContractWrite } from './utils/hooks/useCustomContractWrite';
+// import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
@@ -21,6 +22,8 @@ export const Context = ({ children }) => {
   const [dataOperation, setDataOperation] = useState([]);
   console.log('🚀 ~ dataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
+  // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
+  // const { pathname } = useLocation();
 
   const { address } = useAccount();
 
@@ -42,6 +45,24 @@ export const Context = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hash]);
 
+  function handleApproveOperation({ status, data, resetFunction, page, operation }) {
+    if (status === CONTRACT_OPERATION.status.idle) return;
+
+    setDataOperation(prev =>
+      approveOperation({
+        page,
+        status,
+        prevData: prev,
+        data,
+        operation,
+      })
+    );
+
+    if (status === CONTRACT_OPERATION.status.success || status === CONTRACT_OPERATION.status.error) {
+      resetFunction();
+    }
+  }
+
   const {
     write: approve,
     data: dataApprove,
@@ -54,16 +75,16 @@ export const Context = ({ children }) => {
     status: statusStake,
     reset: resetStake,
   } = useCustomContractWrite({ functionName: 'stake' });
-  const {
-    write: withdraw,
-    data: dataWithdraw,
-    status: statusWithdraw,
-  } = useCustomContractWrite({ functionName: 'withdraw' });
-  const {
-    write: withdrawExit,
-    data: dataWithdrawExit,
-    status: statusWithdrawExit,
-  } = useCustomContractWrite({ functionName: 'exit' });
+  // const {
+  //   write: withdraw,
+  //   data: dataWithdraw,
+  //   status: statusWithdraw,
+  // } = useCustomContractWrite({ functionName: 'withdraw' });
+  // const {
+  //   write: withdrawExit,
+  //   data: dataWithdrawExit,
+  //   status: statusWithdrawExit,
+  // } = useCustomContractWrite({ functionName: 'exit' });
   const {
     write: writeRewards,
     data: dataRewards,
@@ -86,10 +107,10 @@ export const Context = ({ children }) => {
         return dataStake;
       case CONTRACT_OPERATION.approve.operation:
         return dataApprove;
-      case CONTRACT_OPERATION.withdraw.operation:
-        return dataWithdraw;
-      case CONTRACT_OPERATION.withdrawAll.operation:
-        return dataWithdrawExit;
+      // case CONTRACT_OPERATION.withdraw.operation:
+      //   return dataWithdraw;
+      // case CONTRACT_OPERATION.withdrawAll.operation:
+      //   return dataWithdrawExit;
       default:
         return dataRewards;
     }
@@ -101,10 +122,10 @@ export const Context = ({ children }) => {
         return statusStake;
       case CONTRACT_OPERATION.approve.operation:
         return statusApprove;
-      case CONTRACT_OPERATION.withdraw.operation:
-        return statusWithdraw;
-      case CONTRACT_OPERATION.withdrawAll.operation:
-        return statusWithdrawExit;
+      // case CONTRACT_OPERATION.withdraw.operation:
+      //   return statusWithdraw;
+      // case CONTRACT_OPERATION.withdrawAll.operation:
+      //   return statusWithdrawExit;
       default:
         return statusRewards;
     }
@@ -126,8 +147,8 @@ export const Context = ({ children }) => {
       '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
       statusStake,
       statusApprove,
-      statusWithdraw,
-      statusWithdrawExit,
+      // statusWithdraw,
+      // statusWithdrawExit,
       statusRewards,
       isSuccess,
       isError
@@ -135,6 +156,7 @@ export const Context = ({ children }) => {
     );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
+    // console.log('🚀 ~ whatIsOperation:', whatIsOperation);
     const takeAData = getOperationData(whatIsOperation?.operation);
     const takeAStatus = getOperationStatus(whatIsOperation?.operation);
 
@@ -175,8 +197,8 @@ export const Context = ({ children }) => {
   }, [
     statusApprove,
     statusStake,
-    statusWithdraw,
-    statusWithdrawExit,
+    // statusWithdraw,
+    // statusWithdrawExit,
     statusRewards,
     isSuccess,
     isError,
@@ -195,10 +217,11 @@ export const Context = ({ children }) => {
         balance,
         updateInfo,
         setUpdateInfo,
-        withdraw,
-        withdrawExit,
+        // withdraw,
+        // withdrawExit,
         writeRewards,
         tokenName,
+        handleApproveOperation,
       }}
     >
       {children}

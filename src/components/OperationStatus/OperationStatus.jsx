@@ -14,15 +14,16 @@ import { CONTRACT_OPERATION } from '../../constants/constants';
 const OperationStatus = ({ media }) => {
   const { tokenName } = useContextContract();
   const { pathname } = useLocation();
-  const [successStatus, setSuccessStatus] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState(false);
   const [operationData, setOperationData] = useState(null);
 
   const { dataOperation } = useContextContract();
 
   //? перевірка чи прийшов новий статус на цю сторінку
   const statusCheck = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
+  // console.log('🚀 ~ statusCheck:', statusCheck);
 
-  return;
+  // return;
   // //? перевірка чи прийшла додаткова операція
   // const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
   // const isOldStatus = dataOperation.find(
@@ -31,21 +32,20 @@ const OperationStatus = ({ media }) => {
   // const clearOldStatus = isNewStatus && isOldStatus;
 
   useEffect(() => {
-    if (!statusCheck || successStatus) return;
+    if (!statusCheck || fetchStatus) return;
     setOperationData(statusCheck);
     if (
       statusCheck.status === CONTRACT_OPERATION.status.success ||
       statusCheck.status === CONTRACT_OPERATION.status.error
     ) {
-      setSuccessStatus(true);
+      setFetchStatus(true);
     } else return;
 
     setTimeout(() => {
-      setSuccessStatus(false);
+      setFetchStatus(false);
       setOperationData(null);
     }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusCheck]);
+  }, [statusCheck, fetchStatus]);
 
   if (!operationData) return;
 

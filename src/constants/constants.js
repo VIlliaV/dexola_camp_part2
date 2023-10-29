@@ -22,7 +22,7 @@ export const CONTRACT_INFO = {
 };
 
 export const CONTRACT_OPERATION = {
-  status: { preLoading: 'preLoading', loading: 'loading', error: 'error', success: 'success' },
+  status: { idle: 'idle', preLoading: 'preLoading', loading: 'loading', error: 'error', success: 'success' },
   stake: {
     operation: 'stake',
     statusText: {

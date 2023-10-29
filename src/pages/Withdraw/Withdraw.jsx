@@ -7,25 +7,76 @@ import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
-import { addOperation } from '../../utils/helpers/operation';
+import { addOperation, approveOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
+import { useContractWriteData } from '../../utils/hooks/useCustomContractWrite';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
-  const { setDataOperation, withdraw, withdrawExit, dataOperation } = useContextContract();
+  const { setDataOperation, handleApproveOperation } = useContextContract();
+  const {
+    withdraw,
+    dataWithdraw,
+    statusWithdraw,
+    resetWithdraw,
+    withdrawExit,
+    dataWithdrawExit,
+    statusWithdrawExit,
+    resetWithdrawExit,
+  } = useContractWriteData();
+
+  useEffect(() => {
+    handleApproveOperation({
+      page: pathname,
+      status: statusWithdraw,
+      data: dataWithdraw,
+      operation: CONTRACT_OPERATION.withdraw.operation,
+      resetFunction: resetWithdraw,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusWithdraw]);
+
+  useEffect(() => {
+    handleApproveOperation({
+      page: pathname,
+      status: statusWithdrawExit,
+      data: dataWithdrawExit,
+      operation: CONTRACT_OPERATION.withdrawAll.operation,
+      resetFunction: resetWithdrawExit,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusWithdrawExit]);
+
+  // useEffect(() => {
+  //   if (statusWithdrawExit === CONTRACT_OPERATION.status.idle) return;
+  //   setDataOperation(prev =>
+  //     approveOperation({
+  //       page: pathname,
+  //       status: statusWithdrawExit,
+  //       prevData: prev,
+  //       data: dataWithdrawExit,
+  //       operation: CONTRACT_OPERATION.withdraw.operation,
+  //     })
+  //   );
+  //   if (
+  //     statusWithdrawExit === CONTRACT_OPERATION.status.success ||
+  //     statusWithdrawExit === CONTRACT_OPERATION.status.error
+  //   )
+  //     resetWithdrawExit;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusWithdrawExit]);
 
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(withdrawValue, stakedBalance);
-
     if (!error) {
       setDataOperation(prev => {
         return addOperation({
@@ -40,40 +91,10 @@ const Withdraw = () => {
       toast.error(error.message);
     }
   };
-  //   if (!error) {
-  //     setDataOperation(prev => {
-  //       const arr = [
-  //         ...prev,
-  //         {
-  //           page: pathname,
-  //           status: CONTRACT_OPERATION.status.preLoading,
-  //           valueOperation: withdrawValue,
-  //           operation: CONTRACT_OPERATION.withdraw.operation,
-  //         },
-  //       ];
-  //       return arr;
-  //     });
-  //     withdraw({ args: [parseEther(withdrawValue)] });
-  //   } else {
-  //     toast.error(error.message);
-  //   }
-  // };
 
   const handleWithdrawExit = () => {
-    console.log(dataOperation);
     if (stakedBalance !== 0) {
       setDataOperation(prev => {
-        //     const arr = [
-        //       ...prev,
-        //       {
-        //         page: pathname,
-        //         status: CONTRACT_OPERATION.status.preLoading,
-        //         valueOperation: stakedBalance + ' + ' + availableRewards,
-        //         operation: CONTRACT_OPERATION.withdrawAll.operation,
-        //       },
-        //     ];
-        //     return arr;
-        //   });
         return addOperation({
           prev,
           page: pathname,
@@ -100,7 +121,11 @@ const Withdraw = () => {
       </div>
       <OperationStatus media="mobile" />
       <ButtonContainer>
-        <Button typeButton="submit" form={PAGES_NAME.withdraw}>
+        <Button
+          typeButton="submit"
+          form={PAGES_NAME.withdraw}
+          disabled={statusWithdraw === CONTRACT_OPERATION.status.loading}
+        >
           {PAGES_NAME.withdraw}
         </Button>
 
