@@ -21,7 +21,7 @@ const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
-  const { setDataOperation, handleApproveOperation } = useContextContract();
+  const { setDataOperation, handleApproveOperation, dataOperation } = useContextContract();
   const {
     withdraw,
     dataWithdraw,
@@ -75,11 +75,15 @@ const Withdraw = () => {
 
   const handleWithdrawExit = () => {
     if (stakedBalance !== 0) {
+      const isMoreWithdrawOrClaimOperation = dataOperation.some(
+        item => item.page === '/withdraw' || item.page === '/claim'
+      );
+
       setDataOperation(prev => {
         return addOperation({
           prev,
           page: pathname,
-          valueOperation: stakedBalance + ' + ' + availableRewards,
+          valueOperation: !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '',
           operation: CONTRACT_OPERATION.withdrawAll.operation,
         });
       });

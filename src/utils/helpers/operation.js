@@ -8,9 +8,11 @@ export const operationChangeStatus = ({
   data = [],
   dataWaitTransaction = [],
   nameOPeration = null,
+  valueOperation = null,
 }) => {
   let itemFirst = true;
-
+  const value =
+    nameOPeration === CONTRACT_OPERATION.withdrawAll.operation ? valueOperation + ' + ALL Rewards' : valueOperation;
   const arr = prevData.map(item => {
     if (
       itemFirst &&
@@ -37,7 +39,7 @@ export const operationChangeStatus = ({
     }
     if (itemFirst && isSuccess && item.hash === dataWaitTransaction?.transactionHash) {
       itemFirst = false;
-      return { ...item, status: CONTRACT_OPERATION.status.success };
+      return { ...item, status: CONTRACT_OPERATION.status.success, valueOperation: value };
     }
 
     return item;

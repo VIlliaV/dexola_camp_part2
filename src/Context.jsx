@@ -156,6 +156,7 @@ export const Context = ({ children }) => {
     //   isError
     //   // isFetched
     // );
+    const realValueForOperation = formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16));
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     // console.log('🚀 ~ whatIsOperation:', whatIsOperation);
@@ -171,6 +172,7 @@ export const Context = ({ children }) => {
         data: takeAData,
         dataWaitTransaction: dataWaitTransaction,
         nameOPeration: whatIsOperation?.operation,
+        valueOperation: realValueForOperation,
       })
     );
 
