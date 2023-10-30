@@ -13,7 +13,7 @@ import { validateData } from '../../utils/validation';
 import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
-import { addOperation, approveOperation } from '../../utils/helpers/operation';
+import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 import { useContractWriteData } from '../../utils/hooks/useCustomContractWrite';
 
@@ -54,25 +54,6 @@ const Withdraw = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusWithdrawExit]);
-
-  // useEffect(() => {
-  //   if (statusWithdrawExit === CONTRACT_OPERATION.status.idle) return;
-  //   setDataOperation(prev =>
-  //     approveOperation({
-  //       page: pathname,
-  //       status: statusWithdrawExit,
-  //       prevData: prev,
-  //       data: dataWithdrawExit,
-  //       operation: CONTRACT_OPERATION.withdraw.operation,
-  //     })
-  //   );
-  //   if (
-  //     statusWithdrawExit === CONTRACT_OPERATION.status.success ||
-  //     statusWithdrawExit === CONTRACT_OPERATION.status.error
-  //   )
-  //     resetWithdrawExit;
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusWithdrawExit]);
 
   const handleSubmit = event => {
     event.preventDefault();

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { parseEther } from 'viem';
+import { formatEther, parseEther } from 'viem';
 import { useAccount, useBalance, useToken, useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
@@ -101,6 +101,8 @@ export const Context = ({ children }) => {
     hash: isHash ? isHaveOldOperation : isHash,
   });
 
+  console.log('🚀 ~ dataWaitTransaction:', formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16)));
+
   const getOperationData = operation => {
     switch (operation) {
       case CONTRACT_OPERATION.stake.operation:
@@ -143,17 +145,17 @@ export const Context = ({ children }) => {
     }
   }, [dataOperation]);
   useEffect(() => {
-    console.log(
-      '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
-      statusStake,
-      statusApprove,
-      // statusWithdraw,
-      // statusWithdrawExit,
-      statusRewards,
-      isSuccess,
-      isError
-      // isFetched
-    );
+    // console.log(
+    //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+    //   statusStake,
+    //   statusApprove,
+    //   // statusWithdraw,
+    //   // statusWithdrawExit,
+    //   statusRewards,
+    //   isSuccess,
+    //   isError
+    //   // isFetched
+    // );
 
     const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     // console.log('🚀 ~ whatIsOperation:', whatIsOperation);

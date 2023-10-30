@@ -20,7 +20,7 @@ const ClaimRewards = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (availableRewards !== '0') {
+    if (availableRewards !== 0) {
       setDataOperation(prev => {
         const arr = [
           ...prev,
