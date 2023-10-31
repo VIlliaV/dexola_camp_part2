@@ -115,7 +115,7 @@ export const Context = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log('dataWaitTransaction :>> ', dataWaitTransaction?.transactionHash, isTest?.operation);
+    // console.log('dataWaitTransaction :>> ', dataWaitTransaction?.transactionHash, isTest?.operation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataWaitTransaction]);
 

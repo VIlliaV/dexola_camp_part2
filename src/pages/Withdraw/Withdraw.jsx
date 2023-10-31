@@ -16,6 +16,7 @@ import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
+// import { useWaitForTransaction } from 'wagmi';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
@@ -31,6 +32,7 @@ const Withdraw = () => {
     dataWithdrawExit,
     statusWithdrawExit,
     resetWithdrawExit,
+    TEST,
   } = useContractWriteData();
 
   useEffect(() => {
@@ -43,6 +45,30 @@ const Withdraw = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusWithdraw]);
+
+  // const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
+  // const hash = statusWithdraw === CONTRACT_OPERATION.status.success ? dataWithdraw?.hash : false;
+  // console.log('🚀 ~ hash:', hash);
+  // const {
+  //   data: dataWaitTransaction,
+  //   status,
+  //   isSuccess,
+  //   isError,
+
+  //   // isFetched,
+  // } = useWaitForTransaction({
+  //   hash: hash,
+  //   suspense: true,
+  // });
+  // console.log(
+  //   '🚀 ~ dataWaitTransaction:',
+  //   dataWithdraw?.hash,
+  //   statusWithdraw,
+  //   // dataWaitTransaction,
+  //   // isSuccess,
+  //   // isError,
+  //   status
+  // );
 
   useEffect(() => {
     handleApproveOperation({
@@ -67,7 +93,14 @@ const Withdraw = () => {
           operation: CONTRACT_OPERATION.withdraw.operation,
         });
       });
-      withdraw({ args: [parseEther(withdrawValue)] });
+      TEST({ typeFunction: 'withdraw', args: { args: [parseEther(withdrawValue)] } });
+      // try {
+      //   const { hash } = await withdraw({ args: [parseEther(withdrawValue)] });
+      //   console.log('🚀 ~ response:', hash);
+      // } catch (error) {
+      //   console.log('🚀 ~ error:', error);
+      // }
+      // withdraw({ args: [parseEther(withdrawValue)] });
     } else {
       toast.error(error.message);
     }

@@ -1,12 +1,19 @@
 import { useContractWrite } from 'wagmi';
 import { STAR_RUNNER_STAKING_CONTRACT, STAR_RUNNER_TOKEN_CONTRACT } from '../../../constants/constants';
+import { useEffect, useState } from 'react';
 
 const useCustomContractWrite = ({ functionName, contract = STAR_RUNNER_STAKING_CONTRACT }) => {
-  const { write, data, status, reset } = useContractWrite({ ...contract, functionName });
-  return { write, data, status, reset };
+  const { writeAsync, data, status, reset } = useContractWrite({ ...contract, functionName });
+  return { writeAsync, data, status, reset };
 };
 
 const useContractWriteData = () => {
+  const [functionData, setFunctionData] = useState('');
+  useEffect(() => {
+    if (!functionData?.functionName) return;
+    TEST({ args: functionData.args });
+  }, [functionData]);
+
   const {
     write: stake,
     data: dataStake,
@@ -21,12 +28,33 @@ const useContractWriteData = () => {
     reset: resetApprove,
   } = useCustomContractWrite({ functionName: 'approve', contract: STAR_RUNNER_TOKEN_CONTRACT });
 
+  // const {
+  //   write: withdraw,
+  //   data: dataWithdraw,
+  //   status: statusWithdraw,
+  //   reset: resetWithdraw,
+  // } = useCustomContractWrite({ functionName: 'withdraw' });
+
   const {
-    write: withdraw,
+    writeAsync,
     data: dataWithdraw,
     status: statusWithdraw,
     reset: resetWithdraw,
-  } = useCustomContractWrite({ functionName: 'withdraw' });
+  } = useCustomContractWrite({ functionName: functionData?.functionName });
+
+  const TEST = async ({ typeFunction = '', args }) => {
+    if (!functionData?.functionName) {
+      setFunctionData({ functionName: typeFunction, args });
+      return;
+    }
+    try {
+      const { hash } = await writeAsync(args);
+      return hash;
+    } catch (error) {
+      console.log('🚀 ~ error:', error);
+    }
+    setFunctionData(null);
+  };
 
   const {
     write: withdrawExit,
@@ -36,7 +64,7 @@ const useContractWriteData = () => {
   } = useCustomContractWrite({ functionName: 'exit' });
 
   return {
-    withdraw,
+    // withdraw,
     dataWithdraw,
     statusWithdraw,
     resetWithdraw,
@@ -52,7 +80,11 @@ const useContractWriteData = () => {
     dataApprove,
     statusApprove,
     resetApprove,
+    TEST,
+    // hash,
   };
 };
 
-export { useCustomContractWrite, useContractWriteData };
+const useTest = () => {};
+
+export { useCustomContractWrite, useContractWriteData, useTest };
