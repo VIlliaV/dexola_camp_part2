@@ -1,11 +1,9 @@
-// import { formatEther } from 'viem';
 import { CONTRACT_INFO } from '../../constants/constants';
+import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 import ContractInfo from '../ContractInfo/ContractInfo';
 
 import SectionWrapper from '../Section/SectionWrapper';
 import { HeroSectionStyled } from './HeroSection.styled';
-
-import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const HeroSection = () => {
   const { stakedBalance, apr, days, availableRewards } = useContractReadData({});

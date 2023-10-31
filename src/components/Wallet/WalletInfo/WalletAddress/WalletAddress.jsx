@@ -1,8 +1,8 @@
-import { useAccount } from 'wagmi';
 import { formatAddress } from '@/utils/formating';
+import { useWalletInfo } from '../../../../utils/hooks/ContractHooks/useWalletInfo';
 
 const WalletAddress = () => {
-  const { address } = useAccount();
+  const { address } = useWalletInfo({});
   return <h3 className="wallet_address">{formatAddress(address)}</h3>;
 };
 

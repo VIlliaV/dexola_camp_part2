@@ -2,7 +2,7 @@ import { RewardStyled, RewardUnit, RewardValue } from './Reward.styled';
 import { useContextContract } from '../../../../Context';
 
 import { formatDecimalPlaces } from '@/utils/formating';
-import { useContractReadData } from '../../../../utils/hooks/useCustomContractRead';
+import { useContractReadData } from '../../../../utils/hooks/ContractHooks/useCustomContractRead';
 
 const Reward = ({ amountToStake = 0 }) => {
   const { symbol } = useContextContract();

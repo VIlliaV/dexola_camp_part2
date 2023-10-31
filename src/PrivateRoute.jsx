@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
-import { useAccount } from 'wagmi';
+import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
 
 export const PrivateRoute = ({ component: Component, redirectTo = '/' }) => {
-  const { isConnected = false } = useAccount();
+  const { isConnected } = useWalletInfo({});
 
   return isConnected ? Component : <Navigate to={redirectTo} />;
 };

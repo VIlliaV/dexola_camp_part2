@@ -9,9 +9,9 @@ import {
 } from './constants/constants';
 
 import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
-import { useCustomContractWrite } from './utils/hooks/useCustomContractWrite';
+import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
 import { useLocation } from 'react-router-dom';
-import { useWalletInfo } from './utils/hooks/useWalletInfo';
+import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
 // import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();

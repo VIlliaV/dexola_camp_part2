@@ -5,10 +5,10 @@ import Wallet from '../Wallet/Wallet';
 import Currency from '../Wallet/WalletInfo/Currency/Currency';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 
-import { useAccount } from 'wagmi';
+import { useWalletInfo } from '../../utils/hooks/ContractHooks/useWalletInfo';
 
 const Header = () => {
-  const { isConnected } = useAccount();
+  const { isConnected } = useWalletInfo({});
   const { open } = useWeb3Modal();
 
   return (

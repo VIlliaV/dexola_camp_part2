@@ -9,7 +9,8 @@ import Form from '../../components/Form/Form';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
-import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
+import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
+// import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const ClaimRewards = () => {
   const { pathname } = useLocation();

@@ -4,7 +4,8 @@ import SharedLayout from './components/SharedLayout/SharedLayout.jsx';
 import { Toaster } from 'react-hot-toast';
 import { GlobalStyles } from './styles/GlobalStyles.js';
 import { PrivateRoute } from './PrivateRoute.jsx';
-import { useAccount } from 'wagmi';
+
+import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo.js';
 
 const NoConnect = lazy(() => import('./pages/NoConnect/NoConnect.jsx'));
 const Stake = lazy(() => import('./pages/Stake/Stake.jsx'));
@@ -13,7 +14,7 @@ const ClaimRewards = lazy(() => import('./pages/ClaimRewards/ClaimRewards.jsx'))
 const Page404 = lazy(() => import('./pages/404Page/404Page.jsx'));
 
 function App() {
-  const { isConnected = false } = useAccount();
+  const { isConnected } = useWalletInfo({});
 
   const navigate = useNavigate();
   useEffect(() => {
