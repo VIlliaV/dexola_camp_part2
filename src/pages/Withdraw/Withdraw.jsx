@@ -16,8 +16,6 @@ import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
-// import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
-// import { useContractWriteData } from '../../utils/hooks/useCustomContractWrite';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');

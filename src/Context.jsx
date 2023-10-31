@@ -52,7 +52,7 @@ export const Context = ({ children }) => {
   }, [hash]);
 
   function handleApproveOperation({ status, data, resetFunction, page, operation }) {
-    if (status === CONTRACT_OPERATION.status.idle) return;
+    if (status === CONTRACT_OPERATION.status.idle || status === CONTRACT_OPERATION.status.loading) return;
 
     setDataOperation(prev =>
       approveOperation({
