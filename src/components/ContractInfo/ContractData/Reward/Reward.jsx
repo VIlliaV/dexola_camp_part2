@@ -5,7 +5,7 @@ import { formatDecimalPlaces } from '@/utils/formating';
 import { useContractReadData } from '../../../../utils/hooks/useCustomContractRead';
 
 const Reward = ({ amountToStake = 0 }) => {
-  const { tokenName } = useContextContract();
+  const { symbol } = useContextContract();
   const { totalAvailableRewards } = useContractReadData({ amountToStake });
 
   const totalAvailableRewardsFormatting = formatDecimalPlaces(totalAvailableRewards, 0);
@@ -14,7 +14,7 @@ const Reward = ({ amountToStake = 0 }) => {
     <RewardStyled>
       Reward rate:
       <RewardValue>{totalAvailableRewardsFormatting}</RewardValue>
-      <RewardUnit>{tokenName}/week</RewardUnit>
+      <RewardUnit>{symbol}/week</RewardUnit>
     </RewardStyled>
   );
 };

@@ -6,16 +6,16 @@ import { formatDecimalPlaces } from '@/utils/formating';
 import { useContextContract } from '../../../../Context';
 
 const WalletBalance = () => {
-  const { tokenName, balance } = useContextContract();
+  const { symbol, balance } = useContextContract();
 
   return (
     <WalletBalanceStyled>
       <picture>
         <source srcSet={`${stru} 1x, ${stru2x} 2x`} type="image/webp" />
-        <img src={`${struDef}`} alt={tokenName} />
+        <img src={`${struDef}`} alt={symbol} />
       </picture>
       <h3>
-        {formatDecimalPlaces(balance, 0)} {tokenName}
+        {formatDecimalPlaces(balance, 0)} {symbol}
       </h3>
     </WalletBalanceStyled>
   );

@@ -1,5 +1,5 @@
 import { useContractWrite } from 'wagmi';
-import { STAR_RUNNER_STAKING_CONTRACT } from '../../constants/constants';
+import { STAR_RUNNER_STAKING_CONTRACT, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
 
 const useCustomContractWrite = ({ functionName, contract = STAR_RUNNER_STAKING_CONTRACT }) => {
   const { write, data, status, reset } = useContractWrite({ ...contract, functionName });
@@ -13,6 +13,13 @@ const useContractWriteData = () => {
     status: statusStake,
     reset: resetStake,
   } = useCustomContractWrite({ functionName: 'stake' });
+
+  const {
+    write: approve,
+    data: dataApprove,
+    status: statusApprove,
+    reset: resetApprove,
+  } = useCustomContractWrite({ functionName: 'approve', contract: STAR_RUNNER_TOKEN_CONTRACT });
 
   const {
     write: withdraw,
@@ -41,6 +48,10 @@ const useContractWriteData = () => {
     dataWithdrawExit,
     statusWithdrawExit,
     resetWithdrawExit,
+    approve,
+    dataApprove,
+    statusApprove,
+    resetApprove,
   };
 };
 

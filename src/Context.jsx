@@ -1,15 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { formatEther, parseEther } from 'viem';
-import { useAccount, useBalance, useToken, useWaitForTransaction } from 'wagmi';
+import { useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
   STAR_RUNNER_TOKEN_ADDRESS,
-  STAR_RUNNER_TOKEN_CONTRACT,
-  STAR_RUNNER_STAKING_ADDRESS,
+  // STAR_RUNNER_TOKEN_CONTRACT,
+  // STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
 import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
 import { useCustomContractWrite } from './utils/hooks/useCustomContractWrite';
+import { useLocation } from 'react-router-dom';
+import { useWalletInfo } from './utils/hooks/useWalletInfo';
 // import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();
@@ -25,18 +27,22 @@ export const Context = ({ children }) => {
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
   // const { pathname } = useLocation();
 
-  const { address } = useAccount();
-
-  const { data: balanceNoFormatting } = useBalance({
-    address,
-    token: STAR_RUNNER_TOKEN_ADDRESS,
-    watch: true,
+  // const { address } = useAccount();
+  const { balance, symbol } = useWalletInfo({
+    tokenForBalance: STAR_RUNNER_TOKEN_ADDRESS,
   });
-  const balance = +balanceNoFormatting?.formatted || 0;
+  // const { data: balanceNoFormatting } = useBalance({
+  //   address,
+  //   token: STAR_RUNNER_TOKEN_ADDRESS,
+  //   watch: true,
+  // });
+  // const balance = +balanceNoFormatting?.formatted || 0;
+  const { pathname } = useLocation();
 
-  const { data: tokenData } = useToken({ address: STAR_RUNNER_TOKEN_ADDRESS });
-  const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
-  const isHaveOldOperation = dataOperation[0]?.hash || false;
+  // const { data: tokenData } = useToken({ address: STAR_RUNNER_TOKEN_ADDRESS });
+  // const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
+  const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
+  const isHaveOldOperation = isTest?.hash || false;
 
   useEffect(() => {
     if (isHaveOldOperation !== hash) {
@@ -63,12 +69,12 @@ export const Context = ({ children }) => {
     }
   }
 
-  const {
-    write: approve,
-    data: dataApprove,
-    status: statusApprove,
-    reset: resetApprove,
-  } = useCustomContractWrite({ functionName: 'approve', contract: STAR_RUNNER_TOKEN_CONTRACT });
+  // const {
+  //   write: approve,
+  //   data: dataApprove,
+  //   status: statusApprove,
+  //   reset: resetApprove,
+  // } = useCustomContractWrite({ functionName: 'approve', contract: STAR_RUNNER_TOKEN_CONTRACT });
   const {
     write: stake,
     data: dataStake,
@@ -96,19 +102,29 @@ export const Context = ({ children }) => {
     data: dataWaitTransaction,
     isSuccess,
     isError,
+
     // isFetched,
   } = useWaitForTransaction({
     hash: isHash ? isHaveOldOperation : isHash,
+    // onSuccess(data) {
+    //   console.log('Success', data);
+    // },
+    // onError(error) {
+    //   console.log('Error', error);
+    // },
   });
 
-  console.log('🚀 ~ dataWaitTransaction:', formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16)));
+  useEffect(() => {
+    console.log('dataWaitTransaction :>> ', dataWaitTransaction?.transactionHash, isTest?.operation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataWaitTransaction]);
 
   const getOperationData = operation => {
     switch (operation) {
       case CONTRACT_OPERATION.stake.operation:
         return dataStake;
-      case CONTRACT_OPERATION.approve.operation:
-        return dataApprove;
+      // case CONTRACT_OPERATION.approve.operation:
+      //   return dataApprove;
       // case CONTRACT_OPERATION.withdraw.operation:
       //   return dataWithdraw;
       // case CONTRACT_OPERATION.withdrawAll.operation:
@@ -122,8 +138,8 @@ export const Context = ({ children }) => {
     switch (operation) {
       case CONTRACT_OPERATION.stake.operation:
         return statusStake;
-      case CONTRACT_OPERATION.approve.operation:
-        return statusApprove;
+      // case CONTRACT_OPERATION.approve.operation:
+      //   return statusApprove;
       // case CONTRACT_OPERATION.withdraw.operation:
       //   return statusWithdraw;
       // case CONTRACT_OPERATION.withdrawAll.operation:
@@ -183,23 +199,23 @@ export const Context = ({ children }) => {
     ) {
       stake({ args: [parseEther(dataOperation[0].valueOperation)] });
     }
-    if (
-      dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
-      dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
-      statusApprove === 'idle'
-    ) {
-      approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
-    }
+    // if (
+    //   dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
+    //   dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
+    //   statusApprove === 'idle'
+    // ) {
+    //   approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
+    // }
     if ((statusStake === 'success' || statusStake === 'error') && dataOperation[0]?.hash) {
       resetStake();
     }
-    if ((statusApprove === 'success' || statusApprove === 'error') && dataOperation[0]?.hash) {
-      resetApprove();
-    }
+    // if ((statusApprove === 'success' || statusApprove === 'error') && dataOperation[0]?.hash) {
+    //   resetApprove();
+    // }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    statusApprove,
+    // statusApprove,
     statusStake,
     // statusWithdraw,
     // statusWithdrawExit,
@@ -217,14 +233,14 @@ export const Context = ({ children }) => {
         setDataOperation,
         valueForOperation,
         setValueForOperation,
-        approve,
+        // approve,
         balance,
         updateInfo,
         setUpdateInfo,
         // withdraw,
         // withdrawExit,
         writeRewards,
-        tokenName,
+        symbol,
         handleApproveOperation,
       }}
     >

@@ -4,14 +4,14 @@ import { AvailableData, AvailableStyled, AvailableUnit, AvailableValue } from '.
 
 const Available = ({ available = 0, formatDecimal = 0 }) => {
   const availableFormatting = formatDecimalPlaces(available, formatDecimal);
-  const { tokenName } = useContextContract();
+  const { symbol } = useContextContract();
 
   return (
     <AvailableStyled>
       Available:
       <AvailableData>
         <AvailableValue>{availableFormatting} </AvailableValue>
-        <AvailableUnit>{tokenName}</AvailableUnit>
+        <AvailableUnit>{symbol}</AvailableUnit>
       </AvailableData>
     </AvailableStyled>
   );
