@@ -1,19 +1,20 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { formatEther, parseEther } from 'viem';
-import { writeContract, waitForTransaction } from '@wagmi/core';
+import { writeContract, waitForTransaction, readContract } from '@wagmi/core';
 // import { useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
   STAR_RUNNER_TOKEN_ADDRESS,
   STAR_RUNNER_STAKING_CONTRACT,
-  // STAR_RUNNER_TOKEN_CONTRACT,
-  // STAR_RUNNER_STAKING_ADDRESS,
+  STAR_RUNNER_TOKEN_CONTRACT,
+  STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
 import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
 import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useLocation } from 'react-router-dom';
 import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
+import { useContractReadData } from './utils/hooks/ContractHooks/useCustomContractRead';
 // import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();
@@ -22,45 +23,52 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
-  // const [hash, setHash] = useState(null);
+  const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ RealdataOperation:', dataOperation);
+  // console.log('🚀 ~ RealdataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
-  // const rlpShow = toRlp([
-  //   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
-  //   '0x0000000000000000000000002f112ed8a96327747565f4d4b4615be8fb89459d',
-  //   '0x000000000000000000000000fdcb59c1dbffb8678b8bfe64c12ce915219dd401',
-  // ]);
-  // const show = hexToString('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', { size: 32 });
-  // const show1 = hexToString('0x0000000000000000000000002f112ed8a96327747565f4d4b4615be8fb89459d', { size: 32 });
-  // const show2 = hexToString('0x000000000000000000000000fdcb59c1dbffb8678b8bfe64c12ce915219dd401', { size: 32 });
-  // const show3 = hexToString(rlpShow, { size: 101 });
-  // console.log('🚀 ~ show:', show, show1, show2, show3);
+  const { allowance } = useContractReadData({});
+  console.log('🚀 ~ allowance:', allowance);
+
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
   // const { pathname } = useLocation();
 
   // const { address } = useAccount();
-  const { balance, symbol } = useWalletInfo({
+  const { balance, symbol, address } = useWalletInfo({
     tokenForBalance: STAR_RUNNER_TOKEN_ADDRESS,
   });
-  // const { data: balanceNoFormatting } = useBalance({
-  //   address,
-  //   token: STAR_RUNNER_TOKEN_ADDRESS,
-  //   watch: true,
-  // });
-  // const balance = +balanceNoFormatting?.formatted || 0;
-  // const { pathname } = useLocation();
-  const showDATA = () => {
-    console.log('🚀 ~ dataOperation:', dataOperation);
-  };
+
+  useEffect(() => {
+    if (hash === null) return;
+    console.log('🚀 ~ allowanceREAL:', allowance);
+    // writeContractData({ functionName: 'stake', args: [parseInt(hash?.logs[0]?.data || '0', 16)] });
+    console.log("🚀 ~ parseInt(hash?.logs[0]?.data || '0', 16):", parseInt(hash?.logs[0]?.data || '0', 16));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hash]);
+
   const writeContractData = async ({ contract = STAR_RUNNER_STAKING_CONTRACT, functionName = '', args }) => {
+    // const testAllow = allowance;
     try {
       const { hash } = await writeContract({ ...contract, functionName, args });
-      console.log('🚀 ~ hash:', hash);
+      // console.log('🚀 ~ hash:', hash);
       const TransactionReceipt = await waitForTransaction({ hash });
-      showDATA();
       if (functionName === 'approve') {
-        writeContractData({ functionName: 'stake', args: [parseInt(TransactionReceipt?.logs[0]?.data || '0', 16)] });
+        const data = await readContract({
+          ...STAR_RUNNER_TOKEN_CONTRACT,
+          functionName: 'allowance',
+          args: [address, STAR_RUNNER_STAKING_ADDRESS],
+        });
+        const valueOperation = parseInt(TransactionReceipt?.logs[0]?.data || '0', 16);
+        if (+formatEther(data) === +formatEther(valueOperation)) {
+          writeContractData({ functionName: 'stake', args: [parseInt(TransactionReceipt?.logs[0]?.data || '0', 16)] });
+        } else {
+          writeContractData({
+            contract: STAR_RUNNER_TOKEN_CONTRACT,
+            functionName: 'approve',
+            args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(valueOperation)],
+          });
+        }
+        // console.log('🚀 ~ allowance:', testAllow);
       }
     } catch (error) {
       console.log('🚀 ~ error:', error);

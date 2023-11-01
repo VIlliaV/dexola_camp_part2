@@ -1,5 +1,9 @@
 import { useContractRead } from 'wagmi';
-import { STAR_RUNNER_STAKING_CONTRACT } from '../../../constants/constants';
+import {
+  STAR_RUNNER_STAKING_CONTRACT,
+  STAR_RUNNER_TOKEN_CONTRACT,
+  STAR_RUNNER_STAKING_ADDRESS,
+} from '../../../constants/constants';
 import { formatEther } from 'viem';
 import { useWalletInfo } from './useWalletInfo';
 
@@ -11,6 +15,7 @@ const useCustomContractRead = ({ functionName, contract = STAR_RUNNER_STAKING_CO
 
 const useContractReadData = ({ amountToStake = 0 }) => {
   const { address } = useWalletInfo({});
+  // console.log('🚀 ~ address:', address);
 
   const { data: stakedBalanceBig = '0' } = useCustomContractRead({ functionName: 'balanceOf', args: [address] });
   const stakedBalance = +formatEther(stakedBalanceBig);
@@ -43,7 +48,13 @@ const useContractReadData = ({ amountToStake = 0 }) => {
 
   const days = Math.ceil(remaining / 86400);
 
-  return { stakedBalance, availableRewards, totalAvailableRewards, apr, days };
+  const { data: allowanceBig } = useCustomContractRead({
+    contract: STAR_RUNNER_TOKEN_CONTRACT,
+    functionName: 'allowance',
+    args: [address, STAR_RUNNER_STAKING_ADDRESS],
+  });
+  const allowance = +formatEther(allowanceBig);
+  return { stakedBalance, availableRewards, totalAvailableRewards, apr, days, allowance };
 };
 
 export { useCustomContractRead, useContractReadData };
