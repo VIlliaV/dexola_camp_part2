@@ -6,7 +6,12 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import { CONTRACT_OPERATION, PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS } from '../../constants/constants';
+import {
+  CONTRACT_OPERATION,
+  PAGES_NAME,
+  STAR_RUNNER_STAKING_ADDRESS,
+  STAR_RUNNER_TOKEN_CONTRACT,
+} from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
@@ -19,7 +24,7 @@ import { parseEther } from 'viem';
 const Stake = () => {
   const [stakeValue, setStakeValue] = useState('0');
   const { pathname } = useLocation();
-  const { setDataOperation, balance, handleApproveOperation } = useContextContract();
+  const { setDataOperation, balance, handleApproveOperation, writeContractData } = useContextContract();
   const { approve, dataApprove, statusApprove, resetApprove, stake, dataStake, statusStake, resetStake } =
     useContractWriteData();
 
@@ -59,7 +64,12 @@ const Stake = () => {
           operation: CONTRACT_OPERATION.approve.operation,
         });
       });
-      approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)] });
+      writeContractData({
+        contract: STAR_RUNNER_TOKEN_CONTRACT,
+        functionName: 'approve',
+        args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)],
+      });
+      // approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)] });
 
       // setDataOperation(prev => {
       //   const arr = [

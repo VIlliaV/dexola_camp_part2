@@ -51,7 +51,7 @@ export const operationChangeStatus = ({
 export const addOperation = ({
   prev,
   page = '/',
-  status = CONTRACT_OPERATION.status.preLoading,
+  status = CONTRACT_OPERATION.status.loading,
   valueOperation = null,
   operation,
 }) => {

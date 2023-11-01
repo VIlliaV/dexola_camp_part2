@@ -1,16 +1,18 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { formatEther, parseEther } from 'viem';
-import { useWaitForTransaction } from 'wagmi';
+import { writeContract, waitForTransaction } from '@wagmi/core';
+// import { useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
   STAR_RUNNER_TOKEN_ADDRESS,
+  STAR_RUNNER_STAKING_CONTRACT,
   // STAR_RUNNER_TOKEN_CONTRACT,
   // STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
 import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
 import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
 // import { useLocation } from 'react-router-dom';
 
@@ -20,10 +22,20 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
-  const [hash, setHash] = useState(null);
+  // const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ dataOperation:', dataOperation);
+  console.log('🚀 ~ RealdataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
+  // const rlpShow = toRlp([
+  //   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+  //   '0x0000000000000000000000002f112ed8a96327747565f4d4b4615be8fb89459d',
+  //   '0x000000000000000000000000fdcb59c1dbffb8678b8bfe64c12ce915219dd401',
+  // ]);
+  // const show = hexToString('0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef', { size: 32 });
+  // const show1 = hexToString('0x0000000000000000000000002f112ed8a96327747565f4d4b4615be8fb89459d', { size: 32 });
+  // const show2 = hexToString('0x000000000000000000000000fdcb59c1dbffb8678b8bfe64c12ce915219dd401', { size: 32 });
+  // const show3 = hexToString(rlpShow, { size: 101 });
+  // console.log('🚀 ~ show:', show, show1, show2, show3);
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
   // const { pathname } = useLocation();
 
@@ -37,19 +49,35 @@ export const Context = ({ children }) => {
   //   watch: true,
   // });
   // const balance = +balanceNoFormatting?.formatted || 0;
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
+  const showDATA = () => {
+    console.log('🚀 ~ dataOperation:', dataOperation);
+  };
+  const writeContractData = async ({ contract = STAR_RUNNER_STAKING_CONTRACT, functionName = '', args }) => {
+    try {
+      const { hash } = await writeContract({ ...contract, functionName, args });
+      console.log('🚀 ~ hash:', hash);
+      const TransactionReceipt = await waitForTransaction({ hash });
+      showDATA();
+      if (functionName === 'approve') {
+        writeContractData({ functionName: 'stake', args: [parseInt(TransactionReceipt?.logs[0]?.data || '0', 16)] });
+      }
+    } catch (error) {
+      console.log('🚀 ~ error:', error);
+    }
+  };
 
   // const { data: tokenData } = useToken({ address: STAR_RUNNER_TOKEN_ADDRESS });
   // const tokenName = !tokenData?.name ? ':(' : tokenData?.name === 'StarRunner' ? 'STRU' : tokenData?.name;
-  const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
-  const isHaveOldOperation = isTest?.hash || false;
+  // const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
+  // const isHaveOldOperation = isTest?.hash || false;
 
-  useEffect(() => {
-    if (isHaveOldOperation !== hash) {
-      setHash(isHaveOldOperation);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash]);
+  // useEffect(() => {
+  //   if (isHaveOldOperation !== hash) {
+  //     setHash(isHaveOldOperation);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [hash]);
 
   function handleApproveOperation({ status, data, resetFunction, page, operation }) {
     if (status === CONTRACT_OPERATION.status.idle || status === CONTRACT_OPERATION.status.loading) return;
@@ -97,27 +125,27 @@ export const Context = ({ children }) => {
     status: statusRewards,
   } = useCustomContractWrite({ functionName: 'claimReward' });
 
-  const isHash = isHaveOldOperation !== hash;
-  const {
-    data: dataWaitTransaction,
-    isSuccess,
-    isError,
+  // const isHash = isHaveOldOperation !== hash;
+  // const {
+  //   data: dataWaitTransaction,
+  //   isSuccess,
+  //   isError,
 
-    // isFetched,
-  } = useWaitForTransaction({
-    hash: isHash ? isHaveOldOperation : isHash,
-    // onSuccess(data) {
-    //   console.log('Success', data);
-    // },
-    // onError(error) {
-    //   console.log('Error', error);
-    // },
-  });
+  //   // isFetched,
+  // } = useWaitForTransaction({
+  //   hash: isHash ? isHaveOldOperation : isHash,
+  //   // onSuccess(data) {
+  //   //   console.log('Success', data);
+  //   // },
+  //   // onError(error) {
+  //   //   console.log('Error', error);
+  //   // },
+  // });
 
-  useEffect(() => {
-    // console.log('dataWaitTransaction :>> ', dataWaitTransaction?.transactionHash, isTest?.operation);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataWaitTransaction]);
+  // useEffect(() => {
+  //   // console.log('dataWaitTransaction :>> ', dataWaitTransaction?.transactionHash, isTest?.operation);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dataWaitTransaction]);
 
   const getOperationData = operation => {
     switch (operation) {
@@ -172,23 +200,23 @@ export const Context = ({ children }) => {
     //   isError
     //   // isFetched
     // );
-    const realValueForOperation = formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16));
+    // const realValueForOperation = formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16));
 
-    const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
+    // const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
     // console.log('🚀 ~ whatIsOperation:', whatIsOperation);
-    const takeAData = getOperationData(whatIsOperation?.operation);
-    const takeAStatus = getOperationStatus(whatIsOperation?.operation);
+    // const takeAData = getOperationData(whatIsOperation?.operation);
+    // const takeAStatus = getOperationStatus(whatIsOperation?.operation);
 
     setDataOperation(prev =>
       operationChangeStatus({
-        status: takeAStatus,
+        // status: takeAStatus,
         prevData: prev,
-        isSuccess: isSuccess,
-        isError: isError,
-        data: takeAData,
-        dataWaitTransaction: dataWaitTransaction,
-        nameOPeration: whatIsOperation?.operation,
-        valueOperation: realValueForOperation,
+        // isSuccess: isSuccess,
+        // isError: isError,
+        // data: takeAData,
+        // dataWaitTransaction: dataWaitTransaction,
+        // nameOPeration: whatIsOperation?.operation,
+        // valueOperation: realValueForOperation,
       })
     );
 
@@ -220,8 +248,8 @@ export const Context = ({ children }) => {
     // statusWithdraw,
     // statusWithdrawExit,
     statusRewards,
-    isSuccess,
-    isError,
+    // isSuccess,
+    // isError,
     // isFetched,
     dataOperation.length,
   ]);
@@ -242,6 +270,7 @@ export const Context = ({ children }) => {
         writeRewards,
         symbol,
         handleApproveOperation,
+        writeContractData,
       }}
     >
       {children}

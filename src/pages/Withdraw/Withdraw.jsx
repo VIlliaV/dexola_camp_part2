@@ -22,29 +22,28 @@ const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
-  const { setDataOperation, handleApproveOperation, dataOperation } = useContextContract();
+  const { setDataOperation, handleApproveOperation, dataOperation, writeContractData } = useContextContract();
   const {
-    withdraw,
-    dataWithdraw,
-    statusWithdraw,
-    resetWithdraw,
+    // withdraw,
+    // dataWithdraw,
+    // statusWithdraw,
+    // resetWithdraw,
     withdrawExit,
     dataWithdrawExit,
     statusWithdrawExit,
     resetWithdrawExit,
-    TEST,
   } = useContractWriteData();
 
-  useEffect(() => {
-    handleApproveOperation({
-      page: pathname,
-      status: statusWithdraw,
-      data: dataWithdraw,
-      operation: CONTRACT_OPERATION.withdraw.operation,
-      resetFunction: resetWithdraw,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusWithdraw]);
+  // useEffect(() => {
+  //   handleApproveOperation({
+  //     page: pathname,
+  //     status: statusWithdraw,
+  //     data: dataWithdraw,
+  //     operation: CONTRACT_OPERATION.withdraw.operation,
+  //     resetFunction: resetWithdraw,
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusWithdraw]);
 
   // const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
   // const hash = statusWithdraw === CONTRACT_OPERATION.status.success ? dataWithdraw?.hash : false;
@@ -70,16 +69,16 @@ const Withdraw = () => {
   //   status
   // );
 
-  useEffect(() => {
-    handleApproveOperation({
-      page: pathname,
-      status: statusWithdrawExit,
-      data: dataWithdrawExit,
-      operation: CONTRACT_OPERATION.withdrawAll.operation,
-      resetFunction: resetWithdrawExit,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusWithdrawExit]);
+  // useEffect(() => {
+  //   handleApproveOperation({
+  //     page: pathname,
+  //     status: statusWithdrawExit,
+  //     data: dataWithdrawExit,
+  //     operation: CONTRACT_OPERATION.withdrawAll.operation,
+  //     resetFunction: resetWithdrawExit,
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusWithdrawExit]);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -93,7 +92,8 @@ const Withdraw = () => {
           operation: CONTRACT_OPERATION.withdraw.operation,
         });
       });
-      TEST({ typeFunction: 'withdraw', args: { args: [parseEther(withdrawValue)] } });
+      writeContractData({ functionName: 'withdraw', args: [parseEther(withdrawValue)] });
+
       // try {
       //   const { hash } = await withdraw({ args: [parseEther(withdrawValue)] });
       //   console.log('🚀 ~ response:', hash);
@@ -142,7 +142,7 @@ const Withdraw = () => {
         <Button
           typeButton="submit"
           form={PAGES_NAME.withdraw}
-          disabled={statusWithdraw === CONTRACT_OPERATION.status.loading}
+          // disabled={statusWithdraw === CONTRACT_OPERATION.status.loading}
         >
           {PAGES_NAME.withdraw}
         </Button>
