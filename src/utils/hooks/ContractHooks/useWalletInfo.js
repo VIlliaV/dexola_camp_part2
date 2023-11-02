@@ -7,6 +7,7 @@ const useWalletInfo = ({ tokenForBalance = undefined }) => {
     address,
     token: tokenForBalance,
     watch: true,
+    enabled: isConnected,
   });
   const balance = +balanceData?.formatted || 0;
 

@@ -28,7 +28,7 @@ export const Context = ({ children }) => {
   // console.log('🚀 ~ RealdataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
   const { allowance } = useContractReadData({});
-  console.log('🚀 ~ allowance:', allowance);
+  // console.log('🚀 ~ allowance:', allowance);
 
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
   // const { pathname } = useLocation();

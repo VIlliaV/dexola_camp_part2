@@ -7,20 +7,33 @@ import {
 import { formatEther } from 'viem';
 import { useWalletInfo } from './useWalletInfo';
 
-const useCustomContractRead = ({ functionName, contract = STAR_RUNNER_STAKING_CONTRACT, args = [], watch = true }) => {
-  const { data } = useContractRead({ ...contract, functionName, args, watch });
+const useCustomContractRead = ({
+  functionName,
+  contract = STAR_RUNNER_STAKING_CONTRACT,
+  args = [],
+  watch = true,
+  enabled = true,
+}) => {
+  const { data } = useContractRead({ ...contract, functionName, args, watch, enabled });
 
   return { data };
 };
 
 const useContractReadData = ({ amountToStake = 0 }) => {
-  const { address } = useWalletInfo({});
-  // console.log('🚀 ~ address:', address);
+  const { address, isConnected } = useWalletInfo({});
 
-  const { data: stakedBalanceBig = '0' } = useCustomContractRead({ functionName: 'balanceOf', args: [address] });
+  const { data: stakedBalanceBig = '0' } = useCustomContractRead({
+    functionName: 'balanceOf',
+    args: [address],
+    enabled: isConnected,
+  });
   const stakedBalance = +formatEther(stakedBalanceBig);
 
-  const { data: availableRewardsBig = '0' } = useCustomContractRead({ functionName: 'earned', args: [address] });
+  const { data: availableRewardsBig = '0' } = useCustomContractRead({
+    functionName: 'earned',
+    args: [address],
+    enabled: isConnected,
+  });
   const availableRewards = +formatEther(availableRewardsBig);
 
   const { data: periodFinishBig = '0' } = useCustomContractRead({ functionName: 'periodFinish' });
@@ -48,10 +61,11 @@ const useContractReadData = ({ amountToStake = 0 }) => {
 
   const days = Math.ceil(remaining / 86400);
 
-  const { data: allowanceBig } = useCustomContractRead({
+  const { data: allowanceBig = '0' } = useCustomContractRead({
     contract: STAR_RUNNER_TOKEN_CONTRACT,
     functionName: 'allowance',
     args: [address, STAR_RUNNER_STAKING_ADDRESS],
+    enabled: isConnected,
   });
   const allowance = +formatEther(allowanceBig);
   return { stakedBalance, availableRewards, totalAvailableRewards, apr, days, allowance };
