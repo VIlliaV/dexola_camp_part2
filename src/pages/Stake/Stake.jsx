@@ -16,40 +16,40 @@ import { PagesContainer, PagesHead } from '../Pages.styled';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
 import { useContextContract } from '../../Context';
-import { useLocation } from 'react-router-dom';
-import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
+// import { useLocation } from 'react-router-dom';
+// import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
 import { addOperation } from '../../utils/helpers/operation';
 import { parseEther } from 'viem';
 
 const Stake = () => {
   const [stakeValue, setStakeValue] = useState('0');
-  const { pathname } = useLocation();
-  const { setDataOperation, balance, handleApproveOperation, writeContractData } = useContextContract();
-  const { approve, dataApprove, statusApprove, resetApprove, stake, dataStake, statusStake, resetStake } =
-    useContractWriteData();
+  // const { pathname } = useLocation();
+  const { setDataOperation, balance, writeContractData } = useContextContract();
+  // const { approve, dataApprove, statusApprove, resetApprove, stake, dataStake, statusStake, resetStake } =
+  //   useContractWriteData();
 
-  useEffect(() => {
-    if (statusApprove === CONTRACT_OPERATION.status.success) {
-      setDataOperation(prev => {
-        return addOperation({
-          prev,
-          // page: pathname,
-          valueOperation: stakeValue,
-          operation: CONTRACT_OPERATION.stake.operation,
-        });
-      });
-      // stake({ args: [parseEther(stakeValue)] });
-    }
-    handleApproveOperation({
-      page: pathname,
-      status: statusApprove,
-      data: dataApprove,
-      operation: CONTRACT_OPERATION.approve.operation,
-      resetFunction: resetApprove,
-    });
+  // useEffect(() => {
+  //   if (statusApprove === CONTRACT_OPERATION.status.success) {
+  //     setDataOperation(prev => {
+  //       return addOperation({
+  //         prev,
+  //         // page: pathname,
+  //         valueOperation: stakeValue,
+  //         operation: CONTRACT_OPERATION.stake.operation,
+  //       });
+  //     });
+  //     // stake({ args: [parseEther(stakeValue)] });
+  //   }
+  //   handleApproveOperation({
+  //     page: pathname,
+  //     status: statusApprove,
+  //     data: dataApprove,
+  //     operation: CONTRACT_OPERATION.approve.operation,
+  //     resetFunction: resetApprove,
+  //   });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusApprove]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [statusApprove]);
 
   const handleSubmit = event => {
     event.preventDefault();

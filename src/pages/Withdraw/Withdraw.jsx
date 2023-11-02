@@ -15,7 +15,7 @@ import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
-import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
+// import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useWaitForTransaction } from 'wagmi';
 
 const Withdraw = () => {
@@ -23,16 +23,16 @@ const Withdraw = () => {
   const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { setDataOperation, handleApproveOperation, dataOperation, writeContractData } = useContextContract();
-  const {
-    // withdraw,
-    // dataWithdraw,
-    // statusWithdraw,
-    // resetWithdraw,
-    withdrawExit,
-    dataWithdrawExit,
-    statusWithdrawExit,
-    resetWithdrawExit,
-  } = useContractWriteData();
+  // const {
+  //   // withdraw,
+  //   // dataWithdraw,
+  //   // statusWithdraw,
+  //   // resetWithdraw,
+  //   withdrawExit,
+  //   dataWithdrawExit,
+  //   statusWithdrawExit,
+  //   resetWithdrawExit,
+  // } = useContractWriteData();
 
   // useEffect(() => {
   //   handleApproveOperation({

@@ -14,7 +14,7 @@ import { approveOperation, operationChangeStatus } from './utils/helpers/operati
 import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useLocation } from 'react-router-dom';
 import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
-import { useContractReadData } from './utils/hooks/ContractHooks/useCustomContractRead';
+// import { useContractReadData } from './utils/hooks/ContractHooks/useCustomContractRead';
 // import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();
@@ -23,11 +23,11 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
-  const [hash, setHash] = useState(null);
+  // const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
   // console.log('🚀 ~ RealdataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
-  const { allowance } = useContractReadData({});
+  // const { allowance } = useContractReadData({});
   // console.log('🚀 ~ allowance:', allowance);
 
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
@@ -38,37 +38,48 @@ export const Context = ({ children }) => {
     tokenForBalance: STAR_RUNNER_TOKEN_ADDRESS,
   });
 
-  useEffect(() => {
-    if (hash === null) return;
-    console.log('🚀 ~ allowanceREAL:', allowance);
-    // writeContractData({ functionName: 'stake', args: [parseInt(hash?.logs[0]?.data || '0', 16)] });
-    console.log("🚀 ~ parseInt(hash?.logs[0]?.data || '0', 16):", parseInt(hash?.logs[0]?.data || '0', 16));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash]);
+  // useEffect(() => {
+  //   if (hash === null) return;
+  //   // console.log('🚀 ~ allowanceREAL:', allowance);
+  //   // writeContractData({ functionName: 'stake', args: [parseInt(hash?.logs[0]?.data || '0', 16)] });
+  //   // console.log("🚀 ~ parseInt(hash?.logs[0]?.data || '0', 16):", parseInt(hash?.logs[0]?.data || '0', 16));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [hash]);
 
   const writeContractData = async ({ contract = STAR_RUNNER_STAKING_CONTRACT, functionName = '', args }) => {
-    // const testAllow = allowance;
+    const stakeValue = args[1] ? args[1] : args[0];
+    if (functionName === 'approve') {
+      const approveValue = dataOperation.reduce((accumulator, item) => {
+        if (item.operation === 'approve') {
+          return accumulator + +item.valueOperation;
+        }
+        return accumulator;
+      }, +formatEther(args[1]));
+      args[1] = parseEther(approveValue.toString());
+    }
+
     try {
       const { hash } = await writeContract({ ...contract, functionName, args });
-      // console.log('🚀 ~ hash:', hash);
       const TransactionReceipt = await waitForTransaction({ hash });
+
       if (functionName === 'approve') {
-        const data = await readContract({
+        const allowance = await readContract({
           ...STAR_RUNNER_TOKEN_CONTRACT,
           functionName: 'allowance',
           args: [address, STAR_RUNNER_STAKING_ADDRESS],
         });
+
         const valueOperation = parseInt(TransactionReceipt?.logs[0]?.data || '0', 16);
-        if (+formatEther(data) === +formatEther(valueOperation)) {
-          writeContractData({ functionName: 'stake', args: [parseInt(TransactionReceipt?.logs[0]?.data || '0', 16)] });
+
+        if (+formatEther(allowance) >= +formatEther(valueOperation)) {
+          writeContractData({ functionName: 'stake', args: [stakeValue] });
         } else {
           writeContractData({
             contract: STAR_RUNNER_TOKEN_CONTRACT,
             functionName: 'approve',
-            args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(valueOperation)],
+            args: [STAR_RUNNER_STAKING_ADDRESS, stakeValue],
           });
         }
-        // console.log('🚀 ~ allowance:', testAllow);
       }
     } catch (error) {
       console.log('🚀 ~ error:', error);
