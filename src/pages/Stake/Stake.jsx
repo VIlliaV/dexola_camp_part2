@@ -56,14 +56,14 @@ const Stake = () => {
     const { error } = validateData(stakeValue, balance);
 
     if (!error) {
-      setDataOperation(prev => {
-        return addOperation({
-          prev,
-          // page: pathname,
-          valueOperation: stakeValue,
-          operation: CONTRACT_OPERATION.approve.operation,
-        });
-      });
+      // setDataOperation(prev => {
+      //   return addOperation({
+      //     prev,
+      //     // page: pathname,
+      //     valueOperation: stakeValue,
+      //     operation: CONTRACT_OPERATION.approve.operation,
+      //   });
+      // });
       writeContractData({
         contract: STAR_RUNNER_TOKEN_CONTRACT,
         functionName: 'approve',

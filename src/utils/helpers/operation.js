@@ -1,4 +1,6 @@
-import { CONTRACT_OPERATION } from '../../constants/constants';
+import { formatEther, parseEther } from 'viem';
+import { CONTRACT_OPERATION, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
+import { readContract } from '@wagmi/core';
 
 export const operationChangeStatus = ({
   prevData = [],
@@ -48,22 +50,51 @@ export const operationChangeStatus = ({
   return arr;
 };
 
+export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [] }) => {
+  if (functionName === 'approve') {
+    const approveValue = dataOperation.reduce((accumulator, item) => {
+      if (item.operation === 'approve') {
+        return accumulator + +item.valueOperation;
+      }
+      return accumulator;
+    }, +formatEther(args[1]));
+    args[1] = parseEther(approveValue.toString());
+  }
+  const valueOperationBig = args[1] ? args[1] : args[0];
+  const valueOperation = +formatEther(valueOperationBig);
+  const argsOperation = args;
+  return { valueOperation, valueOperationBig, argsOperation };
+};
+export const handleReadyForStake = async ({ address, realValueOperation }) => {
+  const allowance = await readContract({
+    ...STAR_RUNNER_TOKEN_CONTRACT,
+    functionName: 'allowance',
+    args: [address, STAR_RUNNER_STAKING_ADDRESS],
+  });
+
+  if (+formatEther(allowance) >= +formatEther(realValueOperation)) return true;
+  return false;
+};
+
 export const addOperation = ({
+  id,
   prev,
-  page = '/',
+  pathname = '/',
   status = CONTRACT_OPERATION.status.loading,
   valueOperation = null,
-  operation,
+  functionName,
 }) => {
-  const arr = [
-    ...prev,
-    {
-      page,
-      status,
-      valueOperation,
-      operation,
-    },
-  ];
+  const arr = [...prev, { id, pathname, status, valueOperation, functionName }];
+  return arr;
+};
+
+export const removeOperation = ({ id, prev }) => {
+  const indexToRemove = prev.findIndex(obj => obj.id === id);
+  const arr = [...prev];
+
+  if (indexToRemove !== -1) {
+    arr.splice(indexToRemove, 1);
+  }
   return arr;
 };
 
@@ -105,10 +136,8 @@ export const operationChangeStatusTest = ({
   return arr;
 };
 
-export const approveOperation = ({ page = '/', prev = [], status = null, data = [], operation }) => {
-  const indexOperation = prev.findIndex(
-    item => item.page === page && item.status === CONTRACT_OPERATION.status.loading && item.operation === operation
-  );
+export const approveOperation = ({ id, prev = [], status = null, data = [] }) => {
+  const indexOperation = prev.findIndex(item => item.id === id);
   const arr = [...prev];
 
   if (status === CONTRACT_OPERATION.status.error) {

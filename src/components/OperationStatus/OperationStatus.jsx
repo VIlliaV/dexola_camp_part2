@@ -20,7 +20,7 @@ const OperationStatus = ({ media }) => {
   const { dataOperation } = useContextContract();
 
   //? перевірка чи прийшов новий статус на цю сторінку
-  const statusCheck = dataOperation.find(item => item.page === pathname) || dataOperation.find(item => item);
+  const statusCheck = dataOperation.find(item => item.pathname === pathname) || dataOperation.find(item => item);
   // console.log('🚀 ~ statusCheck:', statusCheck);
 
   // return;
@@ -49,7 +49,7 @@ const OperationStatus = ({ media }) => {
 
   if (!operationData) return;
 
-  const { status, valueOperation, operation } = operationData;
+  const { status, valueOperation, functionName } = operationData;
 
   return (
     <OperationStatusStyled $media={media}>
@@ -57,7 +57,7 @@ const OperationStatus = ({ media }) => {
         <>
           {status === CONTRACT_OPERATION.status.success ? <SvgSuccess /> : <SvgPending />}
           <OperationInfo>
-            {CONTRACT_OPERATION[operation].statusText[status].first}{' '}
+            {CONTRACT_OPERATION[functionName].statusText[status].first}{' '}
             <SpanStyled>
               {valueOperation} {symbol}
             </SpanStyled>{' '}
@@ -66,7 +66,7 @@ const OperationStatus = ({ media }) => {
                 successfully <br />
               </>
             )}
-            {CONTRACT_OPERATION[operation].statusText[status].second}
+            {CONTRACT_OPERATION[functionName].statusText[status].second}
           </OperationInfo>
         </>
       ) : (

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { formatEther, parseEther } from 'viem';
 import { writeContract, waitForTransaction, readContract } from '@wagmi/core';
+import { nanoid } from 'nanoid';
 // import { useWaitForTransaction } from 'wagmi';
 import {
   CONTRACT_OPERATION,
@@ -10,7 +11,14 @@ import {
   STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
-import { addOperation, approveOperation, operationChangeStatus } from './utils/helpers/operation';
+import {
+  addOperation,
+  approveOperation,
+  handleArgsOperations,
+  handleReadyForStake,
+  operationChangeStatus,
+  removeOperation,
+} from './utils/helpers/operation';
 import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useLocation } from 'react-router-dom';
 import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
@@ -47,62 +55,68 @@ export const Context = ({ children }) => {
   // }, [hash]);
 
   const writeContractData = async ({ contract = STAR_RUNNER_STAKING_CONTRACT, functionName = '', args }) => {
-    const stakeValue = args[1] ? args[1] : args[0];
+    // const stakeValue = args[1] ? args[1] : args[0];
+    console.log('🚀 ~ dataOperation:', dataOperation);
+    const { valueOperation, valueOperationBig, argsOperation } = handleArgsOperations({
+      args,
+      functionName,
+      dataOperation,
+    });
+    const id = nanoid();
     setDataOperation(prev => {
-      console.log('🚀 ~ prev:', prev);
       return addOperation({
+        id,
         prev,
-        page: pathname,
-        valueOperation: stakeValue,
-        operation: functionName,
+        pathname,
+        valueOperation,
+        functionName,
       });
     });
-    console.log('🚀 ~ firstdataOperation:', dataOperation);
-    if (functionName === 'approve') {
-      const approveValue = dataOperation.reduce((accumulator, item) => {
-        if (item.operation === 'approve') {
-          return accumulator + +item.valueOperation;
-        }
-        return accumulator;
-      }, +formatEther(args[1]));
-      args[1] = parseEther(approveValue.toString());
-    }
+    // if (functionName === 'approve') {
+    //   const approveValue = dataOperation.reduce((accumulator, item) => {
+    //     if (item.operation === 'approve') {
+    //       return accumulator + +item.valueOperation;
+    //     }
+    //     return accumulator;
+    //   }, +formatEther(args[1]));
+    //   args[1] = parseEther(approveValue.toString());
+    // }
 
     try {
-      const { hash } = await writeContract({ ...contract, functionName, args });
+      const { hash } = await writeContract({ ...contract, functionName, args: argsOperation });
       const TransactionReceipt = await waitForTransaction({ hash });
+      const realValueOperation = parseInt(TransactionReceipt?.logs[0]?.data || '0', 16);
 
-      if (functionName === 'approve') {
-        const allowance = await readContract({
-          ...STAR_RUNNER_TOKEN_CONTRACT,
-          functionName: 'allowance',
-          args: [address, STAR_RUNNER_STAKING_ADDRESS],
-        });
-
-        const valueOperation = parseInt(TransactionReceipt?.logs[0]?.data || '0', 16);
-
-        if (+formatEther(allowance) >= +formatEther(valueOperation)) {
-          writeContractData({ functionName: 'stake', args: [stakeValue] });
-        } else {
-          writeContractData({
-            contract: STAR_RUNNER_TOKEN_CONTRACT,
-            functionName: 'approve',
-            args: [STAR_RUNNER_STAKING_ADDRESS, stakeValue],
-          });
-        }
-      }
       setDataOperation(prev => {
         return approveOperation({
-          page: pathname,
+          id,
+          pathname,
           status: CONTRACT_OPERATION.status.success,
           prev,
-          data: TransactionReceipt,
-          operation: functionName,
+          data: TransactionReceipt?.hash,
+          functionName,
         });
       });
       console.log('🚀 ~ LastdataOperation:', dataOperation);
     } catch (error) {
       console.log('🚀 ~ error:', error);
+    }
+    if (functionName === 'approve') {
+      const isReadyForStake = handleReadyForStake({ address, valueOperationBig });
+      if (isReadyForStake) {
+        writeContractData({ functionName: 'stake', args: [valueOperationBig] });
+      } else {
+        setDataOperation(prev => {
+          console.log('in SIDE');
+          removeOperation({ id, prev });
+        });
+        writeContractData({
+          contract: STAR_RUNNER_TOKEN_CONTRACT,
+          functionName: 'approve',
+          args: [STAR_RUNNER_STAKING_ADDRESS, valueOperationBig],
+        });
+        return;
+      }
     }
   };
 
@@ -220,78 +234,71 @@ export const Context = ({ children }) => {
       dataOperation[0]?.status === CONTRACT_OPERATION.status.success ||
       dataOperation[0]?.status === CONTRACT_OPERATION.status.error
     ) {
-      setDataOperation(prev => {
-        const arr = [...prev];
-        arr.splice(0, 1);
-        return arr;
-      });
+      console.log('URA successful', dataOperation[0].id);
+      setDataOperation(prev => removeOperation({ id: dataOperation[0].id, prev }));
     }
   }, [dataOperation]);
-  useEffect(() => {
-    // console.log(
-    //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
-    //   statusStake,
-    //   statusApprove,
-    //   // statusWithdraw,
-    //   // statusWithdrawExit,
-    //   statusRewards,
-    //   isSuccess,
-    //   isError
-    //   // isFetched
-    // );
-    // const realValueForOperation = formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16));
-
-    // const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
-    // console.log('🚀 ~ whatIsOperation:', whatIsOperation);
-    // const takeAData = getOperationData(whatIsOperation?.operation);
-    // const takeAStatus = getOperationStatus(whatIsOperation?.operation);
-
-    setDataOperation(prev =>
-      operationChangeStatus({
-        // status: takeAStatus,
-        prevData: prev,
-        // isSuccess: isSuccess,
-        // isError: isError,
-        // data: takeAData,
-        // dataWaitTransaction: dataWaitTransaction,
-        // nameOPeration: whatIsOperation?.operation,
-        // valueOperation: realValueForOperation,
-      })
-    );
-
-    if (
-      dataOperation[0]?.operation === CONTRACT_OPERATION.stake.operation &&
-      dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
-      statusStake === 'idle'
-    ) {
-      stake({ args: [parseEther(dataOperation[0].valueOperation)] });
-    }
-    // if (
-    //   dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
-    //   dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
-    //   statusApprove === 'idle'
-    // ) {
-    //   approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
-    // }
-    if ((statusStake === 'success' || statusStake === 'error') && dataOperation[0]?.hash) {
-      resetStake();
-    }
-    // if ((statusApprove === 'success' || statusApprove === 'error') && dataOperation[0]?.hash) {
-    //   resetApprove();
-    // }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    // statusApprove,
-    statusStake,
-    // statusWithdraw,
-    // statusWithdrawExit,
-    statusRewards,
-    // isSuccess,
-    // isError,
-    // isFetched,
-    dataOperation.length,
-  ]);
+  // useEffect(() => {
+  // console.log(
+  //   '=??==!!== ~ statusStake, statusApprove, statusWithdraw, statusWithdrawExit, statusRewards, isSuccess, isError]:',
+  //   statusStake,
+  //   statusApprove,
+  //   // statusWithdraw,
+  //   // statusWithdrawExit,
+  //   statusRewards,
+  //   isSuccess,
+  //   isError
+  //   // isFetched
+  // );
+  // const realValueForOperation = formatEther(parseInt(dataWaitTransaction?.logs[0]?.data || '0', 16));
+  // const whatIsOperation = dataOperation.find(item => item.hash === dataWaitTransaction?.transactionHash);
+  // console.log('🚀 ~ whatIsOperation:', whatIsOperation);
+  // const takeAData = getOperationData(whatIsOperation?.operation);
+  // const takeAStatus = getOperationStatus(whatIsOperation?.operation);
+  // setDataOperation(prev =>
+  //   operationChangeStatus({
+  //     // status: takeAStatus,
+  //     prevData: prev,
+  //     // isSuccess: isSuccess,
+  //     // isError: isError,
+  //     // data: takeAData,
+  //     // dataWaitTransaction: dataWaitTransaction,
+  //     // nameOPeration: whatIsOperation?.operation,
+  //     // valueOperation: realValueForOperation,
+  //   })
+  // );
+  // if (
+  //   dataOperation[0]?.operation === CONTRACT_OPERATION.stake.operation &&
+  //   dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
+  //   statusStake === 'idle'
+  // ) {
+  //   stake({ args: [parseEther(dataOperation[0].valueOperation)] });
+  // }
+  // if (
+  //   dataOperation[0]?.operation === CONTRACT_OPERATION.approve.operation &&
+  //   dataOperation[0]?.status === CONTRACT_OPERATION.status.preLoading &&
+  //   statusApprove === 'idle'
+  // ) {
+  //   approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(dataOperation[0].valueOperation)] });
+  // }
+  // if ((statusStake === 'success' || statusStake === 'error') && dataOperation[0]?.hash) {
+  //   resetStake();
+  // }
+  // if ((statusApprove === 'success' || statusApprove === 'error') && dataOperation[0]?.hash) {
+  //   resetApprove();
+  // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [
+  // statusApprove,
+  // statusStake,
+  // statusWithdraw,
+  // statusWithdrawExit,
+  // statusRewards,
+  // isSuccess,
+  // isError,
+  // isFetched,
+  // dataOperation.length,
+  // ]);
 
   return (
     <ContractContext.Provider

@@ -24,7 +24,7 @@ export const CONTRACT_INFO = {
 export const CONTRACT_OPERATION = {
   status: { idle: 'idle', preLoading: 'preLoading', loading: 'loading', error: 'error', success: 'success' },
   stake: {
-    operation: 'stake',
+    functionName: 'stake',
     statusText: {
       loading: { first: 'Adding', second: 'to Staking' },
       preLoading: { first: 'Adding', second: 'to Staking' },
@@ -32,7 +32,7 @@ export const CONTRACT_OPERATION = {
     },
   },
   approve: {
-    operation: 'approve',
+    functionName: 'approve',
     statusText: {
       loading: { first: 'Approving', second: '' },
       preLoading: { first: 'Approving', second: '' },
@@ -40,7 +40,7 @@ export const CONTRACT_OPERATION = {
     },
   },
   withdraw: {
-    operation: 'withdraw',
+    functionName: 'withdraw',
     statusText: {
       loading: { first: 'Withdrawing', second: 'from Staking' },
       preLoading: { first: 'Withdrawing', second: 'from Staking' },
@@ -48,7 +48,7 @@ export const CONTRACT_OPERATION = {
     },
   },
   withdrawAll: {
-    operation: 'withdrawAll',
+    functionName: 'withdrawAll',
     statusText: {
       loading: { first: 'Withdrawing all & Claiming rewards', second: '' },
       preLoading: { first: 'Withdrawing all & Claiming rewards', second: '' },
@@ -56,7 +56,7 @@ export const CONTRACT_OPERATION = {
     },
   },
   claim: {
-    operation: 'claim',
+    functionName: 'claim',
     statusText: {
       loading: { first: 'Claiming', second: 'rewards' },
       preLoading: { first: 'Claiming', second: 'rewards' },
