@@ -84,14 +84,14 @@ const Withdraw = () => {
     event.preventDefault();
     const { error } = validateData(withdrawValue, stakedBalance);
     if (!error) {
-      setDataOperation(prev => {
-        return addOperation({
-          prev,
-          page: pathname,
-          valueOperation: withdrawValue,
-          operation: CONTRACT_OPERATION.withdraw.operation,
-        });
-      });
+      // setDataOperation(prev => {
+      //   return addOperation({
+      //     prev,
+      //     page: pathname,
+      //     valueOperation: withdrawValue,
+      //     operation: CONTRACT_OPERATION.withdraw.operation,
+      //   });
+      // });
       writeContractData({ functionName: 'withdraw', args: [parseEther(withdrawValue)] });
 
       // try {

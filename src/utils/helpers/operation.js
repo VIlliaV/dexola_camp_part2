@@ -78,7 +78,7 @@ export const operationChangeStatusTest = ({
   operation = null,
 }) => {
   const indexOperation = prevData.findIndex(
-    item => item.page === page && item.status === CONTRACT_OPERATION.status.preLoading && item.operation === operation
+    item => item.page === page && item.status === CONTRACT_OPERATION.status.loading && item.operation === operation
   );
   const arr = [...prevData];
   arr[indexOperation];
@@ -105,18 +105,18 @@ export const operationChangeStatusTest = ({
   return arr;
 };
 
-export const approveOperation = ({ page = '/', prevData = [], status = null, data = [], operation }) => {
-  const indexOperation = prevData.findIndex(
-    item => item.page === page && item.status === CONTRACT_OPERATION.status.preLoading && item.operation === operation
+export const approveOperation = ({ page = '/', prev = [], status = null, data = [], operation }) => {
+  const indexOperation = prev.findIndex(
+    item => item.page === page && item.status === CONTRACT_OPERATION.status.loading && item.operation === operation
   );
-  const arr = [...prevData];
+  const arr = [...prev];
 
   if (status === CONTRACT_OPERATION.status.error) {
     arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.error };
   }
 
   if (status === CONTRACT_OPERATION.status.success) {
-    arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.loading, hash: data?.hash };
+    arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.success, hash: data };
   }
 
   return arr;

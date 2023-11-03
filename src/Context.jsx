@@ -10,12 +10,12 @@ import {
   STAR_RUNNER_STAKING_ADDRESS,
 } from './constants/constants';
 
-import { approveOperation, operationChangeStatus } from './utils/helpers/operation';
+import { addOperation, approveOperation, operationChangeStatus } from './utils/helpers/operation';
 import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useLocation } from 'react-router-dom';
 import { useWalletInfo } from './utils/hooks/ContractHooks/useWalletInfo';
 // import { useContractReadData } from './utils/hooks/ContractHooks/useCustomContractRead';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ContractContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
@@ -25,13 +25,13 @@ export const Context = ({ children }) => {
   const [updateInfo, setUpdateInfo] = useState(true);
   // const [hash, setHash] = useState(null);
   const [dataOperation, setDataOperation] = useState([]);
-  // console.log('🚀 ~ RealdataOperation:', dataOperation);
+  console.log('🚀 ~ RealdataOperation:', dataOperation);
   const [valueForOperation, setValueForOperation] = useState('0');
   // const { allowance } = useContractReadData({});
   // console.log('🚀 ~ allowance:', allowance);
 
   // const { withdraw, dataWithdraw, statusWithdraw } = useContractWriteData;
-  // const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
   // const { address } = useAccount();
   const { balance, symbol, address } = useWalletInfo({
@@ -48,6 +48,16 @@ export const Context = ({ children }) => {
 
   const writeContractData = async ({ contract = STAR_RUNNER_STAKING_CONTRACT, functionName = '', args }) => {
     const stakeValue = args[1] ? args[1] : args[0];
+    setDataOperation(prev => {
+      console.log('🚀 ~ prev:', prev);
+      return addOperation({
+        prev,
+        page: pathname,
+        valueOperation: stakeValue,
+        operation: functionName,
+      });
+    });
+    console.log('🚀 ~ firstdataOperation:', dataOperation);
     if (functionName === 'approve') {
       const approveValue = dataOperation.reduce((accumulator, item) => {
         if (item.operation === 'approve') {
@@ -81,6 +91,16 @@ export const Context = ({ children }) => {
           });
         }
       }
+      setDataOperation(prev => {
+        return approveOperation({
+          page: pathname,
+          status: CONTRACT_OPERATION.status.success,
+          prev,
+          data: TransactionReceipt,
+          operation: functionName,
+        });
+      });
+      console.log('🚀 ~ LastdataOperation:', dataOperation);
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }
