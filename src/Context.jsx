@@ -13,10 +13,9 @@ import {
 
 import {
   addOperation,
-  approveOperation,
+  fetchedOperation,
   handleArgsOperations,
   handleReadyForStake,
-  // operationChangeStatus,
   removeOperation,
 } from './utils/helpers/operation';
 // import { useCustomContractWrite } from './utils/hooks/ContractHooks/useCustomContractWrite';
@@ -73,30 +72,24 @@ export const Context = ({ children }) => {
 
     try {
       const { hash } = await writeContract({ ...contract, functionName, args: argsOperation });
-      const TransactionReceipt = await waitForTransaction({ hash });
+      await waitForTransaction({ hash });
       // const realValueOperation = parseInt(TransactionReceipt?.logs[0]?.data || '0', 16);
 
       setDataOperation(prev => {
-        return approveOperation({
-          id,
-          pathname,
-          status: CONTRACT_OPERATION.status.success,
-          prev,
-          data: TransactionReceipt?.hash,
-          functionName,
-        });
+        return fetchedOperation({ id, prev });
       });
     } catch (error) {
+      setDataOperation(prev => {
+        return fetchedOperation({ id, prev, status: CONTRACT_OPERATION.status.error });
+      });
       console.log('🚀 ~ error:', error);
     }
     if (functionName === 'approve') {
       const isReadyForStake = await handleReadyForStake({ address, valueOperationBig });
-      console.log('🚀 ~ isReadyForStake:', isReadyForStake, args[1]);
       if (isReadyForStake) {
         writeContractData({ functionName: 'stake', args: [args[1]] });
       } else {
         setDataOperation(prev => {
-          console.log('in SIDE');
           removeOperation({ id, prev });
         });
         writeContractData({
@@ -121,23 +114,23 @@ export const Context = ({ children }) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [hash]);
 
-  function handleApproveOperation({ status, data, resetFunction, page, operation }) {
-    if (status === CONTRACT_OPERATION.status.idle || status === CONTRACT_OPERATION.status.loading) return;
+  // function handleApproveOperation({ status, data, resetFunction, page, operation }) {
+  //   if (status === CONTRACT_OPERATION.status.idle || status === CONTRACT_OPERATION.status.loading) return;
 
-    setDataOperation(prev =>
-      approveOperation({
-        page,
-        status,
-        prevData: prev,
-        data,
-        operation,
-      })
-    );
+  //   setDataOperation(prev =>
+  //     fetchedOperation({
+  //       page,
+  //       status,
+  //       prevData: prev,
+  //       data,
+  //       operation,
+  //     })
+  //   );
 
-    if (status === CONTRACT_OPERATION.status.success || status === CONTRACT_OPERATION.status.error) {
-      resetFunction();
-    }
-  }
+  //   if (status === CONTRACT_OPERATION.status.success || status === CONTRACT_OPERATION.status.error) {
+  //     resetFunction();
+  //   }
+  // }
 
   // const {
   //   write: approve,
@@ -223,7 +216,6 @@ export const Context = ({ children }) => {
       dataOperation[0]?.status === CONTRACT_OPERATION.status.success ||
       dataOperation[0]?.status === CONTRACT_OPERATION.status.error
     ) {
-      console.log('URA successful', dataOperation[0].id);
       setDataOperation(prev => removeOperation({ id: dataOperation[0].id, prev }));
     }
   }, [dataOperation]);
@@ -304,7 +296,6 @@ export const Context = ({ children }) => {
         // withdrawExit,
         // writeRewards,
         symbol,
-        handleApproveOperation,
         writeContractData,
       }}
     >

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
 import Reward from '../../components/ContractInfo/ContractData/Reward/Reward';
@@ -7,7 +7,7 @@ import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
 import {
-  CONTRACT_OPERATION,
+  // CONTRACT_OPERATION,
   PAGES_NAME,
   STAR_RUNNER_STAKING_ADDRESS,
   STAR_RUNNER_TOKEN_CONTRACT,
@@ -18,13 +18,13 @@ import toast from 'react-hot-toast';
 import { useContextContract } from '../../Context';
 // import { useLocation } from 'react-router-dom';
 // import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
-import { addOperation } from '../../utils/helpers/operation';
+// import { addOperation } from '../../utils/helpers/operation';
 import { parseEther } from 'viem';
 
 const Stake = () => {
   const [stakeValue, setStakeValue] = useState('0');
   // const { pathname } = useLocation();
-  const { setDataOperation, balance, writeContractData } = useContextContract();
+  const { balance, writeContractData } = useContextContract();
   // const { approve, dataApprove, statusApprove, resetApprove, stake, dataStake, statusStake, resetStake } =
   //   useContractWriteData();
 
