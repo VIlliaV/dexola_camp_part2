@@ -7,7 +7,7 @@ import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useLocation } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
   const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
-  const { setDataOperation, handleApproveOperation, dataOperation, writeContractData } = useContextContract();
+  const { setDataOperation, dataOperation, writeContractData } = useContextContract();
   // const {
   //   // withdraw,
   //   // dataWithdraw,
@@ -120,7 +120,8 @@ const Withdraw = () => {
           operation: CONTRACT_OPERATION.withdrawAll.operation,
         });
       });
-      withdrawExit();
+      writeContractData({ functionName: 'exit' });
+      // withdrawExit();
     } else {
       toast.error('you do not have on the Staked balance');
     }

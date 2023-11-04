@@ -51,29 +51,43 @@ export const operationChangeStatus = ({
 };
 
 export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [] }) => {
+  const argsOperation = [...args];
   if (functionName === 'approve') {
-    const approveValue = dataOperation.reduce((accumulator, item) => {
-      if (item.operation === 'approve') {
-        return accumulator + +item.valueOperation;
-      }
-      return accumulator;
-    }, +formatEther(args[1]));
-    args[1] = parseEther(approveValue.toString());
+    const approveValueObj = dataOperation.find(item => item.functionName === 'approve');
+    const approveValue = approveValueObj
+      ? approveValueObj.valueOperation + +formatEther(argsOperation[1])
+      : +formatEther(argsOperation[1]);
+
+    // const approveValue = dataOperation.reduce((accumulator, item) => {
+    //   if (item.operation === 'approve') {
+    //     return accumulator + +item.valueOperation;
+    //   }
+    //   return accumulator;
+    // }, +formatEther(args[1]));
+    argsOperation[1] = parseEther(approveValue.toString());
   }
-  const valueOperationBig = args[1] ? args[1] : args[0];
+
+  const valueOperationBig = argsOperation[1] ? argsOperation[1] : argsOperation[0];
+
   const valueOperation = +formatEther(valueOperationBig);
-  const argsOperation = args;
+
   return { valueOperation, valueOperationBig, argsOperation };
 };
-export const handleReadyForStake = async ({ address, realValueOperation }) => {
-  const allowance = await readContract({
-    ...STAR_RUNNER_TOKEN_CONTRACT,
-    functionName: 'allowance',
-    args: [address, STAR_RUNNER_STAKING_ADDRESS],
-  });
 
-  if (+formatEther(allowance) >= +formatEther(realValueOperation)) return true;
-  return false;
+export const handleReadyForStake = async ({ address, valueOperationBig }) => {
+  try {
+    const allowance = await readContract({
+      ...STAR_RUNNER_TOKEN_CONTRACT,
+      functionName: 'allowance',
+      args: [address, STAR_RUNNER_STAKING_ADDRESS],
+    });
+    if (+formatEther(allowance) >= +formatEther(valueOperationBig)) return true;
+    return false;
+  } catch (error) {
+    throw new Error(error);
+  }
+
+  // console.log('🚀 ~ allowance:', allowance, valueOperationBig);
 };
 
 export const addOperation = ({
@@ -84,6 +98,8 @@ export const addOperation = ({
   valueOperation = null,
   functionName,
 }) => {
+  if (functionName === 'approve') prev = prev.filter(item => item.functionName !== 'approve');
+
   const arr = [...prev, { id, pathname, status, valueOperation, functionName }];
   return arr;
 };
