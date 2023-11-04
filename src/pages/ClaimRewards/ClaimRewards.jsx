@@ -1,8 +1,7 @@
 import toast from 'react-hot-toast';
-import { useLocation } from 'react-router';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
-import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
+import { PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import Form from '../../components/Form/Form';
 
@@ -13,28 +12,15 @@ import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomCo
 // import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const ClaimRewards = () => {
-  const { pathname } = useLocation();
   const { availableRewards } = useContractReadData({});
-  const { setDataOperation, writeRewards } = useContextContract();
+  const { writeContractData } = useContextContract();
 
   const { maxType } = resultType;
   const handleSubmit = event => {
     event.preventDefault();
 
     if (availableRewards !== 0) {
-      setDataOperation(prev => {
-        const arr = [
-          ...prev,
-          {
-            page: pathname,
-            status: CONTRACT_OPERATION.status.preLoading,
-            valueOperation: result(maxType, availableRewards),
-            operation: CONTRACT_OPERATION.claim.operation,
-          },
-        ];
-        return arr;
-      });
-      writeRewards();
+      writeContractData({ functionName: 'claimReward', value: result(maxType, availableRewards) });
     } else {
       toast.error('you have no rewards');
     }

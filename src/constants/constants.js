@@ -22,12 +22,11 @@ export const CONTRACT_INFO = {
 };
 
 export const CONTRACT_OPERATION = {
-  status: { idle: 'idle', preLoading: 'preLoading', loading: 'loading', error: 'error', success: 'success' },
+  status: { loading: 'loading', error: 'error', success: 'success' },
   stake: {
     functionName: 'stake',
     statusText: {
       loading: { first: 'Adding', second: 'to Staking' },
-      preLoading: { first: 'Adding', second: 'to Staking' },
       success: { first: '', second: 'added to Staking' },
     },
   },
@@ -35,7 +34,6 @@ export const CONTRACT_OPERATION = {
     functionName: 'approve',
     statusText: {
       loading: { first: 'Approving', second: '' },
-      preLoading: { first: 'Approving', second: '' },
       success: { first: '', second: 'approved' },
     },
   },
@@ -43,23 +41,20 @@ export const CONTRACT_OPERATION = {
     functionName: 'withdraw',
     statusText: {
       loading: { first: 'Withdrawing', second: 'from Staking' },
-      preLoading: { first: 'Withdrawing', second: 'from Staking' },
       success: { first: '', second: 'withdraw from Staking' },
     },
   },
-  withdrawAll: {
-    functionName: 'withdrawAll',
+  exit: {
+    functionName: 'exit',
     statusText: {
       loading: { first: 'Withdrawing all & Claiming rewards', second: '' },
-      preLoading: { first: 'Withdrawing all & Claiming rewards', second: '' },
       success: { first: '', second: 'Withdraw all & Claim rewards' },
     },
   },
-  claim: {
-    functionName: 'claim',
+  claimReward: {
+    functionName: 'claimReward',
     statusText: {
       loading: { first: 'Claiming', second: 'rewards' },
-      preLoading: { first: 'Claiming', second: 'rewards' },
       success: { first: '', second: 'claim rewards' },
     },
   },

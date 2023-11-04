@@ -6,89 +6,27 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import {
-  // CONTRACT_OPERATION,
-  PAGES_NAME,
-  STAR_RUNNER_STAKING_ADDRESS,
-  STAR_RUNNER_TOKEN_CONTRACT,
-} from '../../constants/constants';
+import { PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
 import { useContextContract } from '../../Context';
-// import { useLocation } from 'react-router-dom';
-// import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
-// import { addOperation } from '../../utils/helpers/operation';
 import { parseEther } from 'viem';
 
 const Stake = () => {
   const [stakeValue, setStakeValue] = useState('0');
-  // const { pathname } = useLocation();
   const { balance, writeContractData } = useContextContract();
-  // const { approve, dataApprove, statusApprove, resetApprove, stake, dataStake, statusStake, resetStake } =
-  //   useContractWriteData();
-
-  // useEffect(() => {
-  //   if (statusApprove === CONTRACT_OPERATION.status.success) {
-  //     setDataOperation(prev => {
-  //       return addOperation({
-  //         prev,
-  //         // page: pathname,
-  //         valueOperation: stakeValue,
-  //         operation: CONTRACT_OPERATION.stake.operation,
-  //       });
-  //     });
-  //     // stake({ args: [parseEther(stakeValue)] });
-  //   }
-  //   handleApproveOperation({
-  //     page: pathname,
-  //     status: statusApprove,
-  //     data: dataApprove,
-  //     operation: CONTRACT_OPERATION.approve.operation,
-  //     resetFunction: resetApprove,
-  //   });
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusApprove]);
 
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stakeValue, balance);
 
     if (!error) {
-      // setDataOperation(prev => {
-      //   return addOperation({
-      //     prev,
-      //     // page: pathname,
-      //     valueOperation: stakeValue,
-      //     operation: CONTRACT_OPERATION.approve.operation,
-      //   });
-      // });
       writeContractData({
         contract: STAR_RUNNER_TOKEN_CONTRACT,
         functionName: 'approve',
         args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)],
       });
-      // approve({ args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)] });
-
-      // setDataOperation(prev => {
-      //   const arr = [
-      //     ...prev,
-      //     {
-      //       page: pathname,
-      //       status: CONTRACT_OPERATION.status.preLoading,
-      //       valueOperation: stakeValue,
-      //       operation: CONTRACT_OPERATION.approve.operation,
-      //     },
-      //     {
-      //       page: pathname,
-      //       status: CONTRACT_OPERATION.status.preLoading,
-      //       valueOperation: stakeValue,
-      //       operation: CONTRACT_OPERATION.stake.operation,
-      //     },
-      //   ];
-      //   return arr;
-      // });
     } else {
       toast.error(error.message);
     }

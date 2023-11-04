@@ -2,7 +2,7 @@ import { formatEther, parseEther } from 'viem';
 import { CONTRACT_OPERATION, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
 import { readContract } from '@wagmi/core';
 
-export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [] }) => {
+export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [], value = null }) => {
   const argsOperation = [...args];
 
   if (functionName === 'approve') {
@@ -12,9 +12,8 @@ export const handleArgsOperations = ({ args = [], functionName = '', dataOperati
       : +formatEther(argsOperation[1]);
     argsOperation[1] = parseEther(approveValue.toString());
   }
-
   const valueOperationBig = argsOperation[1] ? argsOperation[1] : argsOperation[0];
-  const valueOperation = +formatEther(valueOperationBig);
+  const valueOperation = value || +formatEther(valueOperationBig);
 
   return { valueOperation, valueOperationBig, argsOperation };
 };
@@ -35,19 +34,20 @@ export const handleReadyForStake = async ({ address, valueOperationBig }) => {
 
 export const addOperation = ({
   id,
-  prev,
+  prev = [],
   pathname = '/',
   status = CONTRACT_OPERATION.status.loading,
   valueOperation = null,
-  functionName,
+  functionName = '',
 }) => {
-  if (functionName === 'approve') prev = prev.filter(item => item.functionName !== 'approve');
+  let prevArr = [...prev];
+  if (functionName === 'approve') prevArr = prev.filter(item => item.functionName !== 'approve');
 
-  const arr = [...prev, { id, pathname, status, valueOperation, functionName }];
+  const arr = [...prevArr, { id, pathname, status, valueOperation, functionName }];
   return arr;
 };
 
-export const removeOperation = ({ id, prev }) => {
+export const removeOperation = ({ id, prev = [] }) => {
   const indexToRemove = prev.findIndex(obj => obj.id === id);
   const arr = [...prev];
 
@@ -60,14 +60,11 @@ export const removeOperation = ({ id, prev }) => {
 export const fetchedOperation = ({ id, prev = [], status = CONTRACT_OPERATION.status.success }) => {
   const indexOperation = prev.findIndex(item => item.id === id);
   const arr = [...prev];
-
   if (status === CONTRACT_OPERATION.status.error) {
     arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.error };
   }
-
   if (status === CONTRACT_OPERATION.status.success) {
     arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.success };
   }
-
   return arr;
 };

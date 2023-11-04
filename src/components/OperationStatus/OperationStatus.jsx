@@ -10,6 +10,7 @@ import {
 } from './OperationStatus.styled';
 import { useEffect, useState } from 'react';
 import { CONTRACT_OPERATION } from '../../constants/constants';
+import { removeOperation } from '../../utils/helpers/operation';
 
 const OperationStatus = ({ media }) => {
   const { symbol } = useContextContract();
@@ -17,19 +18,14 @@ const OperationStatus = ({ media }) => {
   const [fetchStatus, setFetchStatus] = useState(false);
   const [operationData, setOperationData] = useState(null);
 
-  const { dataOperation } = useContextContract();
+  const { dataOperation, setDataOperation } = useContextContract();
 
   //? перевірка чи прийшов новий статус на цю сторінку
-  const statusCheck = dataOperation.find(item => item.pathname === pathname) || dataOperation.find(item => item);
-  // console.log('🚀 ~ statusCheck:', statusCheck);
-
-  // return;
-  // //? перевірка чи прийшла додаткова операція
-  // const isNewStatus = dataOperation.find(item => item.status === CONTRACT_OPERATION.status.preLoading);
-  // const isOldStatus = dataOperation.find(
-  //   item => item.status === CONTRACT_OPERATION.status.error || item.status === CONTRACT_OPERATION.status.success
-  // );
-  // const clearOldStatus = isNewStatus && isOldStatus;
+  const statusCheckArr = dataOperation.filter(item => item.pathname === pathname) || dataOperation.filter(item => item);
+  const statusCheck =
+    statusCheckArr.find(
+      item => item.status === CONTRACT_OPERATION.status.success || item.status === CONTRACT_OPERATION.status.error
+    ) || statusCheckArr.find(item => item);
 
   useEffect(() => {
     if (!statusCheck || fetchStatus) return;
@@ -44,12 +40,14 @@ const OperationStatus = ({ media }) => {
     setTimeout(() => {
       setFetchStatus(false);
       setOperationData(null);
+      setDataOperation(prev => removeOperation({ id: statusCheck.id, prev }));
     }, 2000);
-  }, [statusCheck, fetchStatus]);
+  }, [statusCheck, fetchStatus, setDataOperation]);
 
   if (!operationData) return;
 
   const { status, valueOperation, functionName } = operationData;
+  console.log('🚀 ~ functionName:', functionName, status);
 
   return (
     <OperationStatusStyled $media={media}>

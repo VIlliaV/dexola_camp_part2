@@ -5,24 +5,24 @@ import Available from '../../components/ContractInfo/ContractData/Available/Avai
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
-import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
+import { PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
-import { addOperation } from '../../utils/helpers/operation';
+// import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 // import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
 // import { useWaitForTransaction } from 'wagmi';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
-  const { setDataOperation, dataOperation, writeContractData } = useContextContract();
+  const { dataOperation, writeContractData } = useContextContract();
   // const {
   //   // withdraw,
   //   // dataWithdraw,
@@ -111,16 +111,8 @@ const Withdraw = () => {
       const isMoreWithdrawOrClaimOperation = dataOperation.some(
         item => item.page === '/withdraw' || item.page === '/claim'
       );
-
-      setDataOperation(prev => {
-        return addOperation({
-          prev,
-          page: pathname,
-          valueOperation: !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '',
-          operation: CONTRACT_OPERATION.withdrawAll.operation,
-        });
-      });
-      writeContractData({ functionName: 'exit' });
+      const value = !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '';
+      writeContractData({ functionName: 'exit', value });
       // withdrawExit();
     } else {
       toast.error('you do not have on the Staked balance');
