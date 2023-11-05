@@ -63,27 +63,27 @@ export const Context = ({ children }) => {
       setDataOperation(prev => {
         return fetchedOperation({ id, prev });
       });
+      if (functionName === 'approve') {
+        const isReadyForStake = await handleReadyForStake({ address, valueOperationBig });
+        if (isReadyForStake) {
+          writeContractData({ functionName: 'stake', args: [args[1]] });
+        } else {
+          setDataOperation(prev => {
+            removeOperation({ id, prev });
+          });
+          writeContractData({
+            contract: STAR_RUNNER_TOKEN_CONTRACT,
+            functionName: 'approve',
+            args: [STAR_RUNNER_STAKING_ADDRESS, args[1]],
+          });
+          return;
+        }
+      }
     } catch (error) {
       setDataOperation(prev => {
         return fetchedOperation({ id, prev, status: CONTRACT_OPERATION.status.error });
       });
       console.log('🚀 ~ error:', error);
-    }
-    if (functionName === 'approve') {
-      const isReadyForStake = await handleReadyForStake({ address, valueOperationBig });
-      if (isReadyForStake) {
-        writeContractData({ functionName: 'stake', args: [args[1]] });
-      } else {
-        setDataOperation(prev => {
-          removeOperation({ id, prev });
-        });
-        writeContractData({
-          contract: STAR_RUNNER_TOKEN_CONTRACT,
-          functionName: 'approve',
-          args: [STAR_RUNNER_STAKING_ADDRESS, args[1]],
-        });
-        return;
-      }
     }
   };
 
