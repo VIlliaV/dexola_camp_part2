@@ -9,7 +9,6 @@ import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
-// import { useContractReadData } from '../../utils/hooks/useCustomContractRead';
 
 const ClaimRewards = () => {
   const { availableRewards } = useContractReadData({});
@@ -20,7 +19,8 @@ const ClaimRewards = () => {
     event.preventDefault();
 
     if (availableRewards !== 0) {
-      writeContractData({ functionName: 'claimReward', value: result(maxType, availableRewards) });
+      const value = result(maxType, availableRewards);
+      writeContractData({ functionName: 'claimReward', value });
     } else {
       toast.error('you have no rewards');
     }

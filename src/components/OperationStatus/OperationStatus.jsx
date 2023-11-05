@@ -47,7 +47,6 @@ const OperationStatus = ({ media }) => {
   if (!operationData) return;
 
   const { status, valueOperation, functionName } = operationData;
-  console.log('🚀 ~ functionName:', functionName, status);
 
   return (
     <OperationStatusStyled $media={media}>

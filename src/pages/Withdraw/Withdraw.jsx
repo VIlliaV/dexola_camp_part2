@@ -1,7 +1,6 @@
 import { parseEther } from 'viem';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
-
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
@@ -10,97 +9,20 @@ import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useState } from 'react';
 import { ButtonContainer } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
-// import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
-// import { addOperation } from '../../utils/helpers/operation';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
-// import { useContractWriteData } from '../../utils/hooks/ContractHooks/useCustomContractWrite';
-// import { useWaitForTransaction } from 'wagmi';
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('0');
-  // const { pathname } = useLocation();
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { dataOperation, writeContractData } = useContextContract();
-  // const {
-  //   // withdraw,
-  //   // dataWithdraw,
-  //   // statusWithdraw,
-  //   // resetWithdraw,
-  //   withdrawExit,
-  //   dataWithdrawExit,
-  //   statusWithdrawExit,
-  //   resetWithdrawExit,
-  // } = useContractWriteData();
-
-  // useEffect(() => {
-  //   handleApproveOperation({
-  //     page: pathname,
-  //     status: statusWithdraw,
-  //     data: dataWithdraw,
-  //     operation: CONTRACT_OPERATION.withdraw.operation,
-  //     resetFunction: resetWithdraw,
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusWithdraw]);
-
-  // const isTest = dataOperation.find(item => item?.hash || item.page === pathname);
-  // const hash = statusWithdraw === CONTRACT_OPERATION.status.success ? dataWithdraw?.hash : false;
-  // console.log('🚀 ~ hash:', hash);
-  // const {
-  //   data: dataWaitTransaction,
-  //   status,
-  //   isSuccess,
-  //   isError,
-
-  //   // isFetched,
-  // } = useWaitForTransaction({
-  //   hash: hash,
-  //   suspense: true,
-  // });
-  // console.log(
-  //   '🚀 ~ dataWaitTransaction:',
-  //   dataWithdraw?.hash,
-  //   statusWithdraw,
-  //   // dataWaitTransaction,
-  //   // isSuccess,
-  //   // isError,
-  //   status
-  // );
-
-  // useEffect(() => {
-  //   handleApproveOperation({
-  //     page: pathname,
-  //     status: statusWithdrawExit,
-  //     data: dataWithdrawExit,
-  //     operation: CONTRACT_OPERATION.withdrawAll.operation,
-  //     resetFunction: resetWithdrawExit,
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [statusWithdrawExit]);
 
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(withdrawValue, stakedBalance);
     if (!error) {
-      // setDataOperation(prev => {
-      //   return addOperation({
-      //     prev,
-      //     page: pathname,
-      //     valueOperation: withdrawValue,
-      //     operation: CONTRACT_OPERATION.withdraw.operation,
-      //   });
-      // });
       writeContractData({ functionName: 'withdraw', args: [parseEther(withdrawValue)] });
-
-      // try {
-      //   const { hash } = await withdraw({ args: [parseEther(withdrawValue)] });
-      //   console.log('🚀 ~ response:', hash);
-      // } catch (error) {
-      //   console.log('🚀 ~ error:', error);
-      // }
-      // withdraw({ args: [parseEther(withdrawValue)] });
     } else {
       toast.error(error.message);
     }
@@ -113,7 +35,6 @@ const Withdraw = () => {
       );
       const value = !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '';
       writeContractData({ functionName: 'exit', value });
-      // withdrawExit();
     } else {
       toast.error('you do not have on the Staked balance');
     }
@@ -132,11 +53,7 @@ const Withdraw = () => {
       </div>
       <OperationStatus media="mobile" />
       <ButtonContainer>
-        <Button
-          typeButton="submit"
-          form={PAGES_NAME.withdraw}
-          // disabled={statusWithdraw === CONTRACT_OPERATION.status.loading}
-        >
+        <Button typeButton="submit" form={PAGES_NAME.withdraw}>
           {PAGES_NAME.withdraw}
         </Button>
 
