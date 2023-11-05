@@ -21,11 +21,12 @@ const OperationStatus = ({ media }) => {
   const { dataOperation, setDataOperation } = useContextContract();
 
   //? перевірка чи прийшов новий статус на цю сторінку
-  const statusCheckArr = dataOperation.filter(item => item.pathname === pathname) || dataOperation.filter(item => item);
-  const statusCheck =
-    statusCheckArr.find(
-      item => item.status === CONTRACT_OPERATION.status.success || item.status === CONTRACT_OPERATION.status.error
-    ) || statusCheckArr.find(item => item);
+  const statusCheckPathArr = dataOperation.filter(
+    item => item.status === CONTRACT_OPERATION.status.success || item.status === CONTRACT_OPERATION.status.error
+  );
+  const statusCheckArr = statusCheckPathArr.length ? statusCheckPathArr : dataOperation.filter(item => item);
+
+  const statusCheck = statusCheckArr.find(item => item.pathname === pathname) || statusCheckArr.find(item => item);
 
   useEffect(() => {
     if (!statusCheck || fetchStatus) return;
