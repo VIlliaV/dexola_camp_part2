@@ -12,6 +12,15 @@ export const OperationStatusStyled = styled.div`
   justify-content: center;
   gap: 16px;
   padding: 8px;
+  animation: popup 3s ease-in-out;
+  @keyframes popup {
+    from {
+      transform: translateX(350px);
+    }
+    to {
+      transform: translateX(0px);
+    }
+  }
   @media ${media.tablet} {
     display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')};
     align-self: end;

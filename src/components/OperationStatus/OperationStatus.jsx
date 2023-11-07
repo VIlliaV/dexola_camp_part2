@@ -42,7 +42,7 @@ const OperationStatus = ({ media }) => {
       setFetchStatus(false);
       setOperationData(null);
       setDataOperation(prev => removeOperation({ id: statusCheck.id, prev }));
-    }, 2000);
+    }, 3000);
   }, [statusCheck, fetchStatus, setDataOperation]);
 
   if (!operationData) return;
