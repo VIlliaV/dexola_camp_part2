@@ -7,6 +7,7 @@ export const PagesContainer = styled.div`
   padding: 29px 0px 32px;
   display: grid;
   grid-template-rows: 1fr auto;
+  overflow-x: hidden;
 
   &::before {
     content: '';
