@@ -26,7 +26,6 @@ export const useContextContract = () => useContext(ContractContext);
 
 export const Context = ({ children }) => {
   const [dataOperation, setDataOperation] = useState([]);
-  console.log('🚀 ~ RealdataOperation:', dataOperation);
   const { pathname } = useLocation();
   const { balance, symbol, address } = useWalletInfo({
     tokenForBalance: STAR_RUNNER_TOKEN_ADDRESS,

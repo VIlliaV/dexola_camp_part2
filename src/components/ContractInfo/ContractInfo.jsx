@@ -7,7 +7,6 @@ import { useResize } from '@/utils/hooks/useResize';
 import { size } from '@/styles/media';
 
 const ContractInfo = ({ data = 0, variable = {} }) => {
-  // console.log('🚀 ~ data:', data);
   const { stakedBalanceInfo, rewardsInfo, daysInfo } = CONTRACT_INFO;
   const { symbol } = useContextContract();
   const { widthResize } = useResize();
