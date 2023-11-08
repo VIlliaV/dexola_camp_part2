@@ -7,6 +7,7 @@ import Navigation from '../Navigation/Navigation';
 import SectionWrapper from '../Section/SectionWrapper';
 import HeroSection from '../HeroSection/HeroSection';
 import OperationStatus from '../OperationStatus/OperationStatus';
+import FallBack from '../FallBack/FallBack';
 
 const SharedLayout = () => {
   return (
@@ -17,7 +18,7 @@ const SharedLayout = () => {
         <HeroSection />
         <SectionWrapper className="pages_section">
           <Navigation />
-          <Suspense fallback={null}>
+          <Suspense fallback={<FallBack />}>
             <Outlet />
           </Suspense>
           <OperationStatus media="tablet" />
