@@ -3,7 +3,7 @@ import { media } from '@/styles/media';
 import { ReactComponent as operationPending } from '@/images/svg/operation_pending.svg';
 import { ReactComponent as operationError } from '@/images/svg/operation_error.svg';
 import { ReactComponent as operationSuccess } from '@/images/svg/operation_success.svg';
-import { rotateAnimation, movingRightLeft } from '../../styles/animationConst.js';
+import { rotateAnimation, movingRightLeft } from '../../styles/styledConst/animationConst.js';
 
 export const OperationStatusStyled = styled.div`
   flex: 1;

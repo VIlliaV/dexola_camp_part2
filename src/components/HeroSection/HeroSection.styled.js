@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import { headerBackground } from '../../styles/styledConst';
+import { headerBackground } from '../../styles/styledConst/styledConst';
 
 export const HeroSectionStyled = styled.div`
   & .section {
