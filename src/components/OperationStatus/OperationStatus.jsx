@@ -20,20 +20,22 @@ const OperationStatus = ({ media }) => {
 
   const { dataOperation, setDataOperation } = useContextContract();
 
-  //? перевірка чи прийшов новий статус на цю сторінку
-  const statusCheckPathArr = dataOperation.filter(
+  const findFetchedStatus = dataOperation.filter(
     item => item.status === CONTRACT_OPERATION.status.success || item.status === CONTRACT_OPERATION.status.error
   );
-  const statusCheckArr = statusCheckPathArr.length ? statusCheckPathArr : dataOperation.filter(item => item);
+  const filterFetchedOrLoading = findFetchedStatus.length
+    ? findFetchedStatus
+    : dataOperation.filter((item, index) => index === dataOperation.length - 1);
 
-  const statusCheck = statusCheckArr.find(item => item.pathname === pathname) || statusCheckArr.find(item => item);
+  const displayOperationData =
+    filterFetchedOrLoading.find(item => item.pathname === pathname) || filterFetchedOrLoading.find(item => item);
 
   useEffect(() => {
-    if (!statusCheck || fetchStatus) return;
-    setOperationData(statusCheck);
+    if (!displayOperationData || fetchStatus) return;
+    setOperationData(displayOperationData);
     if (
-      statusCheck.status === CONTRACT_OPERATION.status.success ||
-      statusCheck.status === CONTRACT_OPERATION.status.error
+      displayOperationData.status === CONTRACT_OPERATION.status.success ||
+      displayOperationData.status === CONTRACT_OPERATION.status.error
     ) {
       setFetchStatus(true);
     } else return;
@@ -41,9 +43,9 @@ const OperationStatus = ({ media }) => {
     setTimeout(() => {
       setFetchStatus(false);
       setOperationData(null);
-      setDataOperation(prev => removeOperation({ id: statusCheck.id, prev }));
+      setDataOperation(prev => removeOperation({ id: displayOperationData.id, prev }));
     }, 3000);
-  }, [statusCheck, fetchStatus, setDataOperation]);
+  }, [displayOperationData, fetchStatus, setDataOperation]);
 
   if (!operationData) return;
 
