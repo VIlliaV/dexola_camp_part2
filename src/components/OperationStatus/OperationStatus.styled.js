@@ -3,6 +3,7 @@ import { media } from '@/styles/media';
 import { ReactComponent as operationPending } from '@/images/svg/operation_pending.svg';
 import { ReactComponent as operationError } from '@/images/svg/operation_error.svg';
 import { ReactComponent as operationSuccess } from '@/images/svg/operation_success.svg';
+import { rotateAnimation, movingRightLeft } from '../../styles/animationConst.js';
 
 export const OperationStatusStyled = styled.div`
   flex: 1;
@@ -12,15 +13,9 @@ export const OperationStatusStyled = styled.div`
   justify-content: center;
   gap: 16px;
   padding: 8px;
-  animation: popup 3s ease-in-out;
-  @keyframes popup {
-    from {
-      transform: translateX(350px);
-    }
-    to {
-      transform: translateX(0px);
-    }
-  }
+  animation: movingRightLeft 3s ease-in-out;
+  ${movingRightLeft}
+
   @media ${media.tablet} {
     display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')};
     align-self: end;
@@ -32,7 +27,7 @@ export const OperationStatusStyled = styled.div`
 
 export const SvgPending = styled(operationPending)`
   border-radius: 50%;
-  animation: rotateIndicator 1s linear infinite;
+  animation: rotate 1s linear infinite;
 
   & #indicator {
   }
@@ -42,14 +37,7 @@ export const SvgPending = styled(operationPending)`
   & #track {
     fill: #6e758b;
   }
-  @keyframes rotateIndicator {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  ${rotateAnimation}
 `;
 
 export const SvgError = styled(operationError)``;
