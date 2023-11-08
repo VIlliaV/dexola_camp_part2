@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import { ReactComponent as no_connect } from '@/images/svg/no_connect.svg';
 import { PagesContainer } from '../Pages.styled';
 
 export const NoConnectStyled = styled(PagesContainer)`
@@ -29,5 +28,3 @@ export const NoConnectStyled = styled(PagesContainer)`
     align-self: center;
   }
 `;
-
-export const SvgStyled = styled(no_connect)``;

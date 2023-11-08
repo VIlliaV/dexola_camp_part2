@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import { ReactComponent as operationPending } from '@/images/svg/operation_pending.svg';
-import { ReactComponent as operationError } from '@/images/svg/operation_error.svg';
-import { ReactComponent as operationSuccess } from '@/images/svg/operation_success.svg';
-import { rotateAnimation, movingRightLeft } from '../../styles/styledConst/animationConst.js';
+import { movingRightLeft } from '../../styles/styledConst/animationConst.js';
 
 export const OperationStatusStyled = styled.div`
   flex: 1;
@@ -24,25 +21,6 @@ export const OperationStatusStyled = styled.div`
     align-items: end;
   }
 `;
-
-export const SvgPending = styled(operationPending)`
-  border-radius: 50%;
-  animation: rotate 1s linear infinite;
-
-  & #indicator {
-  }
-  & #circle {
-    stroke-width: 3px;
-  }
-  & #track {
-    fill: #6e758b;
-  }
-  ${rotateAnimation}
-`;
-
-export const SvgError = styled(operationError)``;
-
-export const SvgSuccess = styled(operationSuccess)``;
 
 export const OperationInfo = styled.p`
   line-height: 1.71429;

@@ -1,16 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import { useContextContract } from '../../Context';
-import {
-  OperationInfo,
-  OperationStatusStyled,
-  SpanStyled,
-  SvgError,
-  SvgPending,
-  SvgSuccess,
-} from './OperationStatus.styled';
+import { OperationInfo, OperationStatusStyled, SpanStyled } from './OperationStatus.styled';
 import { useEffect, useState } from 'react';
 import { CONTRACT_OPERATION } from '../../constants/constants';
 import { removeOperation } from '../../utils/helpers/operation';
+import { SvgError, SvgPending, SvgSuccess } from '../../styles/styledConst/svgStyled';
 
 const OperationStatus = ({ media }) => {
   const { symbol } = useContextContract();

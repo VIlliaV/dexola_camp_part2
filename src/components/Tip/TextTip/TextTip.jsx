@@ -1,4 +1,5 @@
-import { SvgStyled, TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
+import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
+import { TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 
 const TextTip = ({ tip = '', text = '' }) => {
   return (
@@ -11,7 +12,7 @@ const TextTip = ({ tip = '', text = '' }) => {
           {tip.second}
         </TipInfo>
       </TextTipStyled>
-      <SvgStyled className="tip_svg" />
+      <SvgToolTip className="tip_svg" />
     </>
   );
 };

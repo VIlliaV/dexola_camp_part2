@@ -1,4 +1,5 @@
-import { LogoLink, LogoStyled } from './Logo.styled';
+import { SvgLogoStyled } from '../../styles/styledConst/svgStyled';
+import { LogoLink } from './Logo.styled';
 
 const Logo = () => {
   return (
@@ -8,7 +9,7 @@ const Logo = () => {
       target="_blank"
       rel="noopener noreferrer nofollow"
     >
-      <LogoStyled />
+      <SvgLogoStyled />
     </LogoLink>
   );
 };

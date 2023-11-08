@@ -1,8 +1,9 @@
 import WalletAddress from '../WalletAddress/WalletAddress';
-import { CurrencyStyled, SvgStyled } from './Currency.styled';
+import { CurrencyStyled } from './Currency.styled';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 import { formatDecimalPlaces } from '@/utils/formating';
 import { useWalletInfo } from '../../../../utils/hooks/ContractHooks/useWalletInfo';
+import { SvgAvatarETH } from '../../../../styles/styledConst/svgStyled';
 
 const Currency = () => {
   const { balance, symbol } = useWalletInfo({});
@@ -10,7 +11,7 @@ const Currency = () => {
   const { open } = useWeb3Modal();
   return (
     <CurrencyStyled onClick={() => open()}>
-      <SvgStyled />
+      <SvgAvatarETH />
       <h3>
         {formatDecimalPlaces(balance)} {symbol}
       </h3>

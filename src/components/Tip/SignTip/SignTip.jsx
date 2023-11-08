@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Tip from '../TextTip/TextTip';
-import { SignTipStyled, SvgStyled } from './SignTip.styled';
+import { SignTipStyled } from './SignTip.styled';
 import Backdrop from '../../Backdrop/Backdrop';
+import { SvgTip } from '../../../styles/styledConst/svgStyled';
 
 const SignTip = ({ variable = {}, className = '' }) => {
   const [isActive, setIsActive] = useState(false);
@@ -36,7 +37,7 @@ const SignTip = ({ variable = {}, className = '' }) => {
       className={`${className}  ${isActive ? 'active' : ''}`}
     >
       <Backdrop className="backdrop" onClick={clearBackdrop} />
-      <SvgStyled />
+      <SvgTip />
       <Tip tip={tip} text={text} />
     </SignTipStyled>
   );

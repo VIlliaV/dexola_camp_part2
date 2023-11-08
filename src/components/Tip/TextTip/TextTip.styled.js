@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import { ReactComponent as toolTip } from '@/images/svg/tooltip.svg';
 
 export const TextTipStyled = styled.div`
   position: absolute;
@@ -69,12 +68,4 @@ export const TipInfo = styled.p`
     overflow-wrap: break-word;
     word-wrap: break-word;
   }
-`;
-
-export const SvgStyled = styled(toolTip)`
-  position: absolute;
-  top: 1px;
-  left: 0;
-  transform: translate(0, -100%);
-  fill: var(--primary);
 `;
