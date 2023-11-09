@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Tip from '../TextTip/TextTip';
 import { SignTipStyled } from './SignTip.styled';
-// import Backdrop from '../../Backdrop/Backdrop';
 import { SvgTip } from '../../../styles/styledConst/svgStyled';
 import { BackdropStyled } from '../../../styles/styledConst/componentStyled';
 
