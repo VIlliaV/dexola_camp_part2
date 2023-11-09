@@ -1,25 +1,5 @@
 import abiStaking from '@/dataBase/staking_abi.json';
 import abiToken from '@/dataBase/token_abi.json';
-import { resultType } from '../utils/formating';
-const { dateType, approxType, maxType, minType } = resultType;
-export const CONTRACT_INFO = {
-  stakedBalanceInfo: {
-    text: 'Staked balance',
-    tip: { first: 'Staking rewards get ', second: 'allocated on this sum' },
-    type: maxType,
-  },
-  aprInfo: {
-    text: 'APR',
-    tip: { first: 'Displays the average for APR. ', second: 'Interest rate is calculated for each amount of tokens.' },
-    type: approxType,
-  },
-  daysInfo: {
-    text: 'Days',
-    tip: { first: 'Days', second: '' },
-    type: dateType,
-  },
-  rewardsInfo: { text: 'Rewards', tip: { first: 'Rewards get allocated ', second: 'every second' }, type: minType },
-};
 
 export const CONTRACT_OPERATION = {
   status: { loading: 'loading', error: 'error', success: 'success' },
