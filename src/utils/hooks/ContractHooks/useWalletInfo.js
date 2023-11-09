@@ -11,7 +11,7 @@ const useWalletInfo = ({ tokenForBalance = undefined }) => {
   });
   const balance = +balanceData?.formatted || 0;
 
-  const symbol = !balanceData?.symbol ? ':(' : balanceData?.symbol === 'SR' ? 'STRU' : balanceData?.symbol;
+  const symbol = !balanceData?.symbol ? '' : balanceData?.symbol === 'SR' ? 'STRU' : balanceData?.symbol;
 
   return { address, isConnected, balance, symbol };
 };
