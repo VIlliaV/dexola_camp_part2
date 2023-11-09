@@ -1,32 +1,32 @@
-import { CONTRACT_INFO } from '@/constants/constants';
 import { ContractInfoStyled } from './ContractInfo.styled';
 import SignTip from '../Tip/SignTip/SignTip';
 import { result, resultType } from '@/utils/formating';
 import { useContextContract } from '../../Context';
 import { useResize } from '@/utils/hooks/useResize';
 import { size } from '@/styles/media';
+import { useStats } from '../../utils/hooks/ContractHooks/useStats';
 
-const ContractInfo = ({ data = 0, variable = {} }) => {
-  const { stakedBalanceInfo, rewardsInfo, daysInfo } = CONTRACT_INFO;
+const ContractInfo = ({ data = {} }) => {
+  const { text, value, type } = data;
+
   const { symbol } = useContextContract();
+  const { statsName } = useStats();
   const { widthResize } = useResize();
 
   const isMobile =
-    widthResize < size.tablet && variable.type !== resultType.dateType && variable.type !== resultType.approxType
+    widthResize < size.tablet && type !== resultType.dateType && type !== resultType.approxType
       ? resultType.mobileType
-      : variable.type;
-  const contractResult = result(isMobile, data);
+      : type;
+  const contractResult = result(isMobile, value);
 
   return (
     <ContractInfoStyled>
       <div className="contract_data contract_item">
         <p className="contract_result">{contractResult}</p>
-        {(variable === stakedBalanceInfo || variable === rewardsInfo) && (
-          <p className="contract_token_name">{symbol}</p>
-        )}
+        {(text === statsName.balance || text === statsName.rewards) && <p className="contract_token_name">{symbol}</p>}
       </div>
-      {variable.text !== daysInfo.text ? <SignTip variable={variable} className="contract_item" /> : <div></div>}
-      <p className="text_variable contract_item">{variable.text}</p>
+      {text !== statsName.days ? <SignTip variable={data} className="contract_item" /> : <div></div>}
+      <p className="text_variable contract_item">{text}</p>
     </ContractInfoStyled>
   );
 };
