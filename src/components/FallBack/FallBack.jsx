@@ -1,11 +1,12 @@
+import { BackdropStyled } from '../../styles/styledConst/componentStyled';
 import { SvgPending } from '../../styles/styledConst/svgStyled';
-import Backdrop from '../Backdrop/Backdrop';
+// import Backdrop from '../Backdrop/Backdrop';
 import { FallBackStyled } from './FallBack.styled';
 
 const FallBack = () => {
   return (
     <FallBackStyled>
-      <Backdrop />
+      <BackdropStyled />
       <SvgPending className="fallback" />
     </FallBackStyled>
   );

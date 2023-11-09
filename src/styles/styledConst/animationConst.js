@@ -8,7 +8,8 @@ export const rotateAnimation = `
     }
   }`;
 
-export const movingRightLeft = `  @keyframes movingRightLeft {
+export const movingRightLeft = `  
+@keyframes movingRightLeft {
     from {
       transform: translateX(350px);
     }
