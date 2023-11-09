@@ -1,4 +1,10 @@
-import { ContractInfoStyled } from './ContractInfo.styled';
+import {
+  ContractInfoStyled,
+  StatsDataStyled,
+  StatsNameStyled,
+  StatsTokenStyled,
+  StatsValueStyled,
+} from './ContractInfo.styled';
 import SignTip from '../Tip/SignTip/SignTip';
 import { result, resultType } from '@/utils/formating';
 import { useContextContract } from '../../Context';
@@ -17,16 +23,16 @@ const ContractInfo = ({ data = {} }) => {
     widthResize < size.tablet && type !== resultType.dateType && type !== resultType.approxType
       ? resultType.mobileType
       : type;
-  const contractResult = result(isMobile, value);
+  const statsValue = result(isMobile, value);
 
   return (
     <ContractInfoStyled>
-      <div className="contract_data contract_item">
-        <p className="contract_result">{contractResult}</p>
-        {(text === statsName.balance || text === statsName.rewards) && <p className="contract_token_name">{symbol}</p>}
-      </div>
+      <StatsDataStyled className="contract_item">
+        <StatsValueStyled>{statsValue}</StatsValueStyled>
+        {(text === statsName.balance || text === statsName.rewards) && <StatsTokenStyled>{symbol}</StatsTokenStyled>}
+      </StatsDataStyled>
       {text !== statsName.days ? <SignTip variable={data} className="contract_item" /> : <div></div>}
-      <p className="text_variable contract_item">{text}</p>
+      <StatsNameStyled className="contract_item">{text}</StatsNameStyled>
     </ContractInfoStyled>
   );
 };
