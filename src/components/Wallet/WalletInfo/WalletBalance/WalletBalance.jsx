@@ -1,6 +1,6 @@
-import stru from '@/images/STRU.webp';
-import stru2x from '@/images/STRU@2x.webp';
-import struDef from '@/images/STRU.jpg';
+import stru from '@/assets/images/STRU.webp';
+import stru2x from '@/assets/images/STRU@2x.webp';
+import struDef from '@/assets/images/STRU.jpg';
 import { WalletBalanceStyled } from './WalletBalance.styled';
 import { formatDecimalPlaces } from '@/utils/formating';
 import { useContextContract } from '../../../../Context';

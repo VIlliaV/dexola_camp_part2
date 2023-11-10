@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from '@/styles/media';
-import background_header_mob from '@/images/background/technology_background_mob.webp';
-import background_header_mob2x from '@/images/background/technology_background_mob@2x.webp';
+import background_header_mob from '../assets/images/background/technology_background_mob.webp';
+import background_header_mob2x from '../assets/images/background/technology_background_mob@2x.webp';
 
 export const GlobalStyles = createGlobalStyle`
   body {

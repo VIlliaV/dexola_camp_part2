@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
-import { ReactComponent as svgAvaETH } from '../../images/svg/cryptocurrency-color_eth.svg';
-import { ReactComponent as svgTip } from '@/images/svg/help-circle.svg';
-import { ReactComponent as svgToolTip } from '@/images/svg/tooltip.svg';
-import { ReactComponent as svgNoConnect } from '@/images/svg/no_connect.svg';
-import { ReactComponent as svgLogo } from '@/images/svg/logo.svg';
-import { ReactComponent as svgPending } from '@/images/svg/operation_pending.svg';
-import { ReactComponent as svgError } from '@/images/svg/operation_error.svg';
-import { ReactComponent as svgSuccess } from '@/images/svg/operation_success.svg';
+import { ReactComponent as svgAvaETH } from '../../assets/images/svg/cryptocurrency-color_eth.svg';
+import { ReactComponent as svgTip } from '../../assets/images/svg/help-circle.svg';
+import { ReactComponent as svgToolTip } from '../../assets/images/svg/tooltip.svg';
+import { ReactComponent as svgNoConnect } from '../../assets/images/svg/no_connect.svg';
+import { ReactComponent as svgLogo } from '../../assets/images/svg/logo.svg';
+import { ReactComponent as svgPending } from '../../assets/images/svg/operation_pending.svg';
+import { ReactComponent as svgError } from '../../assets/images/svg/operation_error.svg';
+import { ReactComponent as svgSuccess } from '../../assets/images/svg/operation_success.svg';
 import { rotateAnimation } from './animationConst';
 
 export const SvgAvatarETH = styled(svgAvaETH)`

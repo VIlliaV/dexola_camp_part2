@@ -1,8 +1,8 @@
 import { media } from '@/styles/media';
-import background_header from '@/images/background/technology_background.webp';
-import background_header2x from '@/images/background/technology_background@2x.webp';
-import background_header_mob from '@/images/background/technology_background_mob.webp';
-import background_header_mob2x from '@/images/background/technology_background_mob@2x.webp';
+import background_header from '../../assets/images/background/technology_background.webp';
+import background_header2x from '../../assets/images/background/technology_background@2x.webp';
+import background_header_mob from '../../assets/images/background/technology_background_mob.webp';
+import background_header_mob2x from '../../assets/images/background/technology_background_mob@2x.webp';
 
 export const headerBackground = `background-image: url(${background_header_mob});
   @media ${media.mobile + media.retina} {
