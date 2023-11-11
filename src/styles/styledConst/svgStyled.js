@@ -8,7 +8,7 @@ import { ReactComponent as svgLogo } from '../../assets/images/svg/logo.svg';
 import { ReactComponent as svgPending } from '../../assets/images/svg/operation_pending.svg';
 import { ReactComponent as svgError } from '../../assets/images/svg/operation_error.svg';
 import { ReactComponent as svgSuccess } from '../../assets/images/svg/operation_success.svg';
-import { rotateAnimation } from './animationConst';
+import { rotate } from './animationConst';
 
 export const SvgAvatarETH = styled(svgAvaETH)`
   width: 24px;
@@ -58,7 +58,7 @@ export const SvgLogoStyled = styled(svgLogo)`
 
 export const SvgPending = styled(svgPending)`
   border-radius: 50%;
-  animation: rotate 1s linear infinite;
+  animation: ${rotate} 1s linear infinite;
 
   & #indicator {
   }
@@ -68,7 +68,6 @@ export const SvgPending = styled(svgPending)`
   & #track {
     fill: #6e758b;
   }
-  ${rotateAnimation}
 `;
 
 export const SvgError = styled(svgError)``;

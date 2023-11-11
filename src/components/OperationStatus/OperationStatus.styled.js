@@ -10,8 +10,7 @@ export const OperationStatusStyled = styled.div`
   justify-content: center;
   gap: 16px;
   padding: 8px;
-  animation: movingRightLeft 3s ease-in-out;
-  ${movingRightLeft}
+  animation: ${movingRightLeft} 3s ease-in-out;
 
   @media ${media.tablet} {
     display: ${props => (props.$media === 'mobile' ? 'none' : 'flex')};
