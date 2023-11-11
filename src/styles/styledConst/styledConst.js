@@ -24,7 +24,6 @@ export const headerBackground = `background-image: url(${background_header_mob})
   @media ${media.desktop + media.retina} {
     background-image: url(${background_header2x});
      background-size: 100vw auto;
-     z-index: 3;
   }
   background-size: 100vw auto;
   background-repeat: no-repeat;

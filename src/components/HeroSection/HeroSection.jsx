@@ -1,27 +1,23 @@
 import { useStats } from '../../utils/hooks/ContractHooks/useStats';
-import ContractInfo from '../ContractInfo/ContractInfo';
-import HeadContainer from '../HeadContainer/HeadContainer';
+import ContractInfoItem from '../ContractInfo/ContractInfoItem';
 
-import SectionWrapper from '../Section/SectionWrapper';
-import { HeroSectionStyled } from './HeroSection.styled';
+import { ContractInfo, HeadContainerHero, SectionWrapperHero } from './HeroSection.styled';
 
 const HeroSection = () => {
   const { contractStats } = useStats();
   return (
-    <HeroSectionStyled>
-      <SectionWrapper>
-        <HeadContainer>
-          <h1>StarRunner Token staking</h1>
-          <ul className="contract_info">
-            {contractStats.map(item => (
-              <li key={item.text}>
-                <ContractInfo data={item} />
-              </li>
-            ))}
-          </ul>
-        </HeadContainer>
-      </SectionWrapper>
-    </HeroSectionStyled>
+    <SectionWrapperHero>
+      <HeadContainerHero>
+        <h1>StarRunner Token staking</h1>
+        <ContractInfo>
+          {contractStats.map(item => (
+            <li key={item.text}>
+              <ContractInfoItem data={item} />
+            </li>
+          ))}
+        </ContractInfo>
+      </HeadContainerHero>
+    </SectionWrapperHero>
   );
 };
 

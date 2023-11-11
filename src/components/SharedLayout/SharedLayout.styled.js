@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
+import SectionWrapper from '../Section/SectionWrapper';
 
 export const Container = styled.div`
   position: relative;
@@ -18,15 +19,6 @@ export const Container = styled.div`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    & .pages_section {
-      background-color: var(--background);
-      border-radius: 16px 16px 0px 0px;
-      @media ${media.tablet} {
-        background-color: transparent;
-        padding-bottom: 16px;
-        border-radius: none;
-      }
-    }
 
     @media ${media.mobTab} {
       min-height: 100dvh;
@@ -51,5 +43,15 @@ export const Ellipse = styled.div`
     background-size: 2193px 1330px;
     background-repeat: no-repeat;
     background-position: center top;
+  }
+`;
+
+export const SectionWrapperShared = styled(SectionWrapper)`
+  background-color: var(--background);
+  border-radius: 16px 16px 0px 0px;
+  @media ${media.tablet} {
+    background-color: transparent;
+    padding-bottom: 16px;
+    border-radius: none;
   }
 `;

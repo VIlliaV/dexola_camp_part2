@@ -4,7 +4,7 @@ import {
   StatsNameStyled,
   StatsTokenStyled,
   StatsValueStyled,
-} from './ContractInfo.styled';
+} from './ContractInfoItem.styled';
 import SignTip from '../Tip/SignTip/SignTip';
 import { result, resultType } from '@/utils/formating';
 import { useContextContract } from '../../Context';
@@ -12,7 +12,7 @@ import { useResize } from '@/utils/hooks/useResize';
 import { size } from '@/styles/media';
 import { useStats } from '../../utils/hooks/ContractHooks/useStats';
 
-const ContractInfo = ({ data = {} }) => {
+const ContractInfoItem = ({ data = {} }) => {
   const { text, value, type } = data;
 
   const { symbol } = useContextContract();
@@ -37,4 +37,4 @@ const ContractInfo = ({ data = {} }) => {
   );
 };
 
-export default ContractInfo;
+export default ContractInfoItem;
