@@ -4,8 +4,8 @@ const Footer = () => {
   return (
     <FooterSection>
       <HeadContainerFooter>
-        <p className="footer_item">Designed by Dexola - 2023</p>
-        <p className="footer_item"> © All rights reserved</p>
+        <p>Designed by Dexola - 2023</p>
+        <p> © All rights reserved</p>
       </HeadContainerFooter>
     </FooterSection>
   );
