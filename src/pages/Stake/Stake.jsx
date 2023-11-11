@@ -14,7 +14,7 @@ import { useContextContract } from '../../Context';
 import { parseEther } from 'viem';
 
 const Stake = () => {
-  const [stakeValue, setStakeValue] = useState('0');
+  const [stakeValue, setStakeValue] = useState('');
   const { balance, writeContractData } = useContextContract();
 
   const handleSubmit = event => {
@@ -27,6 +27,7 @@ const Stake = () => {
         functionName: 'approve',
         args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)],
       });
+      setStakeValue('');
     } else {
       toast.error(error.message);
     }
@@ -40,7 +41,12 @@ const Stake = () => {
           <Reward amountToStake={+stakeValue} />
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
-          <Label type={PAGES_NAME.stake} formValue={setStakeValue} maxAllowed={balance}></Label>
+          <Label
+            type={PAGES_NAME.stake}
+            formValue={setStakeValue}
+            maxAllowed={balance}
+            initialValue={stakeValue}
+          ></Label>
           <Available available={balance} />
         </Form>
       </div>
