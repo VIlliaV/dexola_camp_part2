@@ -1,14 +1,13 @@
-import HeadContainer from '../HeadContainer/HeadContainer';
-import { FooterContainer } from './Footer.styled';
+import { FooterSection, HeadContainerFooter } from './Footer.styled';
 
 const Footer = () => {
   return (
-    <FooterContainer>
-      <HeadContainer>
+    <FooterSection>
+      <HeadContainerFooter>
         <p className="footer_item">Designed by Dexola - 2023</p>
         <p className="footer_item"> © All rights reserved</p>
-      </HeadContainer>
-    </FooterContainer>
+      </HeadContainerFooter>
+    </FooterSection>
   );
 };
 

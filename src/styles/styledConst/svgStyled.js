@@ -58,7 +58,7 @@ export const SvgLogoStyled = styled(svgLogo)`
 
 export const SvgPending = styled(svgPending)`
   border-radius: 50%;
-  animation: ${rotate} 1s linear infinite;
+  animation: ${rotate} 1s var(--cubic-bezier) infinite;
 
   & #indicator {
   }

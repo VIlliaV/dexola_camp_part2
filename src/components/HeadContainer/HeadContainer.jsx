@@ -1,7 +1,7 @@
-import { Container } from './HeadContainer.styled';
+import { HeaderContainerStyled } from './HeadContainer.styled';
 
-const HeadContainer = ({ children }) => {
-  return <Container className="container">{children}</Container>;
+const HeadContainer = ({ className, children }) => {
+  return <HeaderContainerStyled className={className}>{children}</HeaderContainerStyled>;
 };
 
 export default HeadContainer;

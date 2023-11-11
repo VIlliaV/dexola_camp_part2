@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { media, size, padding } from '@/styles/media';
 
-export const Container = styled.div`
+export const HeaderContainerStyled = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

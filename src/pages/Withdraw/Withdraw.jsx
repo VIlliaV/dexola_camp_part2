@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useState } from 'react';
-import { ButtonContainer } from './Withdraw.styled';
+import { ButtonContainer, ButtonWithdrawExit } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
@@ -57,9 +57,7 @@ const Withdraw = () => {
           {PAGES_NAME.withdraw}
         </Button>
 
-        <Button onClick={handleWithdrawExit} className="desktop with_out_bkg" form={PAGES_NAME.withdraw}>
-          withdraw all & Claim rewards
-        </Button>
+        <ButtonWithdrawExit onClick={handleWithdrawExit}>withdraw all & Claim rewards</ButtonWithdrawExit>
       </ButtonContainer>
     </PagesContainer>
   );
