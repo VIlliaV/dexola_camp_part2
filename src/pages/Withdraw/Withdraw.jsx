@@ -14,7 +14,7 @@ import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 
 const Withdraw = () => {
-  const [withdrawValue, setWithdrawValue] = useState('0');
+  const [withdrawValue, setWithdrawValue] = useState('');
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { dataOperation, writeContractData } = useContextContract();
 
@@ -23,6 +23,7 @@ const Withdraw = () => {
     const { error } = validateData(withdrawValue, stakedBalance);
     if (!error) {
       writeContractData({ functionName: 'withdraw', args: [parseEther(withdrawValue)] });
+      setWithdrawValue('');
     } else {
       toast.error(error.message);
     }
@@ -47,7 +48,12 @@ const Withdraw = () => {
           <h2>{PAGES_NAME.withdraw}</h2>
         </PagesHead>
         <Form onSubmit={handleSubmit} id={PAGES_NAME.withdraw}>
-          <Label type={PAGES_NAME.withdraw} formValue={setWithdrawValue} maxAllowed={stakedBalance}></Label>
+          <Label
+            type={PAGES_NAME.withdraw}
+            formValue={setWithdrawValue}
+            maxAllowed={stakedBalance}
+            initialValue={withdrawValue}
+          ></Label>
           <Available available={stakedBalance} />
         </Form>
       </div>
