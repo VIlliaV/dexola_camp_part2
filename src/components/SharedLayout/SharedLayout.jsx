@@ -8,6 +8,7 @@ import SectionWrapper from '../Section/SectionWrapper';
 import HeroSection from '../HeroSection/HeroSection';
 import OperationStatus from '../OperationStatus/OperationStatus';
 import FallBack from '../FallBack/FallBack';
+import HeadContainer from '../HeadContainer/HeadContainer';
 
 const SharedLayout = () => {
   return (
@@ -17,11 +18,13 @@ const SharedLayout = () => {
       <main>
         <HeroSection />
         <SectionWrapper className="pages_section">
-          <Navigation />
-          <Suspense fallback={<FallBack />}>
-            <Outlet />
-          </Suspense>
-          <OperationStatus media="tablet" />
+          <HeadContainer>
+            <Navigation />
+            <Suspense fallback={<FallBack />}>
+              <Outlet />
+            </Suspense>
+            <OperationStatus media="tablet" />
+          </HeadContainer>
         </SectionWrapper>
       </main>
       <Footer />
