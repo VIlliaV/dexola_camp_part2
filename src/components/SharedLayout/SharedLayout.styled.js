@@ -49,6 +49,7 @@ export const Ellipse = styled.div`
 export const SectionWrapperShared = styled(SectionWrapper)`
   background-color: var(--background);
   border-radius: 16px 16px 0px 0px;
+  flex: 1;
   @media ${media.tablet} {
     background-color: transparent;
     padding-bottom: 16px;

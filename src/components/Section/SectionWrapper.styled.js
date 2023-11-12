@@ -3,7 +3,6 @@ import { media } from '@/styles/media';
 
 export const SectionStyled = styled.section`
   position: relative;
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
