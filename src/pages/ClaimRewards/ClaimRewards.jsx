@@ -16,6 +16,7 @@ const ClaimRewards = () => {
   const { rewardsPage } = PAGES_NAME;
   const { functionName } = CONTRACT_OPERATION.claimReward;
   const { maxType } = resultType;
+
   const handleSubmit = event => {
     event.preventDefault();
 
