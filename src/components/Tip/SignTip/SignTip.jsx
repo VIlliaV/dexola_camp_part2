@@ -5,6 +5,7 @@ import { SvgTip } from '../../../styles/styledConst/svgStyled';
 
 const SignTip = ({ variable = {}, className = '' }) => {
   const [isActive, setIsActive] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   const { tip, text } = variable;
   const handleMouseEnter = () => {
@@ -16,6 +17,7 @@ const SignTip = ({ variable = {}, className = '' }) => {
   };
   const handleClick = () => {
     if (!isActive) {
+      setIsShow(true);
       setIsActive(true);
       document.body.style.overflow = 'hidden';
     } else {
@@ -24,7 +26,10 @@ const SignTip = ({ variable = {}, className = '' }) => {
   };
   const clearBackdrop = e => {
     if (e.target === e.currentTarget) {
-      setIsActive(false);
+      setIsShow(false);
+      setTimeout(() => {
+        setIsActive(false);
+      }, 500);
     }
   };
 
@@ -40,7 +45,7 @@ const SignTip = ({ variable = {}, className = '' }) => {
       {isActive && (
         <>
           <BackdropStyledTip onClick={clearBackdrop} />
-          <TextTip tip={tip} text={text} />
+          <TextTip tip={tip} text={text} isShow={isShow} />
         </>
       )}
     </SignTipStyled>

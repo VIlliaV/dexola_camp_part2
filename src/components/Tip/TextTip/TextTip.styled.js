@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
+import { slideInAnimation, slideOutAnimation } from '../../../styles/styledConst/animationConst';
 
 export const TextTipStyled = styled.div`
   position: absolute;
@@ -14,6 +15,7 @@ export const TextTipStyled = styled.div`
     height: 275px;
     padding: 24px 16px 0px;
     border-radius: 8px 8px 0px 0px;
+    animation: ${props => (props.$isShow ? slideInAnimation : slideOutAnimation)} 0.5s var(--cubic-bezier);
     &::after {
       content: '';
       position: absolute;

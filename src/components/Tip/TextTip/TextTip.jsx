@@ -1,10 +1,11 @@
 import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
 import { TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 
-const TextTip = ({ tip = '', text = '' }) => {
+const TextTip = ({ tip = '', text = '', isShow }) => {
+  console.log('🚀 ~ isShow:', isShow);
   return (
     <>
-      <TextTipStyled>
+      <TextTipStyled $isShow={isShow}>
         <TipTitle>{text}</TipTitle>
         <TipInfo>
           {tip.first}
