@@ -2,12 +2,13 @@ import { formatEther, parseEther } from 'viem';
 import { CONTRACT_OPERATION, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
 import { readContract } from '@wagmi/core';
 const { success, error, loading } = CONTRACT_OPERATION.status;
+const { approve } = CONTRACT_OPERATION;
 
 export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [], value = null }) => {
   const argsOperation = [...args];
 
-  if (functionName === 'approve') {
-    const approveValueObj = dataOperation.find(item => item.functionName === 'approve');
+  if (functionName === approve.functionName) {
+    const approveValueObj = dataOperation.find(item => item.functionName === approve.functionName);
     const approveValue = approveValueObj
       ? approveValueObj.valueOperation + +formatEther(argsOperation[1])
       : +formatEther(argsOperation[1]);
@@ -42,7 +43,7 @@ export const addOperation = ({
   functionName = '',
 }) => {
   let prevArr = [...prev];
-  if (functionName === 'approve') prevArr = prev.filter(item => item.functionName !== 'approve');
+  if (functionName === approve.functionName) prevArr = prev.filter(item => item.functionName !== approve.functionName);
 
   const arr = [...prevArr, { id, pathname, status, valueOperation, functionName }];
   return arr;

@@ -6,7 +6,12 @@ import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 
-import { PAGES_NAME, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
+import {
+  PAGES_NAME,
+  CONTRACT_OPERATION,
+  STAR_RUNNER_STAKING_ADDRESS,
+  STAR_RUNNER_TOKEN_CONTRACT,
+} from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { validateData } from '../../utils/validation';
 import toast from 'react-hot-toast';
@@ -16,7 +21,8 @@ import { parseEther } from 'viem';
 const Stake = () => {
   const [stakeValue, setStakeValue] = useState('');
   const { balance, writeContractData } = useContextContract();
-
+  const { stakePage } = PAGES_NAME;
+  const { functionName } = CONTRACT_OPERATION.approve;
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stakeValue, balance);
@@ -24,7 +30,7 @@ const Stake = () => {
     if (!error) {
       writeContractData({
         contract: STAR_RUNNER_TOKEN_CONTRACT,
-        functionName: 'approve',
+        functionName,
         args: [STAR_RUNNER_STAKING_ADDRESS, parseEther(stakeValue)],
       });
       setStakeValue('');
@@ -37,22 +43,17 @@ const Stake = () => {
     <PagesContainer>
       <div>
         <PagesHead>
-          <h2>{PAGES_NAME.stake}</h2>
+          <h2>{stakePage}</h2>
           <Reward amountToStake={+stakeValue} />
         </PagesHead>
-        <Form onSubmit={handleSubmit} id={PAGES_NAME.stake}>
-          <Label
-            type={PAGES_NAME.stake}
-            formValue={setStakeValue}
-            maxAllowed={balance}
-            initialValue={stakeValue}
-          ></Label>
+        <Form onSubmit={handleSubmit} id={stakePage}>
+          <Label type={stakePage} formValue={setStakeValue} maxAllowed={balance} initialValue={stakeValue}></Label>
           <Available available={balance} />
         </Form>
       </div>
       <OperationStatus media="mobile" />
-      <Button typeButton="submit" form={PAGES_NAME.stake}>
-        {PAGES_NAME.stake}
+      <Button typeButton="submit" form={stakePage}>
+        {stakePage}
       </Button>
     </PagesContainer>
   );

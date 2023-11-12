@@ -67,9 +67,9 @@ export const INPUT_INFO = {
 };
 
 export const PAGES_NAME = {
-  stake: 'stake',
-  withdraw: 'withdraw',
-  rewards: 'claim rewards',
+  stakePage: 'stake',
+  withdrawPage: 'withdraw',
+  rewardsPage: 'claim rewards',
 };
 
 export const STAR_RUNNER_TOKEN_ADDRESS = '0x59Ec26901B19fDE7a96f6f7f328f12d8f682CB83';

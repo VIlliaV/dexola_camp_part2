@@ -4,7 +4,7 @@ import Available from '../../components/ContractInfo/ContractData/Available/Avai
 import Form from '../../components/Form/Form';
 import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
-import { PAGES_NAME } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import { useState } from 'react';
 import { ButtonContainer, ButtonWithdrawExit } from './Withdraw.styled';
@@ -17,12 +17,14 @@ const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('');
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { dataOperation, writeContractData } = useContextContract();
+  const { withdrawPage } = PAGES_NAME;
+  const { exit, withdraw } = CONTRACT_OPERATION;
 
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(withdrawValue, stakedBalance);
     if (!error) {
-      writeContractData({ functionName: 'withdraw', args: [parseEther(withdrawValue)] });
+      writeContractData({ functionName: withdraw.functionName, args: [parseEther(withdrawValue)] });
       setWithdrawValue('');
     } else {
       toast.error(error.message);
@@ -32,10 +34,10 @@ const Withdraw = () => {
   const handleWithdrawExit = () => {
     if (stakedBalance !== 0) {
       const isMoreWithdrawOrClaimOperation = dataOperation.some(
-        item => item.page === '/withdraw' || item.page === '/claim'
+        item => item.pathname === '/withdraw' || item.pathname === '/claim'
       );
       const value = !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '';
-      writeContractData({ functionName: 'exit', value });
+      writeContractData({ functionName: exit.functionName, value });
     } else {
       toast.error('you do not have on the Staked balance');
     }
@@ -45,11 +47,11 @@ const Withdraw = () => {
     <PagesContainer>
       <div>
         <PagesHead>
-          <h2>{PAGES_NAME.withdraw}</h2>
+          <h2>{withdrawPage}</h2>
         </PagesHead>
-        <Form onSubmit={handleSubmit} id={PAGES_NAME.withdraw}>
+        <Form onSubmit={handleSubmit} id={withdrawPage}>
           <Label
-            type={PAGES_NAME.withdraw}
+            type={withdrawPage}
             formValue={setWithdrawValue}
             maxAllowed={stakedBalance}
             initialValue={withdrawValue}
@@ -59,8 +61,8 @@ const Withdraw = () => {
       </div>
       <OperationStatus media="mobile" />
       <ButtonContainer>
-        <Button typeButton="submit" form={PAGES_NAME.withdraw}>
-          {PAGES_NAME.withdraw}
+        <Button typeButton="submit" form={withdrawPage}>
+          {withdrawPage}
         </Button>
 
         <ButtonWithdrawExit onClick={handleWithdrawExit} className="desktop">

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import Button from '../../components/Buttons/Button';
 import Available from '../../components/ContractInfo/ContractData/Available/Available';
-import { PAGES_NAME } from '../../constants/constants';
+import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
 import Form from '../../components/Form/Form';
 
@@ -13,14 +13,15 @@ import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomCo
 const ClaimRewards = () => {
   const { availableRewards } = useContractReadData({});
   const { writeContractData } = useContextContract();
-
+  const { rewardsPage } = PAGES_NAME;
+  const { functionName } = CONTRACT_OPERATION.claimReward;
   const { maxType } = resultType;
   const handleSubmit = event => {
     event.preventDefault();
 
     if (availableRewards !== 0) {
       const value = result(maxType, availableRewards);
-      writeContractData({ functionName: 'claimReward', value });
+      writeContractData({ functionName, value });
     } else {
       toast.error('you have no rewards');
     }
@@ -30,15 +31,15 @@ const ClaimRewards = () => {
     <PagesContainer>
       <div>
         <PagesHead>
-          <h2>{PAGES_NAME.rewards}</h2>
+          <h2>{rewardsPage}</h2>
         </PagesHead>
-        <Form onSubmit={handleSubmit} id={PAGES_NAME.rewards}>
+        <Form onSubmit={handleSubmit} id={rewardsPage}>
           <Available available={availableRewards} formatDecimal={4} />
         </Form>
       </div>
       <OperationStatus media="mobile" />
-      <Button typeButton="submit" form={PAGES_NAME.rewards}>
-        {PAGES_NAME.rewards}
+      <Button typeButton="submit" form={rewardsPage}>
+        {rewardsPage}
       </Button>
     </PagesContainer>
   );

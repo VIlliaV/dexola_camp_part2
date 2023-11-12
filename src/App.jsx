@@ -43,8 +43,8 @@ function App() {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<PrivateRoute component={<Stake />} redirectTo="/no_connect" />} />
           <Route path="/no_connect" element={<NoConnect />} />
-          <Route path="withdraw" element={<PrivateRoute component={<Withdraw />} redirectTo="/no_connect" />} />
-          <Route path="claim" element={<PrivateRoute component={<ClaimRewards />} redirectTo="/no_connect" />} />
+          <Route path="/withdraw" element={<PrivateRoute component={<Withdraw />} redirectTo="/no_connect" />} />
+          <Route path="/claim" element={<PrivateRoute component={<ClaimRewards />} redirectTo="/no_connect" />} />
           <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
