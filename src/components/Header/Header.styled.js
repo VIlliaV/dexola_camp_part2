@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { media, size } from '@/styles/media';
 import { headerBackground } from '../../styles/styledConst/styledConst';
+// import Button from '../Buttons/Button';
 
 export const HeaderContainer = styled.header`
   position: fixed;
@@ -24,10 +25,5 @@ export const HeaderContainer = styled.header`
   @media ${media.desktop} {
     width: ${size.desktop}px;
     margin: 0 auto;
-  }
-  & button {
-    @media ${media.mobTab} {
-      padding: 8px 24px;
-    }
   }
 `;

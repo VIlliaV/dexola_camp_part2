@@ -5,7 +5,6 @@ import { validateData } from '@/utils/validation';
 import { debounce } from 'debounce';
 
 const Input = ({ type, handleErrorMessage, errorMessage, formValue, maxAllowed, initialValue }) => {
-  console.log('🚀 ~ initialValue:', initialValue);
   const [inputValue, setInputValue] = useState(initialValue);
   const { nameInput, typeInput, placeholderInput, requiredInput } = inputInfo(type);
   const debounceHandler = debounce(setInputValue, 100);
