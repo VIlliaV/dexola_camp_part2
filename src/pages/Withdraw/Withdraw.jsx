@@ -36,7 +36,7 @@ const Withdraw = () => {
       const isMoreWithdrawOrClaimOperation = dataOperation.some(
         item => item.pathname === '/withdraw' || item.pathname === '/claim'
       );
-      const value = !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : '';
+      const value = !isMoreWithdrawOrClaimOperation ? stakedBalance + ' + ' + availableRewards : ' ';
       writeContractData({ functionName: exit.functionName, value });
     } else {
       toast.error('you do not have on the Staked balance');
