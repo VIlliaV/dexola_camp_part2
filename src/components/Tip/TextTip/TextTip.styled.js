@@ -28,7 +28,6 @@ export const TextTipStyled = styled.div`
   }
   @media ${media.tabDesk} {
     height: 100%;
-
     top: 50vh;
   }
 

@@ -4,7 +4,7 @@ import { TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 const TextTip = ({ tip = '', text = '' }) => {
   return (
     <>
-      <TextTipStyled className="text_tip">
+      <TextTipStyled>
         <TipTitle>{text}</TipTitle>
         <TipInfo>
           {tip.first}
@@ -12,7 +12,7 @@ const TextTip = ({ tip = '', text = '' }) => {
           {tip.second}
         </TipInfo>
       </TextTipStyled>
-      <SvgToolTip className="tip_svg" />
+      <SvgToolTip />
     </>
   );
 };
