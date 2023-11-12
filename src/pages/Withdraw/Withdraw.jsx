@@ -63,7 +63,9 @@ const Withdraw = () => {
           {PAGES_NAME.withdraw}
         </Button>
 
-        <ButtonWithdrawExit onClick={handleWithdrawExit}>withdraw all & Claim rewards</ButtonWithdrawExit>
+        <ButtonWithdrawExit onClick={handleWithdrawExit} className="desktop">
+          withdraw all & Claim rewards
+        </ButtonWithdrawExit>
       </ButtonContainer>
     </PagesContainer>
   );

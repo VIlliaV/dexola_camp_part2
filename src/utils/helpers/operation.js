@@ -1,6 +1,7 @@
 import { formatEther, parseEther } from 'viem';
 import { CONTRACT_OPERATION, STAR_RUNNER_STAKING_ADDRESS, STAR_RUNNER_TOKEN_CONTRACT } from '../../constants/constants';
 import { readContract } from '@wagmi/core';
+const { success, error, loading } = CONTRACT_OPERATION.status;
 
 export const handleArgsOperations = ({ args = [], functionName = '', dataOperation = [], value = null }) => {
   const argsOperation = [...args];
@@ -36,7 +37,7 @@ export const addOperation = ({
   id,
   prev = [],
   pathname = '/',
-  status = CONTRACT_OPERATION.status.loading,
+  status = loading,
   valueOperation = null,
   functionName = '',
 }) => {
@@ -57,14 +58,14 @@ export const removeOperation = ({ id, prev = [] }) => {
   return arr;
 };
 
-export const fetchedOperation = ({ id, prev = [], status = CONTRACT_OPERATION.status.success }) => {
+export const fetchedOperation = ({ id, prev = [], status = success }) => {
   const indexOperation = prev.findIndex(item => item.id === id);
   const arr = [...prev];
-  if (status === CONTRACT_OPERATION.status.error) {
-    arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.error };
+  if (status === error) {
+    arr[indexOperation] = { ...arr[indexOperation], status: error };
   }
-  if (status === CONTRACT_OPERATION.status.success) {
-    arr[indexOperation] = { ...arr[indexOperation], status: CONTRACT_OPERATION.status.success };
+  if (status === success) {
+    arr[indexOperation] = { ...arr[indexOperation], status: success };
   }
   return arr;
 };

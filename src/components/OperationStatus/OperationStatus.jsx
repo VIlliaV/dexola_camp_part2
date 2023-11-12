@@ -10,69 +10,62 @@ const OperationStatus = ({ media }) => {
   const { symbol } = useContextContract();
   const { pathname } = useLocation();
   const [fetchStatus, setFetchStatus] = useState(false);
-  const [operationData, setOperationData] = useState(null);
-
+  const [dataOperationItem, setDataOperationItem] = useState(null);
   const { dataOperation, setDataOperation } = useContextContract();
 
-  const findFetchedStatus = dataOperation.filter(
-    item => item.status === CONTRACT_OPERATION.status.success || item.status === CONTRACT_OPERATION.status.error
-  );
+  const { success, error } = CONTRACT_OPERATION.status;
+
+  const findFetchedStatus = dataOperation.filter(item => item.status === success || item.status === error);
   const filterFetchedOrLoading = findFetchedStatus.length
     ? findFetchedStatus
-    : dataOperation.filter((item, index) => index === dataOperation.length - 1);
+    : dataOperation.filter((_, index) => index === dataOperation.length - 1);
 
   const displayOperationData =
     filterFetchedOrLoading.find(item => item.pathname === pathname) || filterFetchedOrLoading.find(item => item);
 
   useEffect(() => {
     if (!displayOperationData || fetchStatus) return;
-    setOperationData(displayOperationData);
-    if (
-      displayOperationData.status === CONTRACT_OPERATION.status.success ||
-      displayOperationData.status === CONTRACT_OPERATION.status.error
-    ) {
+    setDataOperationItem(displayOperationData);
+    if (displayOperationData.status === success || displayOperationData.status === error) {
       setFetchStatus(true);
     } else return;
 
     setTimeout(() => {
       setFetchStatus(false);
-      setOperationData(null);
+      setDataOperationItem(null);
       setDataOperation(prev => removeOperation({ id: displayOperationData.id, prev }));
     }, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayOperationData, fetchStatus, setDataOperation]);
 
-  if (!operationData) return;
+  if (!dataOperationItem) return;
 
-  const { status, valueOperation, functionName } = operationData;
+  const { status, valueOperation, functionName } = dataOperationItem;
+  const { statusText } = CONTRACT_OPERATION[functionName];
+
+  let svgStatus;
+  switch (status) {
+    case success:
+      svgStatus = <SvgSuccess />;
+      break;
+    case error:
+      svgStatus = <SvgError />;
+      break;
+    default:
+      svgStatus = <SvgPending />;
+  }
 
   return (
     <OperationStatusStyled $media={media}>
-      {status !== CONTRACT_OPERATION.status.error ? (
-        <>
-          {status === CONTRACT_OPERATION.status.success ? <SvgSuccess /> : <SvgPending />}
-          <OperationInfo>
-            {CONTRACT_OPERATION[functionName].statusText[status].first}{' '}
-            <SpanStyled>
-              {valueOperation} {symbol}
-            </SpanStyled>{' '}
-            {status === CONTRACT_OPERATION.status.success && (
-              <>
-                successfully <br />
-              </>
-            )}
-            {CONTRACT_OPERATION[functionName].statusText[status].second}
-          </OperationInfo>
-        </>
-      ) : (
-        <>
-          <SvgError />
-          <OperationInfo>
-            <SpanStyled>Connection Error </SpanStyled>
-            <br />
-            Please try again
-          </OperationInfo>
-        </>
-      )}
+      <>
+        {svgStatus}
+        <OperationInfo>
+          {statusText[status].first}{' '}
+          <SpanStyled>{status === error ? 'Connection Error' : valueOperation + ' ' + symbol}</SpanStyled>{' '}
+          {status === success && 'successfully'} <br />
+          {statusText[status].second}
+        </OperationInfo>
+      </>
     </OperationStatusStyled>
   );
 };

@@ -8,6 +8,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Adding', second: 'to Staking' },
       success: { first: '', second: 'added to Staking' },
+      error: { first: '', second: 'Please try again' },
     },
   },
   approve: {
@@ -15,6 +16,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Approving', second: '' },
       success: { first: '', second: 'approved' },
+      error: { first: '', second: 'Please try again' },
     },
   },
   withdraw: {
@@ -22,6 +24,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Withdrawing', second: 'from Staking' },
       success: { first: '', second: 'withdraw from Staking' },
+      error: { first: '', second: 'Please try again' },
     },
   },
   exit: {
@@ -29,6 +32,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Withdrawing all & Claiming rewards', second: '' },
       success: { first: '', second: 'Withdraw all & Claim rewards' },
+      error: { first: '', second: 'Please try again' },
     },
   },
   claimReward: {
@@ -36,6 +40,7 @@ export const CONTRACT_OPERATION = {
     statusText: {
       loading: { first: 'Claiming', second: 'rewards' },
       success: { first: '', second: 'claim rewards' },
+      error: { first: '', second: 'Please try again' },
     },
   },
 };
