@@ -15,7 +15,7 @@ export const TextTipStyled = styled.div`
     height: 275px;
     padding: 24px 16px 0px;
     border-radius: 8px 8px 0px 0px;
-    animation: ${props => (props.$isShow ? slideInAnimation : slideOutAnimation)} 0.5s var(--cubic-bezier);
+    animation: ${props => (props.$isShow ? slideInAnimation : slideOutAnimation)} 0.5s var(--cubic-bezier) 1;
     &::after {
       content: '';
       position: absolute;
