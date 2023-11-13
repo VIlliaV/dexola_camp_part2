@@ -14,7 +14,7 @@ export const TextTipStyled = styled.div`
 
   @media ${media.mobTab}, ${media.tabDesk} {
     bottom: 0;
-    width: 100vw;
+    width: 100%;
     height: 275px;
     padding: 24px 16px 0px;
     border-radius: 8px 8px 0px 0px;

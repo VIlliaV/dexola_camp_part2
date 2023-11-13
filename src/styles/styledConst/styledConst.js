@@ -19,13 +19,13 @@ export const headerBackground = `background-image: url(${background_header_mob})
   }
     @media ${media.desktop} {
     background-image: url(${background_header});
-    background-size: 100vw auto;
+    background-size: 100% auto;
   }
   @media ${media.desktop + media.retina} {
     background-image: url(${background_header2x});
-     background-size: 100vw auto;
+     background-size: 100% auto;
   }
-  background-size: 100vw auto;
+  background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: top center;
 `;

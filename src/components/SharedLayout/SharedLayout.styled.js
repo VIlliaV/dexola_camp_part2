@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
 
   @media ${media.mobTab} {
     min-height: 100vw;
@@ -35,7 +35,7 @@ export const Ellipse = styled.div`
     display: block;
     position: absolute;
     top: 57vh;
-    width: 100vw;
+    width: 100%;
     bottom: 0;
     z-index: -1;
     overflow: hidden;

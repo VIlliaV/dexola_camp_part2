@@ -10,7 +10,7 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   padding: 11px 40px;
   z-index: 100;
   ${headerBackground}
