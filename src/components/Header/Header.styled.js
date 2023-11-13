@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { media, size } from '@/styles/media';
 import { headerBackground } from '../../styles/styledConst/styledConst';
-// import Button from '../Buttons/Button';
 
 export const HeaderContainer = styled.header`
   position: fixed;

@@ -1,4 +1,3 @@
-// import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
 import { SvgToolTipStyled, TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 
 const TextTip = ({ tip = '', text = '', isShow, isActive }) => {
