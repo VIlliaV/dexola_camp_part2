@@ -6,14 +6,14 @@ export const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+
   width: 100%;
 
   @media ${media.mobTab} {
-    min-height: 100vw;
     height: 100dvh;
   }
-  @media ${media.desktop} {
+  @media ${media.tablet} {
+    min-height: 100vh;
   }
   & main {
     flex-grow: 1;
