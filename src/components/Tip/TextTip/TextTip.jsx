@@ -1,10 +1,10 @@
-import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
-import { TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
+// import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
+import { SvgToolTipStyled, TextTipStyled, TipInfo, TipTitle } from './TextTip.styled';
 
-const TextTip = ({ tip = '', text = '', isShow }) => {
+const TextTip = ({ tip = '', text = '', isShow, isActive }) => {
   return (
     <>
-      <TextTipStyled $isShow={isShow}>
+      <TextTipStyled $isShow={isShow} $active={isActive}>
         <TipTitle>{text}</TipTitle>
         <TipInfo>
           {tip.first}
@@ -12,7 +12,7 @@ const TextTip = ({ tip = '', text = '', isShow }) => {
           {tip.second}
         </TipInfo>
       </TextTipStyled>
-      <SvgToolTip />
+      <SvgToolTipStyled />
     </>
   );
 };

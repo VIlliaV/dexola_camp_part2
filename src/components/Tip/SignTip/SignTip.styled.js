@@ -12,7 +12,7 @@ export const SignTipStyled = styled.div`
 `;
 
 export const BackdropStyledTip = styled(BackdropStyled)`
-  display: block;
+  display: ${props => (props.$active ? 'block' : 'none')};
   @media ${media.desktop} {
     display: none;
   }

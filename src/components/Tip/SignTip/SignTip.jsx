@@ -8,13 +8,7 @@ const SignTip = ({ variable = {}, className = '' }) => {
   const [isShow, setIsShow] = useState(false);
 
   const { tip, text } = variable;
-  const handleMouseEnter = () => {
-    setIsActive(true);
-  };
 
-  const handleMouseLeave = () => {
-    setIsActive(false);
-  };
   const handleClick = () => {
     if (!isActive) {
       setIsShow(true);
@@ -34,20 +28,10 @@ const SignTip = ({ variable = {}, className = '' }) => {
   };
 
   return (
-    <SignTipStyled
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-      $active={isActive}
-      className={className}
-    >
-      <SvgTip />
-      {isActive && (
-        <>
-          <BackdropStyledTip onClick={clearBackdrop} />
-          <TextTip tip={tip} text={text} isShow={isShow} />
-        </>
-      )}
+    <SignTipStyled onClick={handleClick} $active={isActive} className={className}>
+      <SvgTip $active={isActive} />
+      <BackdropStyledTip $active={isActive} onClick={clearBackdrop} />
+      <TextTip tip={tip} text={text} isShow={isShow} isActive={isActive} />
     </SignTipStyled>
   );
 };

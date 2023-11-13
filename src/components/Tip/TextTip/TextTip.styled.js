@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import { media } from '@/styles/media';
 import { slideInAnimation, slideOutAnimation } from '../../../styles/styledConst/animationConst';
+import { SignTipStyled } from '../SignTip/SignTip.styled';
+import { SvgToolTip } from '../../../styles/styledConst/svgStyled';
 
 export const TextTipStyled = styled.div`
+  display: ${props => (props.$active ? 'inline-block' : 'none')};
   position: absolute;
   padding: 8px 12px;
   background-color: var(--primary);
@@ -34,11 +37,15 @@ export const TextTipStyled = styled.div`
   }
 
   @media ${media.desktop} {
-    top: -5px;
-    left: 50%;
-    transform: translate(-50%, -100%);
+    display: none;
+    ${SignTipStyled}:hover & {
+      display: inline-block;
+      top: -5px;
+      left: 50%;
+      transform: translate(-50%, -100%);
+    }
   }
-  display: inline-block;
+
   text-align: center;
 `;
 
@@ -68,5 +75,14 @@ export const TipInfo = styled.p`
     white-space: wrap;
     overflow-wrap: break-word;
     word-wrap: break-word;
+  }
+`;
+
+export const SvgToolTipStyled = styled(SvgToolTip)`
+  display: none;
+  ${SignTipStyled}:hover & {
+    @media ${media.desktop} {
+      display: block;
+    }
   }
 `;
