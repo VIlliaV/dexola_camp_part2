@@ -30,6 +30,7 @@ export const Context = ({ children }) => {
   const { balance, symbol, address } = useWalletInfo({
     tokenForBalance: STAR_RUNNER_TOKEN_ADDRESS,
   });
+  const { approve, stake } = CONTRACT_OPERATION;
 
   const writeContractData = async ({
     contract = STAR_RUNNER_STAKING_CONTRACT,
@@ -62,17 +63,17 @@ export const Context = ({ children }) => {
       setDataOperation(prev => {
         return fetchedOperation({ id, prev });
       });
-      if (functionName === 'approve') {
+      if (functionName === approve.functionName) {
         const isReadyForStake = await handleReadyForStake({ address, valueOperationBig });
         if (isReadyForStake) {
-          writeContractData({ functionName: 'stake', args: [args[1]] });
+          writeContractData({ functionName: stake.functionName, args: [args[1]] });
         } else {
           setDataOperation(prev => {
             removeOperation({ id, prev });
           });
           writeContractData({
             contract: STAR_RUNNER_TOKEN_CONTRACT,
-            functionName: 'approve',
+            functionName: approve.functionName,
             args: [STAR_RUNNER_STAKING_ADDRESS, args[1]],
           });
           return;
