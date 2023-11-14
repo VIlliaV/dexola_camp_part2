@@ -2,7 +2,7 @@
 
 ## External look
 
-![External view](./assets/view.jpg)
+![External view](./public/view.webp)
 
 ## Description of the project
 
@@ -21,13 +21,13 @@ Decentralization of web applications with interaction with various contracts, at
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![SASS](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![styled-components](https://img.shields.io/badge/styled-components?style=for-the-badge&logo=styled-components)
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-000000?style=for-the-badge&logo=vite)
-![Formik](https://img.shields.io/badge/Formik-090000?style=for-the-badge)
-![Yup](https://img.shields.io/badge/Yup-0BEDD7?style=for-the-badge)
+![Joi](https://img.shields.io/badge/Joi-0BEDD7?style=for-the-badge)
+![wagmi](https://img.shields.io/badge/wagmi-2a30a3?style=for-the-badge)
+![web3.js](https://img.shields.io/badge/WEB3-1572B6?style=for-the-badge&logo=web3dotjs&logoColor=white)
 
 ## Instructions for use
 
@@ -80,7 +80,7 @@ blockchain.
 
 ## ## Link to web dapp:
 
-[Link to web dapp](dexola-camp-webapp.vercel.app)
+[Link to web dapp](https://dexola-camp-part2.vercel.app/)
 
 ## Test task:
 
