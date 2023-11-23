@@ -9,13 +9,20 @@ import { useContextContract } from '../../Context';
 import OperationStatus from '../../components/OperationStatus/OperationStatus';
 import { result, resultType } from '../../utils/formating';
 import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
+import { useEffect, useState } from 'react';
 
 const ClaimRewards = () => {
+  const [isClaim, setIsClaim] = useState(false);
   const { availableRewards } = useContractReadData({});
-  const { writeContractData } = useContextContract();
+  const { dataOperation, writeContractData } = useContextContract();
   const { rewardsPage } = PAGES_NAME;
   const { functionName } = CONTRACT_OPERATION.claimReward;
   const { maxType } = resultType;
+
+  useEffect(() => {
+    setIsClaim(dataOperation.some(item => item.functionName === functionName));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataOperation]);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -39,7 +46,7 @@ const ClaimRewards = () => {
         </Form>
       </div>
       <OperationStatus media="mobile" />
-      <Button typeButton="submit" form={rewardsPage}>
+      <Button typeButton="submit" form={rewardsPage} disabled={isClaim}>
         {rewardsPage}
       </Button>
     </PagesContainer>

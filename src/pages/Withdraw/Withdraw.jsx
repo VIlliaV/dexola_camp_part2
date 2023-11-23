@@ -6,7 +6,7 @@ import Label from '../../components/Form/FormComponents/Label/Label';
 import toast from 'react-hot-toast';
 import { CONTRACT_OPERATION, PAGES_NAME } from '../../constants/constants';
 import { PagesContainer, PagesHead } from '../Pages.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonContainer, ButtonWithdrawExit } from './Withdraw.styled';
 import { validateData } from '../../utils/validation';
 import { useContextContract } from '../../Context';
@@ -15,10 +15,16 @@ import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomCo
 
 const Withdraw = () => {
   const [withdrawValue, setWithdrawValue] = useState('');
+  const [isWithdrawExit, setIsWithdrawExit] = useState(false);
   const { stakedBalance, availableRewards } = useContractReadData({});
   const { dataOperation, writeContractData } = useContextContract();
   const { withdrawPage } = PAGES_NAME;
   const { exit, withdraw } = CONTRACT_OPERATION;
+
+  useEffect(() => {
+    setIsWithdrawExit(dataOperation.some(item => item.functionName === exit.functionName));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataOperation]);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -65,7 +71,7 @@ const Withdraw = () => {
           {withdrawPage}
         </Button>
 
-        <ButtonWithdrawExit onClick={handleWithdrawExit} className="desktop">
+        <ButtonWithdrawExit onClick={handleWithdrawExit} disabled={isWithdrawExit} className="desktop">
           withdraw all & Claim rewards
         </ButtonWithdrawExit>
       </ButtonContainer>

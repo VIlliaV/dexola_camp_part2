@@ -5,14 +5,16 @@ import { useEffect, useState } from 'react';
 import { CONTRACT_OPERATION } from '../../constants/constants';
 import { removeOperation } from '../../utils/helpers/operation';
 import { SvgError, SvgPending, SvgSuccess } from '../../styles/styledConst/svgStyled';
+import { useContractReadData } from '../../utils/hooks/ContractHooks/useCustomContractRead';
 
 const OperationStatus = ({ media }) => {
   const { symbol } = useContextContract();
+  const { availableRewards } = useContractReadData({});
   const { pathname } = useLocation();
   const [fetchStatus, setFetchStatus] = useState(false);
   const [dataOperationItem, setDataOperationItem] = useState(null);
   const { dataOperation, setDataOperation } = useContextContract();
-
+  const { claimReward } = CONTRACT_OPERATION;
   const { success, error } = CONTRACT_OPERATION.status;
 
   const findFetchedStatus = dataOperation.filter(item => item.status === success || item.status === error);
@@ -41,7 +43,9 @@ const OperationStatus = ({ media }) => {
   if (!dataOperationItem) return;
 
   const { status, valueOperation, functionName } = dataOperationItem;
+  if (!availableRewards && functionName === claimReward.functionName) return;
   const { statusText } = CONTRACT_OPERATION[functionName];
+  const valueDisplay = functionName === claimReward.functionName ? availableRewards : valueOperation;
 
   let svgStatus;
   switch (status) {
@@ -61,7 +65,7 @@ const OperationStatus = ({ media }) => {
         {svgStatus}
         <OperationInfo>
           {statusText[status].first}{' '}
-          <SpanStyled>{status === error ? 'Connection Error' : valueOperation + ' ' + symbol}</SpanStyled>{' '}
+          <SpanStyled>{status === error ? 'Connection Error' : valueDisplay + ' ' + symbol}</SpanStyled>{' '}
           {status === success && 'successfully'} <br />
           {statusText[status].second}
         </OperationInfo>

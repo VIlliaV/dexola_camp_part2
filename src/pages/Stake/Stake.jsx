@@ -23,6 +23,7 @@ const Stake = () => {
   const { balance, writeContractData } = useContextContract();
   const { stakePage } = PAGES_NAME;
   const { functionName } = CONTRACT_OPERATION.approve;
+
   const handleSubmit = event => {
     event.preventDefault();
     const { error } = validateData(stakeValue, balance);
